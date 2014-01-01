@@ -1,0 +1,61 @@
+create table user_lq
+(
+  id serial NOT Null,
+  userid integer NOT NULL,
+  roleid integer NOT NULL,
+  faculty_role  character varying(30) NOT NULL,
+  primary_phone character varying(12) NOT NULL,
+  website character varying(60) ,
+  business_name character varying(60) NOT NULL,
+  city character varying(30) NOT NULL,
+  country character varying(30) NOT NULL,
+  photo character varying(60) NOT NULL,
+  bio_statement text NOT NULL,
+
+  CONSTRAINT user_lq_pkey PRIMARY KEY (id ),
+  CONSTRAINT user_role_roleid FOREIGN KEY (roleid)
+      REFERENCES role_(roleid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT user_user_id_fkey FOREIGN KEY (userid)
+      REFERENCES user_ (userid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+
+)
+
+// sample data
+insert into user_lq(userid, roleid, faculty_role, primary_phone, website, business_name, city, country, photo, bio_statement)
+values
+(10774,10772,'Leader','000123456780','www.thecoaches.com','Leadership','CA','USA','http://www.eobcards.com/corey.gif','xxxxx');
+
+create table quest_master_(
+
+quest_id serial NOT NULL,
+quest_title character varying(512)  NOT NULL,
+access_mode boolean  NOT NULL,
+definition text  NOT NULL,
+userid integer  NOT NULL,
+ CONSTRAINT quest_master_pkey PRIMARY KEY (quest_id ),
+ CONSTRAINT user_user_id_fkey FOREIGN KEY (userid)
+      REFERENCES user_ (userid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+
+CREATE TABLE quest_transaction_
+(
+  id serial NOT NULL,
+  quest_id integer NOT NULL,
+  quest_type character varying(12) NOT NULL,
+  quest_location character varying(256) NOT NULL,
+ 
+  CONSTRAINT quest_transaction_pkey PRIMARY KEY (id ),
+  CONSTRAINT quest_master_quest_id_fkey FOREIGN KEY (quest_id)
+      REFERENCES quest_master_ (quest_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE quest_transaction_
+  OWNER TO postgres;
+
+

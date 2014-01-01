@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE display PUBLIC "-//Liferay//DTD Display 6.2.0//EN" "http://www.liferay.com/dtd/liferay-display_6_2_0.dtd">
+
+<display>
+	<category name="category.sample">
+		<portlet id="LQPortlet" />
+	</category>
+	<category name="cti.leadership-quest">
+		<portlet id="headerPortlet" />
+		<portlet id="questslist" />
+		<portlet id="forgetpassword" />
+		<portlet id="leadernologin" />
+		<portlet id="leaderlogin" />
+		<portlet id="leaderview" />
+		<portlet id="questview" />
+		<portlet id="questnologin" />
+	</category>
+</display>
