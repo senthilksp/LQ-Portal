@@ -1,0 +1,88 @@
+/* This file allows you to override default styles in one central location for easier upgrade and maintenance. */
+
+/* global styles by element */
+.site-breadcrumbs { display:none; }
+
+body {margin: 0px; padding: 0px; background: #beba9f url(../images/cti/bkgds/bg-main.jpg) no-repeat center top;  font-family: arial, helvetica, sans-serif; font-size: 104%; line-height: 109%; padding-top: 10px; color: #32110a;}
+
+div {margin: 0px; padding: 0px; vertical-align: top;}
+
+img {border: 0px none; outline: none;}
+
+h1 {font-size: 2.6em; padding: 0px; margin-top: 24px; margin-bottom: 20px; font-weight: normal; color: #32110a; text-transform: none; font-family: District-Light, sans-serif; letter-spacing: -.05em; line-height: 27px; }
+
+h2 {font-size: 1.2em; padding: 0px; margin-top: 20px; margin-bottom: 10px; font-weight: bold; color: #32110a;}
+
+h3 {font-size: 1.0em; padding: 0px; margin-top: 0px; margin-bottom: 10px; font-weight: bold; color: #32110a; line-height: 100%;}
+
+p {margin-top: 0px; padding-top: 0px;}
+
+ul {margin-left: 25px; padding-left: 0px; list-style-type: disc; list-style-position: outside; display: block;} 
+
+li {display: list-item;} 
+
+abbr {border: 0px none;}
+
+dfn {font-weight: normal; font-style: normal;}
+
+dl {display: block;}
+
+p {font-size: 1.0em;}
+
+dt {font-weight: bold; font-style: normal; margin-left: 0px; margin-right: 0px; margin-top: 0px; margin-bottom: 5px; padding: 0px;}
+
+dd {font-weight: normal; font-style: normal; margin: 0px; padding: 0px;}
+
+blockquote {margin: 0px; padding: 0px; font-style: italic; text-align: left; font-size: 0.99em;}
+
+blockquote:before {content: "";}
+
+blockquote:after {content: "";}
+
+cite {display: inline; font-style: normal;}
+
+blockquote cite {display: block; font-weight: bold;}
+
+code {display: block; text-align: left; margin-bottom: 15px;}
+
+label {display: inline; font-weight: normal;}
+
+form {margin: 0px; padding: 0px;}
+
+input {margin-top: 0px; background-color: #ebe9da;}
+
+table {clear: both; text-align: left; border: 0px none; padding: 0px; margin: 0px; border-spacing:0px; border-collapse: collapse; width: 100%;}
+
+caption {text-align: left; font-size: 1.3em; font-weight: bold; padding-top: 20px; padding-bottom: 7px;}
+
+th {padding-left: 10px; padding-right: 10px; font-weight: bold;}
+
+td {padding-left: 10px; padding-right: 10px;}
+
+strong {font-weight: bold; font-style: normal;}
+
+sup {font-size: 60%; vertical-align: top; line-height: 100%;}
+
+fieldset {border: 0px none;}
+
+a {color: #32110a; text-decoration: underline;}
+
+a:hover {color: #5da1cd; text-decoration: underline;}
+
+dd a:hover {color: #5DA1CD !important;}
+
+
+@font-face { font-family: District; src: url('/images/cti/res/fonts/DistMd__.otf'); } 
+@font-face { font-family: District-Light; src: url('/images/cti/res/fonts/DistLt__.otf'); } 
+@font-face {
+    font-family: 'RalewayThin';
+    src: url('raleway_thin-webfont.eot');
+    src: url('raleway_thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('raleway_thin-webfont.woff') format('woff'),
+         url('raleway_thin-webfont.ttf') format('truetype'),
+         url('raleway_thin-webfont.svg#RalewayThin') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+

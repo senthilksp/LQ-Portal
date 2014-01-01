@@ -1,0 +1,157 @@
+
+
+ul#home-promo { float: none; width: 285px; padding: 0; list-style: none; border-bottom: 0 solid #c3bead; margin: 0; } 
+ul#home-promo li {float: none; display: inline; font-size: 16px; margin: 0px; border-right: 0 solid #ccc7b7; line-height: 100%; padding: 0; font-weight: normal; }
+.home-promo-active {background: none; color: #5c4d41;}
+.home-promo-active {background: none; color: #ffffff;}
+.home-promo-active a {color: #ffffff;}
+.blog-entry { margin-left: 0; margin-right: 0; width: 420px; }
+div#ticker ul { color: #32110A !important; overflow-x: visible !important; list-style-type: none !important; }
+div#ticker ul li { background: url('../img/bullet_why-cti.gif') left 3px no-repeat !important; padding-left: 10px !important;  }
+div#ticker ul li a { color: #306e94 !important; }
+
+/* global footer styles */
+
+div#footerMain div.panel { position: relative; top: -5px;}
+/* CHANGE */ div#footer {background-image: none; background-repeat: no-repeat; display: table; margin: 0 auto; padding-top: 8px;}
+div#footer img {vertical-align: middle;}
+div#footer img#cti-logo-tagged {float: left;}
+div#footer div#footer-content {float: right; width: 930px;}
+div#footer div#footer-content div#footer-nav {float: left; width: 500px; font-size: .94em; padding-top: 5px; padding-bottom: 2px; line-height: 120%;}
+div#footer div#footer-content div#footer-nav div#footer-legal {margin-bottom: 5px;}
+div#footer div#footer-content div#footer-nav a#privacy-link {margin-left: 20px;}
+div#footer div#footer-content div#footer-nav ul {margin-left: 0px; margin-top: 0px; margin-bottom: 0px; padding-left: 0px; list-style-type: none; list-style-position: inside; display: inline; vertical-align: middle;} 
+div#footer div#footer-content div#footer-nav li {display: inline; vertical-align: middle;}
+div#footer div#footer-content img#icf-logo {float: left; clear: left;}
+div#footer div#footer-content img#coactive-footer-logo {
+	float: right;
+	margin: 5px 20px 0 0 !important;
+	}
+div#footer div#footer-content div#footer-nav p { margin: 0; }
+div.footer ul li p,
+div.footer ul li p a { font-size: .91em; margin-top: 0; line-height: 12px; }
+div.footer .calendar-entry { margin-bottom: 20px; }
+div.footer .calendar-entry-left { width: 200px; border-width: 0; }
+div.footer .calendar-page { background: #796a5a; width: 31px; float: left; margin-left: 0; margin-right: 12px; color: #FFF; font-size: 9px; font-weight: bold; text-align: center; -moz-border-radius-bottomleft: 5px; -moz-border-radius-bottomright: 5px; -webkit-border-bottom-left-radius: 5px; -webkit-border-bottom-right-radius: 5px; }
+div.footer p.month { margin: 4px 0 0 0; padding: 0; line-height: 4px; text-transform: uppercase; padding: 2px 0 0; }
+div.footer p.day { background: #ffffff; margin: 4px 0 0 0px !important; color: #111111; font-size: 15px; padding: 2px 0px 4px; -moz-border-radius-bottomleft: 4px; -moz-border-radius-bottomright: 4px; -webkit-border-bottom-left-radius: 4px; -webkit-border-bottom-right-radius: 4px; position: relative; top: 3px; }
+div.footer .calendar-info { float: left; width: 155px; font-size: 11px; line-height: 1.4em; }
+div.footer .calendar-info a { color: #326c91; text-decoration: underline; }
+
+
+
+/* CHANGE */ 
+/* footer
+---------------------------------------------------------------------- */
+div.wrapperFooterNav { margin: 0; display: inline-table;}
+div.wrapperFooterNav.copyright { width: 606px; height: 18px; background: none; margin: 0 auto 0 auto; position: relative; color: #777; left:-57px; }
+div.wrapperFooterNav.copyright a { color: #777; text-decoration: none; }
+div.wrapperFooterNav.copyright a:hover { color: #999; text-decoration: underline; }
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0){
+	div.wrapperFooterNav { bottom: 0; }
+}
+*/
+div.wrapperFooter { min-width: 940px; background: #efebdb; overflow: visible; font-size: 13px; min-height: 250px; }
+div.wrapperFooterCopyright { min-width: 940px; height: 26px; background: #efebdb; overflow: visible; padding-bottom: 12px; }
+div.footer { width: 940px; margin: 0 auto; text-align: left; color: #3e3a36; overflow: visible; padding: 20px 25px 5px; display: inline-table; }
+div.footer .one-col { width: 215px; margin-right: 30px; float: left; margin-bottom: 25px; }
+div.footer .one-col div { margin-left: 8px; }
+div.footer .two-col { width: 435px; margin-right: 30px; float: left;  }
+div.footer .two-col ul { margin: 0; vertical-align: top; margin-bottom: 20px !important; }
+
+/* calendar entry on home page */
+div.footer .two-col ul li { width: 200px; margin-right: 15px; float: left; height: 80px; font-size: 11px; }
+
+div.footer .three-col { width: 685px; margin-right: 35px; float: left; margin-bottom: 25px; }
+div.footer .col-three { width: 180px; margin-right: 0; float: left; }
+div.footer .one-col h3,
+div.footer .two-col h3,
+div.footer .three-col h3 { font-size: 13px; text-transform: uppercase; border-bottom: 1px solid #b3ab9f; padding: 6px 8px; margin-bottom: 15px; color: #776c60; }
+div.footer .col-three h3 { font-size: 13px; text-transform: uppercase; border-bottom: 1px solid #b3ab9f; padding: 6px 8px; margin-bottom: 15px; color: #776c60; }
+div.footer .col-three p { font-size: 11px; font-weight: bold; }
+div.footer ul { list-style: none; margin-left: 8px; margin-bottom: 0; width: 435px; display: inline-table; padding-left: 0; }
+div.footer ul li { margin-right: 15px; margin-bottom: 15px; display: block; float: left; }
+div.footer ul li a { text-decoration: none; line-height: 16px; }
+div.footer ul#twitter_update_list { margin: 0; }
+div.footer ul#twitter_update_list li { margin-right: 0; width: 400px; height: 65px; font-size: 13px; }
+div.footer ul#twitter_update_list li span a { display: inline-block;  }
+div.footer div#twitter_div { font-size: 12px; }
+
+div.footer div#twitter_div ul#twitter_update_list li {
+	margin-bottom: 0;
+}
+div.footer .two-col dl { margin-bottom: 20px; margin-left: 8px; }
+div.footer .two-col dl p { margin-bottom: 8px; }
+div.footer .two-col dl dt { text-transform: uppercase; margin-top: 0; }
+
+
+/* footer tabs
+---------------------------------------------------------------------- */
+#footerMain .tabs { width: 960px; height: 30px; margin: 0 !important; background: #ffffff url("../img/tabs-sprite.png") no-repeat; }
+#footerMain .tabs li { float: left; list-style: none;  }
+#footerMain .tabs a { color: #776B63; display: block; font-size: 14px; line-height: 30px; text-align: center; text-decoration: none; width: 200px; }
+#footerMain .tabs a:focus { outline: 0; }
+#footerMain .tabs a:hover { background: url("../img/tabs-sprite.png") no-repeat; }
+
+#footerMain li#tabCTI a { margin-right: -33px; }
+#footerMain li#tabSpecials a { margin: 0 -33px 0 0; }
+#footerMain li#tabNews a { margin: 0 -33px 0 0; }
+#footerMain li#tabBlog a { margin-left: 0; }
+
+#footerMain .activeCTI { background-position: 0 0; }
+#footerMain .activeCTI li#tabCTI a:hover { background-image: none; }
+#footerMain .activeCTI li#tabSpecials a:hover { background-position: -167px -30px; }
+#footerMain .activeCTI li#tabNews a:hover { background-position: -334px -60px; }
+#footerMain .activeCTI li#tabBlog a:hover { background-position: -501px -90px; }
+
+#footerMain .activeSpecials { background-position: 0 -120px; }
+#footerMain .activeSpecials li#tabCTI a:hover { background-position: 0 -150px; }
+#footerMain .activeSpecials li#tabSpecials a:hover { background-image: none; }
+#footerMain .activeSpecials li#tabNews a:hover { background-position: -334px -180px; }
+#footerMain .activeSpecials li#tabBlog a:hover { background-position: -501px -210px; }
+
+#footerMain .activeNews { background-position: 0 -240px; }
+#footerMain .activeNews li#tabCTI a:hover { background-position: 0 -270px; }
+#footerMain .activeNews li#tabSpecials a:hover { background-position: -167px -300px; }
+#footerMain .activeNews li#tabNews a:hover { background-image: none; }
+#footerMain .activeNews li#tabBlog a:hover { background-position: -501px -330px; }
+
+#footerMain .activeBlog { background-position: 0 -360px; }
+#footerMain .activeBlog li#tabCTI a:hover { background-position: 0px -390px; }
+#footerMain .activeBlog li#tabSpecials a:hover { background-position: -167px -420px; }
+#footerMain .activeBlog li#tabNews a:hover { background-position: -334px -450px; }
+#footerMain .activeBlog li#tabBlog a:hover { background-image: none; }
+/* CHANGE */ 
+
+a.newsletter-signup {
+    background-color: #8e8469;
+    border-radius: 10px 10px 10px 10px;
+    color: #FFFFFF;
+    display: block;
+    line-height: 26px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 11px;
+    width: 200px;
+    vertical-align: middle;
+    -webkit-box-shadow: 2px 2px 2px #aaa;
+	-moz-box-shadow: 2px 2px 2px #aaa;
+	box-shadow: 2px 2px 2px #aaa; 
+	/* For IE 8 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#aaaaaa')";
+	/* For IE 5.5 - 7 */
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#aaaaaa');
+}
+
+a.newsletter-signup:hover {
+    background-color: #a79d84;
+}
+
+
+
+
+li.newsletter-icon { float: left; clear: left; display: block; margin: 0 0 0px -1px; padding: 4px 0 7px 30px; background: url('../img/email_newsletter_icon.png') no-repeat 0 0px; line-height: 5px; }
+li.twitter-icon { float: left; clear: left; display: block; margin: -8px 0 -8px; padding: 4px 0 4px 30px; background: url('../img/twitter_icon.png') no-repeat; }
+li.facebook-icon { float: left; clear: left; display: block; margin: -8px 0 0 0; padding: 4px 0 4px 30px; background: url('../img/facebook_icon.png') no-repeat; }
