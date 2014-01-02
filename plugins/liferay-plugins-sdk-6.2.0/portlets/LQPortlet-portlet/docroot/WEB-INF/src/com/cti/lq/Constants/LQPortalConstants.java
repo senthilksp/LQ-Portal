@@ -12,5 +12,18 @@ public class LQPortalConstants {
 	public static String LQ_LEADER_ROLE = "LEADER";
 	public static String LQ_LEADER_ADMIN = "LEADER_ADMIN";
 	public static String LQ_SOLUTION_ADMIN = "SOLUTION_ADMIN";
+	
+	public static final String LQ_HOME_URL 			  = "/Welcome";
+	public static final String LQ_LEADER_NO_LOGIN_URL = "/web/guest/leaderdetails-no-login";
+	public static final String LQ_QUEST_NO_LOGIN_URL  = "/web/guest/questdetails-no-login";
+	public static final String LQ_QUEST_DETAILS_URL   = "/web/guest/questdetails";
+	public static final String LQ_LEADER_DETAILS_URL  = "/web/guest/leaderdetails";
+	public static final String LQ_PORTAL_LOGOUT_URL   = "/c/portal/logout";
+	public static final String LQ_PORTAL_LOGIN_URL    = "/c/portal/login";
+	
+	public static final String LQ_QUEST_DETAIL_VIEW_PAGE = "/web/guest/questdetails-viewpage";
+	public static final String LQ_QUEST_DETAIL_EDIT_PAGE = "/web/guest/questdetails-editpage";
+	public static final String LQ_LEADER_DETAIL_VIEW_PAGE = "/web/guest/leaderdetails-viewpage";
+	public static final String LQ_LEADER_DETAIL_EDIT_PAGE = "/web/guest/leaderdetails-editpage";
 
 }
