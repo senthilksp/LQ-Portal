@@ -46,14 +46,17 @@ public class LeaderLogin extends MVCPortlet {
 
 		LeaderBean leaderBean = new LeaderBean();
 		LQPortletService lqServiceLayer = new LQPortletServiceImpl();
-
+		String role = LQPortalUserServiceUtil.getRoleName(renderRequest);
+		
 		try {
 			lqServiceLayer
 					.populateLeaderLoginPortlet(leaderBean, renderRequest);
+			renderRequest.setAttribute("roleName", role);
 
 		} catch (LQPortalException le) {
 			LQPortalUtil.processException(le, renderRequest);
 		}
+
 
 		if (portletRequestDispatcher == null) {
 		} else {
@@ -80,20 +83,46 @@ public class LeaderLogin extends MVCPortlet {
 			leaderDetails.setBusinessName(actionRequest.getParameter("businessname")); 
 			leaderDetails.setCountry(actionRequest.getParameter("country"));
 			leaderDetails.setCity(actionRequest.getParameter("city"));
-			System.out.println("Bio Statement" + actionRequest.getParameter("biostatement"));
 			
 			leaderDetails.setBioStatement(actionRequest.getParameter("biostatement"));
 			leaderDetails.setPhotoURL(actionRequest.getParameter("photourl"));
 			leaderDetails.setUserid(userId);
 
+			List<QuestMasterBean> questMasterList = new ArrayList<QuestMasterBean>();
+			List<QuestMasterBean> questChangesList = new ArrayList<QuestMasterBean>();
+			
+			
+			LQQuestService questService = new LQQuestServiceImpl(); 
+			questMasterList = questService.getQuestMasterList(userId);
+			for(QuestMasterBean qb:questMasterList) {
+				QuestMasterBean newBean = new QuestMasterBean();
+				newBean.setUserId(qb.getUserId());
+				newBean.setQuestId(qb.getQuestId());
+				if( actionRequest.getParameter(String.valueOf(qb.getQuestId())) != null) {
+					newBean.setUserId(userId);
+					if("Private".equalsIgnoreCase(actionRequest.getParameter(String.valueOf(qb.getQuestId())))) {
+						newBean.setAccessMode(false);
+					} else {
+						newBean.setAccessMode(true);
+					}
+				}
+				questChangesList.add(newBean);
+			}
+			
+			leaderDetails.setQuestList(questChangesList);
+			
 			LQLeaderService lqServiceLayer = new LQLeaderServiceImpl();
-			lqServiceLayer.saveLeaderDetails(leaderDetails);
-			LOG.info("updation done");
+			saveSuccess = lqServiceLayer.saveLeaderDetails(leaderDetails);
 		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		if (saveSuccess) {
+			SessionMessages.add(actionRequest, "leader-edited-successfully");
+		} else {
+			SessionErrors.add(actionRequest, "leader-edit-failed");
+		}
 
 	}
-
 }
