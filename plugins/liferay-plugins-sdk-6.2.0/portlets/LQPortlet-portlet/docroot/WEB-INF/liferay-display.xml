@@ -14,5 +14,11 @@
 		<portlet id="leaderview" />
 		<portlet id="questview" />
 		<portlet id="questnologin" />
+		
+		<portlet id="addquest" />
+		<portlet id="passwordreset" />
+		<portlet id="addleader" />
+		<portlet id="questlogin" />
 	</category>
 </display>
+

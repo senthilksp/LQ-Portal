@@ -77,6 +77,43 @@
 		<css-class-wrapper>LQPortlet-portlet</css-class-wrapper>
 	</portlet>
 	
+	<portlet>
+		<portlet-name>addquest</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/js/jquery-validation-1.9.0/jquery.validate.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/js/jquery-validation-1.9.0/additional-methods.js</footer-portlet-javascript>		
+		<footer-portlet-javascript>/js/jquery-validation-1.9.0/jquery.form.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/js/LeaderDetails.js</footer-portlet-javascript>
+		<css-class-wrapper>LQPortlet-portlet</css-class-wrapper>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>passwordreset</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>LQPortlet-portlet</css-class-wrapper>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>addleader</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>LQPortlet-portlet</css-class-wrapper>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>questlogin</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>LQPortlet-portlet</css-class-wrapper>
+	</portlet>
+	
+	
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>
