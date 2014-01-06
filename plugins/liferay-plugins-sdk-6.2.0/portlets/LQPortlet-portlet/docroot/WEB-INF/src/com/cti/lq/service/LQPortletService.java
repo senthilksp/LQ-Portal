@@ -35,6 +35,10 @@ public interface LQPortletService {
 
 	public void populateQuestViewPortlet(List<QuestViewBean> questList,
 			RenderRequest renderRequest) throws LQPortalException;;
+	
+	public void populateQuestLoginPortlet(List<QuestViewBean> questList,
+					RenderRequest renderRequest);
+
 
 
 }

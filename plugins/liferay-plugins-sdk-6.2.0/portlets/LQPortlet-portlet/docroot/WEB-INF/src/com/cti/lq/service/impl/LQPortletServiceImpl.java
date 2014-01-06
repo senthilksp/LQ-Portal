@@ -50,8 +50,13 @@ public class LQPortletServiceImpl implements LQPortletService {
 	public void populateLeaderLoginPortlet(LeaderBean leaderBean,
 			RenderRequest renderRequest) throws LQPortalException {
 
+		HttpServletRequest httpRequest = PortalUtil
+				.getOriginalServletRequest(PortalUtil
+						.getHttpServletRequest(renderRequest));
 		LQLeaderService leaderService = new LQLeaderServiceImpl();
-		leaderBean.setUserid(0);
+
+		leaderBean.setUserid(httpRequest.getParameter("userId") == null ? 0
+				: Integer.valueOf(httpRequest.getParameter("userId")));
 
 		try {
 			leaderBean = leaderService.getLeaderDetails(leaderBean,
@@ -61,6 +66,12 @@ public class LQPortletServiceImpl implements LQPortletService {
 		} catch (Exception le) {
 			throw new LQPortalException(le.getMessage());
 		}
+
+	}
+
+	@Override
+	public void populateQuestLoginPortlet(List<QuestViewBean> questList,
+			RenderRequest renderRequest) {
 
 	}
 
@@ -114,25 +125,33 @@ public class LQPortletServiceImpl implements LQPortletService {
 			RenderRequest renderRequest) throws LQPortalException {
 		int userId = 0;
 		int questId = 0;
-		
+
 		QuestViewBean questBean = new QuestViewBean();
-		
+
 		HttpServletRequest httpRequest = PortalUtil
 				.getOriginalServletRequest(PortalUtil
 						.getHttpServletRequest(renderRequest));
 		LQLeaderService leaderService = new LQLeaderServiceImpl();
 
-		userId  = httpRequest.getParameter("userId") == null ? 0 : Integer
+		userId = httpRequest.getParameter("userId") == null ? 0 : Integer
 				.valueOf(httpRequest.getParameter("userId"));
-		
+
 		questId = httpRequest.getParameter("questId") == null ? 0 : Integer
 				.valueOf(httpRequest.getParameter("questId"));
 
 		try {
-			questList = leaderService.getQuestDetails(questList, renderRequest,
-					userId,questId);
+			// This method is for getting questlists when nologin
+			if (questId != 0) {
+				questList = leaderService.getQuestDetails(questList,
+						renderRequest, userId, questId);
+			} else { // This method is for getting questlists when login
+				questList = leaderService.getQuestMasterDetails(questList,
+						renderRequest);
+
+			}
+
 			renderRequest.setAttribute("questList", questList);
-			if(questList.size()>0) {
+			if (questList.size() > 0) {
 				questBean.setFirstName(questList.get(0).getFirstName());
 				questBean.setPhotoURL(questList.get(0).getPhotoURL());
 				renderRequest.setAttribute("questBean", questBean);
