@@ -9,7 +9,8 @@
 <jsp:useBean id="leaderBean" class="com.cti.lq.beans.LeaderBean"
 	scope="request" />
 	
-<% java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);%>	
+<% java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);%>
+<% String LQ_LEADER_DETAIL_EDIT_PAGE = com.cti.lq.Constants.LQPortalConstants.LQ_LEADER_DETAIL_EDIT_PAGE; %>	
 
 	<div class="contentWrapper_lq">
 		<h2><%=rb.getString("leader-view-portlet-heading")%></h2>
@@ -25,4 +26,8 @@
 		<tr> <td> <b><%=rb.getString("leader-view-portlet-website")%> </b> : </td> <td> ${leaderBean.website} </td> </tr>
 		<tr> <td> <b><%=rb.getString("leader-view-portlet-biostatement")%> </b> : </td> <td> ${leaderBean.bioStatement} </td> </tr>
 		</table>
+		 <c:if test="${canEdit eq true}">
+			<a href='<%=LQ_LEADER_DETAIL_EDIT_PAGE%>?userId=${userId}' style="float:right">Edit Leader</a> 
+			<br>
+		</c:if>	
 	</div>

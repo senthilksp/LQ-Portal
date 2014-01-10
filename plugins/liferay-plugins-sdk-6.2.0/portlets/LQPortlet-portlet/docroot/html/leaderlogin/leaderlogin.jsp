@@ -13,17 +13,30 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-	
 });
 
 function doSubmit() {
 	document.LeaderDetailsForm.submit();
 }
 
+function doCancel() {
+	document.LeaderDetailsForm.reset();
+}
+
 </script>
 
 	<div class="contentWrapper_lq">
 		<h2><%=rb.getString("leader-login-portlet-title")%></h2>
+		
+		<br>
+		<br>
+		<!-- Social Sharing Buttons BEGIN -->
+				<a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=ra-52ce7b2b414da24b"><img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a>
+			    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+				<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52ce7b2b414da24b"></script>
+		<!-- Social Sharing Buttons Ends -->
+		
+		
 		<portlet:actionURL name="submitLeaderDetails" var="submitLeaderDetailsURL" />
 		<liferay-ui:success key="leader-edited-successfully" message='<%=rb.getString("leader-editleader-success-msg")%>'/>
 		<liferay-ui:error  key="leader-edit-failed" message='<%=rb.getString("leader-editleader-failure-msg")%>'/>
@@ -102,10 +115,15 @@ function doSubmit() {
 							 <c:if test="${roleName eq 'LEADER' || roleName eq 'LEADER_ADMIN'}">
 								<aui:button type="submit" onClick="doSubmit();" value='<%=rb.getString("leader-login-portlet-btn1-caption")%>' />
 							</c:if>
+							<c:if test="${roleName eq 'LEADER' || roleName eq 'LEADER_ADMIN'}">
+								<aui:button type="cancel" onClick="doCancel();" value='<%=rb.getString("leader-login-portlet-btn2-caption")%>' />
+							</c:if>
 						</aui:button-row>
 					<c:if test="${roleName eq'LEADER_ADMIN'}">
-								<a style="btn-primary" href='/web/guest/addLeaderPage'><%=rb.getString("leader-login-portlet-btn2-caption")%></a>
+								<a style="btn-primary" href='/web/guest/addLeaderPage'><%=rb.getString("leader-login-portlet-btn3-caption")%></a>
 					</c:if>	
+					 <a class="offsite" href="http://www.coactivenetwork.com/">Co-Active Network</a>
+					 <br><br>
 			</div>		
 		</div>
 		<div class="contentWrapper_lq" style="width: 40%; float: right; height:1250px;">

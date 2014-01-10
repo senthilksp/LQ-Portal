@@ -6,9 +6,6 @@
 
 <portlet:defineObjects />
 
-<script type="text/javascript">
-
-</script>
 <%java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);%>
 
 
@@ -18,6 +15,15 @@
 <div style="overflow: hidden" class="contentWrapper_lq">
 	<h2 style="margin-left:20px"><%=rb.getString("quest-view-portlet-heading")%></h2>
 	<br>
+	<br>		
+	
+	<!-- AddThis Button BEGIN -->
+		<a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=ra-52ce7b2b414da24b"><img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a>
+			    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+				<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52ce7b2b414da24b"></script>
+	<!-- AddThis Button END -->
+	<br>
+			
 	<div class="contentWrapper_lq"
 		style="width: 50%; float: left; overflow: hidden">
 		<img src="${questBean.photoURL}"
@@ -33,10 +39,11 @@
 			</c:if>
 			<c:if test="${quest.questType eq 'VIDEO' || quest.questType eq 'AUDIO'}">
 				<br><br>
-				<video width="320" height="240" controls>
-		  		<source src="${quest.questLocation}" type="video/mp4">
-		 		 <%=rb.getString("quest-view-portlet-video-msg")%>
-			</video>
+				 <video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="264"
+								      poster="/LQTheme-theme/images/cti/bkgds/oceans-clip.png"
+								      data-setup="{{}}">
+								    <source src="${quest.questLocation}" type='video/mp4' />
+								  </video>
 			</c:if>
 		 </c:forEach>
 	</div>

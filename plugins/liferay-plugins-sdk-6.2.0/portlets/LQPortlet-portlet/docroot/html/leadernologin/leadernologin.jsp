@@ -13,25 +13,17 @@
 
 <% java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);%>
 
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-	  var js, fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-	  fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));
-</script>
 
 <portlet:defineObjects />
-	<div class="contentWrapper_lq">
+	<div class="contentWrapper_lq" style="overflow: hidden" >
 		<h2><%=rb.getString("leader-no-login-portlet-heading")%></h2>
-		<br>
-		<br>
-		
-		<div class="fb-share-button" data-href="http://127.0.0.1:8081/welcome" data-width="100px" data-type="button_count"></div>
-		
+			<br>
+				<div class="contentWrapper_lq" style="width: 50%; float: left; ">
+				  <h3> Welcome to Leadership Quest </h3>
+				  <br>
+				   <table>
 			<c:forEach items="${leaderList}" var="leader">
+			
 				<tr>
 					<td><img src="${leader.photoURL}" alt="" ></img>
 					<td>
@@ -48,17 +40,22 @@
 				</tr>
 				<tr>
 				    <td> 
-				    <c:if test="${roleName == null}">
 				    	<a href='<%=LQ_LEADER_DETAIL_VIEW_PAGE%>?userId=${leader.userid}'>${leader.firstname}</a> 
-				    </c:if>
-				    <c:if test="${roleName eq 'LEADER' || roleName eq 'LEADER_ADMIN'}">
-				    	<a href='<%=LQ_LEADER_DETAIL_EDIT_PAGE%>?userId=${leader.userid}'>${leader.firstname}</a> 
-				    </c:if>	
 				    </td>
 				</tr>	
 				
 			</c:forEach>
 		</table>
+				</div>
+				<div class="contentWrapper_lq" style="width: 50%; float: right; overflow: hidden" >
+					<!-- AddThis Button BEGIN -->
+					<a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=ra-52ce7b2b414da24b"><img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a>
+				    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+					<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52ce7b2b414da24b"></script>
+				<!-- AddThis Button END -->
+				</div>	
+			<br>
+		
 	
 	</div>
 

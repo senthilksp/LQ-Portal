@@ -35,7 +35,7 @@ function doSubmit() {
 				<tr>
 					<td><img src="${leaderBean.photoURL}" alt=""></img>
 					</td>
-					<td><aui:input label='<%=rb.getString("leader-login-portlet-photoURL")%>' name="photourl" min="2" max="60"
+					<td><aui:input label='<%=rb.getString("leader-login-portlet-photoURL")%>' name="photourl" length="60"
 							style="width:300px" id="firstname" type="text" required="true"
 							value="">
 							<aui:validator name="minLength"> '2' </aui:validator>
@@ -45,12 +45,12 @@ function doSubmit() {
 						</td>
 				</tr>
 				<tr>
-					<td><aui:input label='<%=rb.getString("leader-view-portlet-firstname")%>' name="firstname" min="2"
-							max="60" id="firstname" type="text" required="true"	value="">
+					<td><aui:input label='<%=rb.getString("leader-view-portlet-firstname")%>' name="firstname" length="60"
+							       id="firstname" type="text" required="true"	value="">
 							<aui:validator name="minLength"> '2' </aui:validator>
 							<aui:validator name="maxLength"> '60' </aui:validator>
 						</aui:input></td>
-					<td><aui:input label='<%=rb.getString("leader-view-portlet-lastname")%>' name="lastname" min="2"
+					<td><aui:input label='<%=rb.getString("leader-view-portlet-lastname")%>' name="lastname" length="60"
 							required="true" max="60" id="lastname" type="text"
 							value="">
 							<aui:validator name="minLength"> '2' </aui:validator>

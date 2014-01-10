@@ -6,6 +6,8 @@
 <%@ page import="com.cti.lq.Constants.LQPortalConstants" %>
 
 <portlet:defineObjects />
+
+
 <%java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);%>
 
 	<div class="contentWrapper_lq" style="overflow: hidden" >
@@ -36,9 +38,11 @@
 			  	<c:forEach items="${questList}" var="quest">
 					<c:if test="${quest.questType eq 'AUDIO'}">
 						<br><br>
-						<video width="320" height="240" controls>
-				  			<source src="${quest.questLocation}" type="video/mp4"><%=rb.getString("quest-view-portlet-video-msg")%>
-						</video>
+						 <video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="264"
+								      poster="/LQTheme-theme/images/cti/bkgds/oceans-clip.png"
+								      data-setup="{{}}">
+								    <source src="${quest.questLocation}" type='video/mp4' />
+								  </video>
 					</c:if>
 				</c:forEach>
 				<input type="file" name="<portlet:namespace />audio_fileName" />
@@ -49,9 +53,11 @@
 				<c:forEach items="${questList}" var="quest">	
 					<c:if test="${quest.questType eq 'VIDEO'}">
 						<br><br>
-						<video width="320" height="240" controls>
-				  			<source src="${quest.questLocation}" type="video/mp4"> <%=rb.getString("quest-view-portlet-video-msg")%>
-						</video>
+						 <video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="264"
+								      poster="/LQTheme-theme/images/cti/bkgds/oceans-clip.png"
+								      data-setup="{{}}">
+								    <source src="${quest.questLocation}" type='video/mp4' />
+								  </video>
 					</c:if>
                   </c:forEach>
                   <input type="file" name="<portlet:namespace />video_fileName" />
