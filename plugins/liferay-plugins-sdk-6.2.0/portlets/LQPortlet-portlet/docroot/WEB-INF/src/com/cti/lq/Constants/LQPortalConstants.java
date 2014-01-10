@@ -22,9 +22,12 @@ public class LQPortalConstants {
 	public static final String LQ_PORTAL_LOGIN_URL    = "/c/portal/login";
 	
 	public static final String LQ_QUEST_DETAIL_VIEW_PAGE = "/web/guest/questdetails-viewpage";
-	public static final String LQ_QUEST_DETAIL_EDIT_PAGE = "/web/guest/questdetails-editpage";
+	//public static final String LQ_QUEST_DETAIL_EDIT_PAGE = "/web/guest/questdetails-editpage";
+	public static final String LQ_QUEST_DETAIL_EDIT_PAGE =  "/web/guest/editquestpage"; 
 	public static final String LQ_LEADER_DETAIL_VIEW_PAGE = "/web/guest/leaderdetails-viewpage";
 	public static final String LQ_LEADER_DETAIL_EDIT_PAGE = "/web/guest/leaderdetails-editpage";
+	
+	
 	
 	public static final String portletLocatation = "LQPortlet-portlet";
 	public static final String fileLocation = "lqfiles";
@@ -32,6 +35,8 @@ public class LQPortalConstants {
 	public static final String IMAGE_TYPE = "IMAGE";
 	public static final String AUDIO_TYPE = "AUDIO";
 	public static final String VIDEO_TYPE = "VIDEO";
+	
+	public static final String LQ_FILE_LOCATION = "/LQPortlet-portlet/lqfiles";
 	
 
 }

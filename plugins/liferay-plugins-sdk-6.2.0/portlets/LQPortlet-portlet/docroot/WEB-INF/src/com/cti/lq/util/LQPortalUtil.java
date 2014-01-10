@@ -4,10 +4,16 @@
 package com.cti.lq.util;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -209,6 +215,41 @@ public class LQPortalUtil {
 		}
 
 		return isFileUploaded;
+	}
+	
+	public static Boolean fileMakerLeaderCheck(String email) {
+		LOG.info("Authentication success.");
+		Boolean isLeader = false;
+		URL url;
+		email = "ping@me.com";
+		 
+		try {
+			// get URL content //1 Leader 0-noleader
+			//url = new URL("http://crm.thecoaches.com/fmi-test/webcomp2_newFM/abletogetrecord.php?postkey=fjgh15t&em=ping@me.com");
+			url = new URL("http://crm.thecoaches.com/fmi-test/webcomp2_newFM/authenticate_leader.php?postkey=fjgh15t&em=ping@me.com");
+			URLConnection conn = url.openConnection();
+ 
+			// open the stream and put it into BufferedReader
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+ 
+			String inputLine;
+ 
+			while ((inputLine = br.readLine()) != null) {
+				LOG.info("inputLine=====" + inputLine);
+				if (inputLine.equalsIgnoreCase("ok")) {
+					isLeader = true;
+					LOG.info("Authentication success.");
+					break;
+				}
+			}
+ 
+			br.close(); 
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return isLeader;
 	}
 
 }

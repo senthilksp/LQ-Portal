@@ -54,6 +54,7 @@ public class LeaderLogin extends MVCPortlet {
 		LQPortletService lqServiceLayer = new LQPortletServiceImpl();
 		String role = LQPortalUserServiceUtil.getRoleName(renderRequest);
 		
+		
 		try {
 			lqServiceLayer
 					.populateLeaderLoginPortlet(leaderBean, renderRequest);

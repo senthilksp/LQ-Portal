@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.cti.lq.Constants.LQPortalConstants;
 import com.cti.lq.beans.LeaderBean;
 import com.cti.lq.beans.LoggedUserBean;
 import com.cti.lq.beans.QuestMasterBean;
@@ -23,7 +24,9 @@ import com.cti.lq.service.LQLeaderService;
 import com.cti.lq.service.LQPortletService;
 import com.cti.lq.service.LQQuestService;
 import com.cti.lq.util.LQPortalUserServiceUtil;
+import com.cti.lq.util.LQPortalUtil;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
 /**
@@ -44,7 +47,9 @@ public class LQPortletServiceImpl implements LQPortletService {
 			lbean.setFirstName(user.getFirstName());
 			lbean.setLastName(user.getLastName());
 			lbean.setSignedIn(true);
+			renderRequest.setAttribute("userId", userId);
 		}
+		
 		LOG.info("Leaving from populateHeaderPortlet");
 		return lbean;
 	}
@@ -52,6 +57,7 @@ public class LQPortletServiceImpl implements LQPortletService {
 	@Override
 	public void populateLeaderLoginPortlet(LeaderBean leaderBean,
 			RenderRequest renderRequest) throws LQPortalException {
+		LOG.info("populateLeaderLoginPortlet");
 
 		HttpServletRequest httpRequest = PortalUtil
 				.getOriginalServletRequest(PortalUtil
@@ -62,9 +68,17 @@ public class LQPortletServiceImpl implements LQPortletService {
 				: Integer.valueOf(httpRequest.getParameter("userId")));
 
 		try {
+			int userId = LQPortalUserServiceUtil.getUserId(renderRequest);
+			User user = UserLocalServiceUtil.getUser(userId);
+
+			Boolean isLeader = LQPortalUtil.fileMakerLeaderCheck(user
+					.getEmailAddress());
+			LOG.info("isLeader====" + isLeader);
+
 			leaderBean = leaderService.getLeaderDetails(leaderBean,
 					renderRequest);
 			renderRequest.setAttribute("leaderBean", leaderBean);
+			renderRequest.setAttribute("isLeader", isLeader);
 
 		} catch (Exception le) {
 			throw new LQPortalException(le.getMessage());
@@ -90,7 +104,6 @@ public class LQPortletServiceImpl implements LQPortletService {
 		LQLeaderService leaderService = new LQLeaderServiceImpl();
 
 		try {
-
 			leaderList = leaderService.getLeaderList(leaderList, renderRequest);
 			renderRequest.setAttribute("leaderList", leaderList);
 
@@ -112,10 +125,28 @@ public class LQPortletServiceImpl implements LQPortletService {
 		leaderBean.setUserid(httpRequest.getParameter("userId") == null ? 0
 				: Integer.valueOf(httpRequest.getParameter("userId")));
 
+		Boolean editRights = false;
+		int loginUserId = LQPortalUserServiceUtil.getUserId(renderRequest);
+
 		try {
+			String role = LQPortalUserServiceUtil.getRoleName(renderRequest);
+
+			if (LQPortalConstants.LQ_LEADER_ROLE.equalsIgnoreCase(role)
+					&& httpRequest.getParameter("userId") != null) {
+				if (Integer.valueOf(httpRequest.getParameter("userId")) == loginUserId) {
+					editRights = true;
+				}
+			}
+
+			if (LQPortalConstants.LQ_LEADER_ADMIN.equalsIgnoreCase(role))
+				editRights = true;
+
+			renderRequest.setAttribute("canEdit", editRights);
+
 			leaderBean = leaderService.getLeaderDetails(leaderBean,
 					renderRequest);
 			renderRequest.setAttribute("leaderBean", leaderBean);
+			renderRequest.setAttribute("userId", httpRequest.getParameter("userId"));
 
 		} catch (Exception le) {
 			throw new LQPortalException(le.getMessage());
@@ -168,36 +199,36 @@ public class LQPortletServiceImpl implements LQPortletService {
 
 	@Override
 	public void populateQuestEditPortlet(RenderRequest renderRequest) {
-		
+
 		LQLeaderService leaderService = new LQLeaderServiceImpl();
-		
-		List<QuestMasterBean> questList     = new ArrayList<QuestMasterBean>();
-		List<QuestViewBean>   questListAll  = new ArrayList<QuestViewBean>();
-		
+
+		List<QuestMasterBean> questList = new ArrayList<QuestMasterBean>();
+		List<QuestViewBean> questListAll = new ArrayList<QuestViewBean>();
+
 		int userId = LQPortalUserServiceUtil.getUserId(renderRequest);
 		questList = new ArrayList<QuestMasterBean>();
-		
+
 		try {
 			LQQuestService questService = new LQQuestServiceImpl();
-			questList     = questService.getMasterQuestList(userId);
-			questListAll  = leaderService.getQuestMasterDetails(questListAll,renderRequest);
-			
+			questList = questService.getMasterQuestList(userId);
+			questListAll = leaderService.getQuestMasterDetails(questListAll,
+					renderRequest);
+
 			QuestViewBean questBean = new QuestViewBean();
 			if (questList.size() > 0) {
 				questBean.setFirstName(questListAll.get(0).getFirstName());
 				questBean.setPhotoURL(questListAll.get(0).getPhotoURL());
 				renderRequest.setAttribute("questBean", questBean);
 			}
-			
+
 			renderRequest.setAttribute("questMasterList", questList);
 			renderRequest.setAttribute("questListAll", questListAll);
-		
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 
 }

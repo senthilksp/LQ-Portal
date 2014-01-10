@@ -80,9 +80,7 @@ public class EditQuest extends MVCPortlet {
 
 		QuestMasterBean questMaster = null;
 		QuestTransactionBean transBean = null;
-		String fileLocation = File.separator
-				+ LQPortalConstants.portletLocatation + File.separator
-				+ LQPortalConstants.fileLocation;
+		String fileLocation = LQPortalConstants.LQ_FILE_LOCATION;
 		LQQuestService questService = new LQQuestServiceImpl();
 		Boolean transSaved = false;
 		Boolean masterSaved = true;
@@ -116,8 +114,7 @@ public class EditQuest extends MVCPortlet {
 				LQPortalUtil.uploadFile(path, uploadRequest, String.valueOf(id));
 				transBean = new QuestTransactionBean();
 				transBean.setId(id);
-				transBean.setQuestLocation(fileLocation + File.separator
-						+ fileName);
+				transBean.setQuestLocation(fileLocation + "/" + fileName);
 
 			}
 			

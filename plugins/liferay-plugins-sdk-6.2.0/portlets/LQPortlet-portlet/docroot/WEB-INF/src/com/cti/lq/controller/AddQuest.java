@@ -83,7 +83,7 @@ public class AddQuest extends MVCPortlet {
 		
 		QuestMasterBean questmaster = new QuestMasterBean();
 		List<QuestTransactionBean> qTransList = new ArrayList<QuestTransactionBean>();
-		String fileLocation = File.separator + LQPortalConstants.portletLocatation + File.separator + LQPortalConstants.fileLocation ;
+		String fileLocation = LQPortalConstants.LQ_FILE_LOCATION;
 		
 
 		try {
@@ -99,7 +99,7 @@ public class AddQuest extends MVCPortlet {
 						uploadRequest, "image_fileName");
 				QuestTransactionBean transBean = new QuestTransactionBean();
 				transBean.setQuestType(LQPortalConstants.IMAGE_TYPE);
-				transBean.setQuestLocation(fileLocation + File.separator + imageFileName);
+				transBean.setQuestLocation(fileLocation + "/" + imageFileName);
 				qTransList.add(transBean);
 				
 			}
@@ -108,7 +108,7 @@ public class AddQuest extends MVCPortlet {
 						uploadRequest, "audio_fileName");
 				QuestTransactionBean transBean = new QuestTransactionBean();
 				transBean.setQuestType(LQPortalConstants.AUDIO_TYPE);
-				transBean.setQuestLocation(fileLocation + File.separator +  audioFileName);
+				transBean.setQuestLocation(fileLocation + "/" +  audioFileName);
 				qTransList.add(transBean);
 				
 			}
@@ -117,7 +117,7 @@ public class AddQuest extends MVCPortlet {
 						uploadRequest, "video_fileName");
 				QuestTransactionBean transBean = new QuestTransactionBean();
 				transBean.setQuestType(LQPortalConstants.VIDEO_TYPE);
-				transBean.setQuestLocation(fileLocation + File.separator+ videoFileName);
+				transBean.setQuestLocation(fileLocation + "/"+ videoFileName);
 				qTransList.add(transBean);
 			}
 

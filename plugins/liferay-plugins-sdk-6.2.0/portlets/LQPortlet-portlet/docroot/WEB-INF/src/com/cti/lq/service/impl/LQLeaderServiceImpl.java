@@ -79,7 +79,7 @@ public class LQLeaderServiceImpl implements LQLeaderService  {
 		    LOG.info("Entering Leader Service-Layer");
 		
 		    LQLeaderDAO leaderDAO = new LQLeaderDAOImpl();
-		    questList = leaderDAO.getQuestMasterDetails(renderRequest, questList); 
+		    questList = leaderDAO.getQuestMasterDetails(renderRequest, questList);
 		
 		    return questList;
 	}
