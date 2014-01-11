@@ -56,7 +56,7 @@ function doCancel() {
 							<aui:validator name="minLength"> '2' </aui:validator>
 						</aui:input>
 					<aui:input label='<%=rb.getString("leader-view-portlet-biostatement")%>' name="biostatement" style="height:200px;width:500px"
-							required="true" id="biostatement" type="textarea" maxlength="60" value="${leaderBean.bioStatement}">
+							required="true" id="biostatement" type="textarea" maxlength="256" value="${leaderBean.bioStatement}">
 							<aui:validator name="minLength"> '10' </aui:validator>
 					</aui:input>	
 					<br> <img src="${leaderBean.photoURL}" alt=""></img> <br>
@@ -100,7 +100,6 @@ function doCancel() {
 						</aui:input>
 					<aui:input label='<%=rb.getString("leader-view-portlet-website")%>' name="website" id="website"
 							type="text" value="${leaderBean.website}" maxlength="60">
-							 <aui:validator name="minLength"> '2' </aui:validator>
 						</aui:input>
 					
 					<aui:button-row>

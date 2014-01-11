@@ -10,23 +10,47 @@
 <% String LQ_QUEST_DETAIL_EDIT_PAGE  = com.cti.lq.Constants.LQPortalConstants.LQ_QUEST_DETAIL_EDIT_PAGE; %>
 <% String LQ_LEADER_DETAIL_VIEW_PAGE = com.cti.lq.Constants.LQPortalConstants.LQ_LEADER_DETAIL_VIEW_PAGE; %>
 <% String LQ_LEADER_DETAIL_EDIT_PAGE = com.cti.lq.Constants.LQPortalConstants.LQ_LEADER_DETAIL_EDIT_PAGE; %>
+<% String LQ_QUEST_DETAIL_EDIT_FOR_UPLOAD = com.cti.lq.Constants.LQPortalConstants.LQ_QUEST_DETAIL_EDIT_FOR_UPLOAD; %>
 
 
 <% java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);%>
 
+<script type="text/javascript">
+$(document).ready(function () {
+	var pathname = window.location.pathname;
+
+	if(pathname.indexOf('leader') != -1){
+		$("#welcomediv").hide();
+	    $("#leaderdiv").show();
+	
+	} else {
+		   $("#welcomediv").show();
+		   $("#leaderdiv").hide();
+	}
+});
+
+</script>
+
 
 <portlet:defineObjects />
 	<div class="contentWrapper_lq" style="overflow: hidden" >
-			<br>
-				<div class="contentWrapper_lq" style="width: 50%; float: left; ">
-				 <h2>Welcome</h2> <br>
+	<br>
+		<div class="contentWrapper_lq" style="width: 50%; float: left; ">
+			<div id="welcomediv" >
+				 <h2><%=rb.getString("leader-welcome-msg1")%></h2> <br>
 						<ul style = "margin-left: 55px"> 
-						<li>See the Quests and Leaders Details. 
-						</li> <li>Each Quest have images, audios and videos.  </li> 
-						<li> Visit Leader pages to know about the leader.
-						</li> <li>Visit Quest Pages to see the audios and videos. </li> 
+							<li><%=rb.getString("leader-welcome-msg2")%> </li>
+							<li><%=rb.getString("leader-welcome-msg2")%> </li> 
+							<li><%=rb.getString("leader-welcome-msg3")%> </li> 
+							<li><%=rb.getString("leader-welcome-msg4")%> </li> 
+							<li><%=rb.getString("leader-welcome-msg5")%> </li>  
 						</ul>
 				  <br>
+				</div> 
+				 <div id="leaderdiv" > 
+					  <h2> <%=rb.getString("leader-welcome-msg6")%> </h2> <br>
+				 </div>
+				  
 				   <table>
 			<c:forEach items="${leaderList}" var="leader">
 			
@@ -39,7 +63,7 @@
 				    	 <li><a href='<%=LQ_QUEST_DETAIL_VIEW_PAGE%>?userId=${leader.userid}&questId=${quest.questId}'>${quest.questTitle}</a></li> 
 				    </c:if>
 				    <c:if test="${roleName eq 'LEADER' || roleName eq 'LEADER_ADMIN'}">
-				    	  <li><a href='<%=LQ_QUEST_DETAIL_EDIT_PAGE%>'>${quest.questTitle}</a></li> 
+				           <li><a href='<%=LQ_QUEST_DETAIL_EDIT_FOR_UPLOAD%>?userId=${leader.userid}&questId=${quest.questId}'>${quest.questTitle}</a></li> 
 				    </c:if>
 					</c:forEach>
 					</ul>

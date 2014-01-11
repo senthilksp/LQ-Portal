@@ -78,7 +78,7 @@
 							<br>
 							<input type="hidden" name="id1" id="<portlet:namespace />id1" />
 							<input type="file" name="${questTransaction.questTransId}"
-								id="${questTransaction.questTransId}" />
+								id="${questTransaction.questTransId}" accept="image/*"/>
 							<input type="button" id="btnEdit" name="btnEdit" value=<%=rb.getString("quest-edit-button-caption")%>
 								onclick="doSubmit('${questTransaction.questTransId}');" />
 							<input type="button" id="btnDelete" name="btnDelete" value=<%=rb.getString("quest-delete-button-caption")%>

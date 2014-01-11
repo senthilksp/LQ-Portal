@@ -12,6 +12,10 @@
 
 	<div class="contentWrapper_lq" style="overflow: hidden" >
 		<h2>Quest Details</h2> <br>
+		
+		<liferay-ui:success key="quest-added-successfully"
+		message='<%=rb.getString("quest-editquest-success-msg")%>' />
+		
 		<portlet:actionURL name="submitQuestLoginDetails" var="submitQuestLoginDetailsURL" />
 
 		<div class="contentWrapper_lq" style="width: 50%; float: left; overflow: hidden">
