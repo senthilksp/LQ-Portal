@@ -185,9 +185,14 @@ public class LQPortletServiceImpl implements LQPortletService {
 			}
 
 			renderRequest.setAttribute("questList", questList);
+			renderRequest.setAttribute("questId", questId);
+			renderRequest.setAttribute("userId", userId);
+			
 			if (questList.size() > 0) {
 				questBean.setFirstName(questList.get(0).getFirstName());
 				questBean.setPhotoURL(questList.get(0).getPhotoURL());
+				questBean.setQuest_title(questList.get(0).getQuest_title());
+				questBean.setDefinition(questList.get(0).getDefinition());
 				renderRequest.setAttribute("questBean", questBean);
 			}
 
@@ -204,9 +209,18 @@ public class LQPortletServiceImpl implements LQPortletService {
 
 		List<QuestMasterBean> questList = new ArrayList<QuestMasterBean>();
 		List<QuestViewBean> questListAll = new ArrayList<QuestViewBean>();
+		
+		List<QuestMasterBean> questListFiltered = new ArrayList<QuestMasterBean>();
+		List<QuestViewBean> questListAllFiltered = new ArrayList<QuestViewBean>();
 
 		int userId = LQPortalUserServiceUtil.getUserId(renderRequest);
 		questList = new ArrayList<QuestMasterBean>();
+		
+		HttpServletRequest httpRequest = PortalUtil
+				.getOriginalServletRequest(PortalUtil
+						.getHttpServletRequest(renderRequest));
+		
+		int questId = Integer.valueOf(httpRequest.getParameter("questId")); 
 
 		try {
 			LQQuestService questService = new LQQuestServiceImpl();
@@ -220,9 +234,22 @@ public class LQPortletServiceImpl implements LQPortletService {
 				questBean.setPhotoURL(questListAll.get(0).getPhotoURL());
 				renderRequest.setAttribute("questBean", questBean);
 			}
+			
+			for(QuestMasterBean qb:questList) {
+				if(qb.getQuestId() == questId) {
+					questListFiltered.add(qb);
+				}
+			}
+			
+			for(QuestViewBean qb1:questListAll) {
+				if(qb1.getQuest_id() == questId) {
+					questListAllFiltered.add(qb1);
+				}
+			}
 
-			renderRequest.setAttribute("questMasterList", questList);
-			renderRequest.setAttribute("questListAll", questListAll);
+			renderRequest.setAttribute("questMasterList", questListFiltered);
+			renderRequest.setAttribute("questListAll", questListAllFiltered);
+			renderRequest.setAttribute("questId", questId);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -230,5 +257,28 @@ public class LQPortletServiceImpl implements LQPortletService {
 		}
 
 	}
+
+	@Override
+	public void populateQuestListPortlet(RenderRequest renderRequest) {
+		LOG.info("Entering into populateQuestListPortlet");
+		
+		LQLeaderService leaderService = new LQLeaderServiceImpl();
+		LeaderBean leaderBean = new LeaderBean();
+		try {
+			int userId = LQPortalUserServiceUtil.getUserId(renderRequest);
+			renderRequest.setAttribute("userId", userId);
+			
+			leaderBean = leaderService.getLeaderDetails(leaderBean,
+					renderRequest);
+			renderRequest.setAttribute("leaderBean", leaderBean);
+
+		} catch (Exception le) {
+			le.printStackTrace();
+		}
+
+		
+		
+	}
+
 
 }

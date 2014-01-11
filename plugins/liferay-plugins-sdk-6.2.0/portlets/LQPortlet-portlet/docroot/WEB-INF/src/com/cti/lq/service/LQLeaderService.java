@@ -34,6 +34,7 @@ public interface LQLeaderService {
 	List<QuestViewBean> getQuestMasterDetails(List<QuestViewBean> questList,
 			RenderRequest renderRequest)throws SQLException;
 
+
 	
 
 }

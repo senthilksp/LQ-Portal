@@ -14,11 +14,13 @@ public interface LQQuestDAO {
 	Boolean saveQuestDetails(QuestMasterBean questmaster,
 			List<QuestTransactionBean> qTransList) throws SQLException;
 
-	Boolean saveQuestTransactions(List<QuestTransactionBean> qTransList, int userId) throws SQLException;
+	Boolean saveQuestTransactions(List<QuestTransactionBean> qTransList, int userId, int questId) throws SQLException;
 
 	Boolean updateQuestTransaction(QuestTransactionBean transBean) throws SQLException;
 
 	Boolean updateQuestMaster(QuestMasterBean questMaster) throws SQLException;
+
+	Boolean deleteQuestTransaction(int id1) throws SQLException;
 
 
 }

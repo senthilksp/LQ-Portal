@@ -138,23 +138,14 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 	
 	@Override
 	public Boolean saveQuestTransactions(List<QuestTransactionBean> qTransList,
-			int userId) throws SQLException {
+			int userId,int questId) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		int questId = 0;
 		int save1 = 0;
 
 		try {
 			con = DBConnectionFactory.getPostgresDBConnection();
-			ps = con.prepareStatement(QueryContants.getMaxQuestId.toString());
-			ps.setInt(1, userId);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				questId = rs.getInt(1);
-			}
-			ps.close();
-
 			if (qTransList.size() > 0) {
 				for (QuestTransactionBean qt : qTransList) {
 					ps = con.prepareStatement(QueryContants.insertQuestTrans);
@@ -245,6 +236,36 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 
 		} finally {
 			closeDBOperations(con, ps, rs);
+		}
+
+		if (save1 > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public Boolean deleteQuestTransaction(int id1) throws SQLException {
+		LOG.info("Entering into deleteQuestTransaction");
+		Connection con = null;
+		PreparedStatement ps = null;
+		int save1 = 0;
+		// set quest_title=?, definition=? where quest_id=?";
+
+		try {
+			con = DBConnectionFactory.getPostgresDBConnection();
+			ps = con.prepareStatement(QueryContants.deleteQuestTran.toString());
+			ps.setInt(1, id1);
+			save1 = ps.executeUpdate();
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			if (con != null)
+				con.close();
+
+		} finally {
+			closeDBOperations(con, ps, null);
 		}
 
 		if (save1 > 0) {

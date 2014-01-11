@@ -41,5 +41,7 @@ public interface LQPortletService {
 
 	public void populateQuestEditPortlet(RenderRequest renderRequest);
 
+	public void populateQuestListPortlet(RenderRequest renderRequest);
+
 
 }

@@ -26,7 +26,7 @@ public class LQPortalConstants {
 	public static final String LQ_QUEST_DETAIL_EDIT_PAGE =  "/web/guest/editquestpage"; 
 	public static final String LQ_LEADER_DETAIL_VIEW_PAGE = "/web/guest/leaderdetails-viewpage";
 	public static final String LQ_LEADER_DETAIL_EDIT_PAGE = "/web/guest/leaderdetails-editpage";
-	
+	public static final String LQ_QUEST_DETAIL_EDIT_FOR_UPLOAD = "/web/guest/questdetails-editpage";
 	
 	
 	public static final String portletLocatation = "LQPortlet-portlet";

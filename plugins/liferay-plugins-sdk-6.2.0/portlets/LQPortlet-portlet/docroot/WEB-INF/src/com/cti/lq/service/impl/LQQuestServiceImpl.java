@@ -33,9 +33,9 @@ public class LQQuestServiceImpl implements LQQuestService {
 	}
 
 	@Override
-	public Boolean saveQuestTransactions(List<QuestTransactionBean> qTransList,int userId) throws SQLException {
+	public Boolean saveQuestTransactions(List<QuestTransactionBean> qTransList,int userId,int questId) throws SQLException {
 		LQQuestDAO questDAO = new LQQuestDAOImpl();
- 		return questDAO.saveQuestTransactions(qTransList,userId);
+ 		return questDAO.saveQuestTransactions(qTransList,userId,questId);
 	}
 
 	@Override
@@ -56,6 +56,12 @@ public class LQQuestServiceImpl implements LQQuestService {
 			throws SQLException {
 		LQQuestDAO questDAO = new LQQuestDAOImpl();
 		return questDAO.updateQuestMaster(questMaster);
+	}
+
+	@Override
+	public Boolean deleteQuestTransaction(int id1) throws SQLException {
+		LQQuestDAO questDAO = new LQQuestDAOImpl();
+		return questDAO.deleteQuestTransaction(id1);
 	}
 
 }

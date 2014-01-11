@@ -91,6 +91,8 @@ public class QuestLogin extends MVCPortlet {
 			String audioFileName = uploadRequest.getFileName("audio_fileName");
 			String videoFileName = uploadRequest.getFileName("video_fileName");
 			
+			int questId = Integer.valueOf(uploadRequest.getParameter("quest_id"));
+			
 			if (! (imageFileName == null || "".equals(imageFileName))) {
 					LQPortalUtil.uploadFile(path,uploadRequest, "image_fileName");
 					QuestTransactionBean transBean = new QuestTransactionBean();
@@ -120,13 +122,13 @@ public class QuestLogin extends MVCPortlet {
 			int userId = LQPortalUserServiceUtil.getUserId(actionRequest);
 			
 			LQQuestService questService = new LQQuestServiceImpl();
-			Boolean isSaved = questService.saveQuestTransactions(qTransList,userId);
+			Boolean isSaved = questService.saveQuestTransactions(qTransList,userId,questId);
 			if(isSaved) {
 				SessionMessages.add(actionRequest, "quest-added-successfully");
 			} else {
 				SessionErrors.add(actionRequest, "quest-add-failed");
 			}
-			
+			actionResponse.sendRedirect(LQPortalConstants.LQ_QUEST_DETAILS_URL);
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}

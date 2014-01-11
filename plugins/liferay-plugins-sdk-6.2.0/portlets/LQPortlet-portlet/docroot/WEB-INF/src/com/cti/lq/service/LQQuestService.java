@@ -14,7 +14,7 @@ public interface LQQuestService {
 	Boolean saveQuestDetails(QuestMasterBean questmaster,
 			List<QuestTransactionBean> qTransList) throws SQLException;
 
-	Boolean saveQuestTransactions(List<QuestTransactionBean> qTransList,int UserId) throws SQLException;
+	Boolean saveQuestTransactions(List<QuestTransactionBean> qTransList,int UserId, int questId) throws SQLException;
 
 	List<QuestMasterBean> getMasterQuestList(int userId) throws SQLException;
 
@@ -22,5 +22,7 @@ public interface LQQuestService {
 
 
 	Boolean updateQuestMaster(QuestMasterBean questMaster) throws SQLException;
+
+	Boolean deleteQuestTransaction(int id1) throws SQLException;;
 
 }
