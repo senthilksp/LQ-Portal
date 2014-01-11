@@ -55,7 +55,7 @@ public class EditQuest extends MVCPortlet {
 			lqServiceLayer.populateQuestEditPortlet(renderRequest);
 
 		} catch (Exception le) {
-			LQPortalUtil.processException(le, renderRequest);
+			le.printStackTrace();
 		}
 
 		if (portletRequestDispatcher == null) {
@@ -81,7 +81,7 @@ public class EditQuest extends MVCPortlet {
 			} else {
 			   doUpdate(uploadRequest,actionRequest);
 			}
-			actionResponse.sendRedirect(LQPortalConstants.LQ_QUEST_DETAILS_URL);
+			
 			
 		}catch (Exception ex) {
 				ex.printStackTrace();

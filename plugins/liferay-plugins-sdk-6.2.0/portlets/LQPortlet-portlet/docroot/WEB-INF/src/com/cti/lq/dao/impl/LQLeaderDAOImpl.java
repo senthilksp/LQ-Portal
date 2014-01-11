@@ -12,6 +12,7 @@ import javax.portlet.RenderRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.cti.lq.Constants.LQPortalConstants;
 import com.cti.lq.Constants.QueryContants;
 import com.cti.lq.beans.LeaderBean;
 import com.cti.lq.beans.QuestMasterBean;
@@ -19,6 +20,8 @@ import com.cti.lq.beans.QuestViewBean;
 import com.cti.lq.dao.LQLeaderDAO;
 import com.cti.lq.persistence.DBConnectionFactory;
 import com.cti.lq.util.LQPortalUserServiceUtil;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.sql.PreparedStatement;
 
@@ -38,6 +41,8 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 
 		ResultSet rs1 = null;
 		ResultSet rs2 = null;
+		
+		Boolean accessMode = false;
 
 		StringBuffer leaderQuery = new StringBuffer(QueryContants.getAllLeaders);
 
@@ -56,6 +61,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 				ps2 = con.prepareStatement(questQuery.toString());
 				ps2.setInt(1, lb.getUserid());
 				rs2 = ps2.executeQuery();
+				String role = LQPortalUserServiceUtil.getRoleName(renderRequest);
 
 				while (rs2.next()) {
 					QuestMasterBean qb = new QuestMasterBean();
@@ -66,11 +72,19 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 					qb.setQuestId(rs2.getInt("quest_id"));
 					
 					if(qb.getAccessMode() || (qb.getAccessMode()==false && qb.getUserId()==signinUserId)) {
-						questList.add(qb);
+						accessMode = true;
+					}  
+					
+					if(role != null && role.equalsIgnoreCase(LQPortalConstants.LQ_LEADER_ADMIN)){
+						accessMode = true;
 					}
 					
+					if(accessMode) {
+						questList.add(qb);
+						accessMode = false;
+					}
 				}
-
+				
 				if (questList.size() > 0) {
 					lb.setQuestList(questList);
 				}
