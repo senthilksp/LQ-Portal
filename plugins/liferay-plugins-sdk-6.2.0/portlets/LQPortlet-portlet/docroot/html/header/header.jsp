@@ -7,34 +7,11 @@
 
 <script type="text/javascript">
 jQuery(document).ready(function() {
-	/* alert('inside');
-	
-	//var url1 = "http://crm.thecoaches.com/fmi-test/webcomp2_newFM/abletogetrecord.php?postkey=fjgh15t&em=ping@me.com";
-	var url1 = "http://127.0.0.1:8081/LQPortlet-portlet/lqfiles/check_leader.php";
-	
-	$.get(url1, function(data) {
-		alert(data[0]);
-		if (data[0] == '1') {
-		// login success
-		}
-		else {
-		// login fail
-		}
-		
-		
-		});
- */
 	
 });
 
 function doSubmit() {
    
-/* 	if(jQuery("input[name=questName]").val()=='' ) {
-		jQuery("#questname-error").show();
-	} else {
-		jQuery("#questname-error").hide();
-		//document.questForm.submit();
-	} */
 }
 
 </script>
@@ -51,6 +28,7 @@ function doSubmit() {
 	<%  String LQ_LEADER_ROLE 		      = com.cti.lq.Constants.LQPortalConstants.LQ_LEADER_ROLE; %>
 	<%  String LQ_LEADER_ADMIN_ROLE	      = com.cti.lq.Constants.LQPortalConstants.LQ_LEADER_ADMIN; %>
 	<%  String LQ_LEADER_DETAIL_VIEW_PAGE = com.cti.lq.Constants.LQPortalConstants.LQ_LEADER_DETAIL_VIEW_PAGE; %>
+	<%  String LQ_QUEST_DETAILS_PAGE      = com.cti.lq.Constants.LQPortalConstants.LQ_QUEST_DETAILS_URL; %>
 	
 
 <jsp:useBean id="LoggedUserBean" class="com.cti.lq.beans.LoggedUserBean"
@@ -69,7 +47,7 @@ function doSubmit() {
 		</c:if>
 		<c:if test="${roleName eq 'LEADER' || roleName eq 'LEADER_ADMIN'}">
 			<li class="level-1" id="nav-sub-leadership"><a
-			href='<%=LQ_QUEST_DETAIL_EDIT_PAGE%>'><%=rb.getString("header-portlet-Quest")%></a></li>
+			href='<%=LQ_QUEST_DETAILS_PAGE%>'><%=rb.getString("header-portlet-Quest")%></a></li>
 	    </c:if>
 		
 		<c:if test="${roleName == null}">
