@@ -44,8 +44,8 @@ function doSubmit() {
 				<input type="text" name="<portlet:namespace />questDefinition" class="required" id="<portlet:namespace />questDefinition" > <br>
 				
 				<%=rb.getString("quest-addquest-accessmode")%>
-				<input type="radio"name= "<portlet:namespace />accessMode" value="Public" checked="checked" /> Public 
-				<input type="radio"name= "<portlet:namespace />accessMode" value="Public"  /> Private <br><br><br>
+				<input type="radio"name= "<portlet:namespace />accessMode" value="PUBLIC" checked="checked" /> Public 
+				<input type="radio"name= "<portlet:namespace />accessMode" value="PRIVATE"  /> Private <br><br><br>
 				
 				<%=rb.getString("quest-addquest-image-type")%><br>
 				<input type="file" name="<portlet:namespace />image_fileName" /> <br><br><br>

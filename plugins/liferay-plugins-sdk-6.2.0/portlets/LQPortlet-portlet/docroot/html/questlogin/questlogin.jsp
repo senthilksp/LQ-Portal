@@ -27,7 +27,6 @@
 			 <h5> Quest Pictures </h5>
 			 <c:forEach items="${questList}" var="quest">
 				<c:if test="${quest.questType eq 'IMAGE'}">
-				    <br><br>
 					<img src="${quest.questLocation}" alt=""></img>
 				</c:if>
 			  </c:forEach>
@@ -39,14 +38,14 @@
 					<c:if test="${quest.questType eq 'AUDIO'}">
 						<br><br>
 						 <video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="264"
-								      poster="/LQTheme-theme/images/cti/bkgds/oceans-clip.png"
+								      poster=""
 								      data-setup="{{}}">
 								    <source src="${quest.questLocation}" type='video/mp4' />
 								  </video>
 					</c:if>
 				</c:forEach>
 				<input type="file" name="<portlet:namespace />audio_fileName" />
-				<input type="hidden" name="<portlet:namespace />quest_id" id="<portlet:namespace />quest_id" value ="${quest.quest_id}" />
+				<input type="hidden" name="<portlet:namespace />quest_id" id="<portlet:namespace />quest_id" value ="${questId}" />
 				<input type="submit" id="btnSubmit2" name="btnSubmit2" value='Upload' />	
 					
 				<br><br><h5> Quest Videos </h5>
@@ -54,18 +53,18 @@
 					<c:if test="${quest.questType eq 'VIDEO'}">
 						<br><br>
 						 <video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="264"
-								      poster="/LQTheme-theme/images/cti/bkgds/oceans-clip.png"
+								      poster=""
 								      data-setup="{{}}">
 								    <source src="${quest.questLocation}" type='video/mp4' />
 								  </video>
 					</c:if>
                   </c:forEach>
                   <input type="file" name="<portlet:namespace />video_fileName" />
-                 	<input type="hidden" name="<portlet:namespace />quest_id" id="<portlet:namespace />quest_id" value ="${quest.quest_id}" />
                   <input type="submit" id="btnSubmit3" name="btnSubmit3" value='upload' />
                   
 			   <br><br>
-			   <a href='/web/guest/editQuestPage'>Edit Quest></a>
+			 
+			   <a href='/web/guest/editQuestPage?userId=${userId}&questId=${questId}'>EditQuest</a>
 			  <a href='/web/guest/addQuestPage'><%=rb.getString("quest-addquest-link-caption")%></a>  <br><br>
 		</div>
 	</form>

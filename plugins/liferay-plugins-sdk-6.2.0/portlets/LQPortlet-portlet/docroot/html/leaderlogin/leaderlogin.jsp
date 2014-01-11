@@ -45,70 +45,62 @@ function doCancel() {
 		<div class="contentWrapper_lq"style="width: 60%; float: left; height:1250px;" >	
 					<div style="margin:0px 0px 0px 20px;">
 					<%=rb.getString("leader-view-portlet-firstname")%><aui:input label= "" name="firstname" min="2"
-							max="60" id="firstname" type="text" required="true"  
+							max="60" id="firstname" type="text" maxlength="60" required="true"  
 							value="${leaderBean.firstname}">
 							<aui:validator name="minLength"> '2' </aui:validator>
-							<aui:validator name="maxLength"> '60' </aui:validator>
 					</aui:input>
 					
 					<aui:input label='<%=rb.getString("leader-view-portlet-lastname")%>' name="lastname" min="2"
-							required="true" max="60" id="lastname" type="text"
+							required="true" max="60" id="lastname" type="text" maxlength="60"
 							value="${leaderBean.lastname}">
 							<aui:validator name="minLength"> '2' </aui:validator>
-							<aui:validator name="maxLength"> '60' </aui:validator>
 						</aui:input>
 					<aui:input label='<%=rb.getString("leader-view-portlet-biostatement")%>' name="biostatement" style="height:200px;width:500px"
-							required="true" id="biostatement" type="textarea" value="${leaderBean.bioStatement}">
+							required="true" id="biostatement" type="textarea" maxlength="60" value="${leaderBean.bioStatement}">
 							<aui:validator name="minLength"> '10' </aui:validator>
-							<aui:validator name="maxLength"> '256' </aui:validator>
 					</aui:input>	
 					<br> <img src="${leaderBean.photoURL}" alt=""></img> <br>
 					
 					<aui:input label='<%=rb.getString("leader-login-portlet-photoURL")%>' name="photourl" min="2" max="60"
-							style="width:300px" id="firstname" type="text" required="true"
+							style="width:300px" id="firstname" type="text" required="true" maxlength="60"
 							value="${leaderBean.photoURL}">
 							<aui:validator name="minLength"> '2' </aui:validator>
-							<aui:validator name="maxLength"> '60' </aui:validator>
 					</aui:input>
 						<input id="image-file" type="file" />
 					<aui:input label='<%=rb.getString("leader-view-portlet-facultyrole")%>' name="facultyrole"
-							required="true" id="facultyrole" type="text"
+							required="true" id="facultyrole" type="text" maxlength="30"
 							value="${leaderBean.facultyRole}">
 							<aui:validator name="minLength"> '2' </aui:validator>
-						    <aui:validator name="maxLength"> '30' </aui:validator>	
 					</aui:input>
-					<aui:input label='<%=rb.getString("leader-view-portlet-primaryphone")%>' name="primaryphone"
-							required="true" min="10" max="11" id="primaryphone" type="text"
+					<aui:input label='<%=rb.getString("leader-view-portlet-primaryphone")%>' name="primaryphone" mask="9999999999"
+							min="10" max="11" id="primaryphone" type="text" maxlength="11" 
 							value="${leaderBean.primaryPhone}">
 							<aui:validator name="minLength"> '10' </aui:validator>
-							<aui:validator name="maxLength"> '11' </aui:validator>	
+							<aui:validator name="required">  </aui:validator>
+						    <aui:validator name="digits">  </aui:validator>
 						</aui:input>
 					<aui:input label='<%=rb.getString("leader-view-portlet-businessname")%>' name="businessname"
-							required="true" id="businessname" type="text"
+							required="true" id="businessname" type="text" maxlength="150"
 							value="${leaderBean.businessName}">
 							<aui:validator name="minLength"> '2' </aui:validator>
-							<aui:validator name="maxLength"> '150' </aui:validator>
 						</aui:input>
 					<aui:input label = '<%=rb.getString("leader-view-portlet-emailaddress")%>' name="emailaddress" id="emailaddress" 
-					               type="text" value="${leaderBean.emailAddress}"  required="true">
+					               type="text" value="${leaderBean.emailAddress}" maxlength="60" required="true">
 					     <aui:validator name="minLength"> '2' </aui:validator>
-						 <aui:validator name="maxLength"> '60' </aui:validator>           
-					    <aui:validator name="email" />
+					     <aui:validator name="email" />
 					    </aui:input>
 					<aui:input label='<%=rb.getString("leader-view-portlet-city")%>' name="city" id="city" type="text"
-							required="true" value="${leaderBean.city}">
+							   value="${leaderBean.city}" maxlength="30">
 							 <aui:validator name="minLength"> '2' </aui:validator>
-							 <aui:validator name="maxLength"> '30' </aui:validator> 
+							 <aui:validator name="required" />
 						</aui:input>
 					<aui:input label='<%=rb.getString("leader-view-portlet-country")%>' name="country" id="country"
-							required="true" type="text" value="${leaderBean.country}">
+							required="true" type="text" value="${leaderBean.country}" maxlength="60">
 							 <aui:validator name="minLength"> '2' </aui:validator>
-							 <aui:validator name="maxLength"> '30' </aui:validator> 
 						</aui:input>
 					<aui:input label='<%=rb.getString("leader-view-portlet-website")%>' name="website" id="website"
-							type="text" value="${leaderBean.website}">
+							type="text" value="${leaderBean.website}" maxlength="60">
 							 <aui:validator name="minLength"> '2' </aui:validator>
-							 <aui:validator name="maxLength"> '30' </aui:validator> 
 						</aui:input>
 					
 					<aui:button-row>

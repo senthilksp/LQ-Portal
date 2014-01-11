@@ -10,33 +10,33 @@
 	scope="request" />
 
 <script type="text/javascript">
-$(document).ready(function () {
-	$("#viewDiv").show();
-	$("#editDiv").hide();
+	$(document).ready(function() {
+
+	});
+
+	function doSubmit(x) {
+		jQuery("input[name=id1]").val(x);
+		document.<portlet:namespace />questForm.submit();
+	}
 	
-});
-
-function divShow()  {
-	$("#viewDiv").hide();
-	$("#editDiv").show();
-	
-}
-
-function doSubmit(x) {
-		jQuery("input[name=id1]").val(x); 
-	    document.<portlet:namespace />questForm.submit();
-}
-
+	function doDelete(x) {
+		jQuery("input[name=id1]").val(x);
+		jQuery("input[name=delId]").val("DELETE");
+		document.<portlet:namespace />questForm.submit();
+	}
 </script>
 
-<%java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);%>
+<%
+	java.util.ResourceBundle rb = LQPortalUtil
+			.getResourceBundle(request);
+%>
 
-<div style="overflow: hidden" class="contentWrapper_lq" id="editDiv">
-	<h2 style="margin-left: 20px">Edit Quest</h2>
+<div style="overflow: hidden" class="contentWrapper_lq" >
 	<br>
 	<div class="contentWrapper_lq"
 		style="width: 50%; float: left; overflow: hidden">
-		<img src="${questBean.photoURL}" alt="" style="margin-left: 20px"></img>
+		<br> <img src="${questBean.photoURL}" alt=""
+			style="margin-left: 20px"></img>
 		<p style="margin-left: 20px">${questBean.firstName}</p>
 	</div>
 
@@ -52,21 +52,25 @@ function doSubmit(x) {
 
 		<div class="contentWrapper_lq"
 			style="width: 50%; float: right; overflow: hidden">
+			<h2>Edit Quest</h2>
 			<c:forEach items="${questMasterList}" var="questMaster">
 				<br>
-				<input type="text" name="questName"
+				Quest Title : <br>
+				<input type="text" name="questName" required="required"
 					id="<portlet:namespace />questName"
 					value="${questMaster.questTitle}">
 				<br>
-				<input type="text" name="questDefinition"
+				Quest Definition : <br>
+				<input type="text" name="questDefinition" required="required"
 					id="<portlet:namespace />questDefinition"
 					value="${questMaster.questDefinition}">
 				<input type="hidden" name="questId"
 					id="<portlet:namespace />questId" value="${questMaster.questId}">
 
-				<input type="submit" id="btnEdit" name="btnEdit" value='Edit' />
+				<input type="submit" id="btnEdit" name="btnEdit" value=<%=rb.getString("quest-edit-button-caption")%> />
 				<c:forEach items="${questListAll}" var="questTransaction">
 					<c:if test="${questMaster.questId == questTransaction.quest_id}">
+						<input type="hidden" name="delId" id="<portlet:namespace />delId" />
 						<c:if test="${questTransaction.questType eq 'IMAGE'}">
 							<br>
 							<br>
@@ -75,92 +79,52 @@ function doSubmit(x) {
 							<input type="hidden" name="id1" id="<portlet:namespace />id1" />
 							<input type="file" name="${questTransaction.questTransId}"
 								id="${questTransaction.questTransId}" />
-							<input type="button" id="btnEdit" name="btnEdit" value='Edit'
+							<input type="button" id="btnEdit" name="btnEdit" value=<%=rb.getString("quest-edit-button-caption")%>
 								onclick="doSubmit('${questTransaction.questTransId}');" />
+							<input type="button" id="btnDelete" name="btnDelete" value=<%=rb.getString("quest-delete-button-caption")%>
+								onclick="doDelete('${questTransaction.questTransId}');" />	
 						</c:if>
 						<c:if test="${questTransaction.questType eq 'AUDIO'}">
 							<video id="lq_video" class="video-js vjs-default-skin" controls
 								preload="none" width="300" height="264"
-								poster="/LQTheme-theme/images/cti/bkgds/oceans-clip.png"
+								poster=""
 								data-setup="{{}}">
 								<source src="${questTransaction.questLocation}" type='video/mp4' />
 							</video>
 							<input type="hidden" name="id1" id="<portlet:namespace />id1" />"
-							<input type="file" name="<portlet:namespace />audio_fileName"
-								id="<portlet:namespace />audio_fileName" />
-							<input type="button" id="btnEdit" name="btnEdit" value='Edit'
+							<input type="file" name="${questTransaction.questTransId}"
+								id="${questTransaction.questTransId}" />
+							<input type="button" id="btnEdit" name="btnEdit" value=<%=rb.getString("quest-edit-button-caption")%>
 								onclick="doSubmit('${questTransaction.questTransId}');" />
+							<input type="button" id="btnDelete" name="btnDelete" value=<%=rb.getString("quest-delete-button-caption")%>
+								onclick="doSubmit('${questTransaction.questTransId}'');" />		
 						</c:if>
 						<c:if test="${questTransaction.questType eq 'VIDEO' }">
 							<br>
 							<br>
 							<video id="lq_video" class="video-js vjs-default-skin" controls
 								preload="none" width="300" height="264"
-								poster="/LQTheme-theme/images/cti/bkgds/oceans-clip.png"
+								poster=""
 								data-setup="{{}}">
 								<source src="${questTransaction.questLocation}" type='video/mp4' />
 							</video>
-							<input type="file" name="<portlet:namespace />video_fileName"
-								id="<portlet:namespace />video_fileName" />
-							<input type="button" id="btnEdit" name="btnEdit" value='Edit'
+							<input type="file" name="${questTransaction.questTransId}"
+								id="${questTransaction.questTransId}" />
+							<input type="button" id="btnEdit" name="btnEdit" value=<%=rb.getString("quest-edit-button-caption")%>
 								onclick="doSubmit('${questTransaction.questTransId}');" />
+							<input type="button" id="btnDelete" name="btnDelete" value=<%=rb.getString("quest-delete-button-caption")%>
+								onclick="doSubmit('${questTransaction.questTransId}');" />		
 							<br>
 							<br>
 							<br>
 						</c:if>
-
 					</c:if>
 				</c:forEach>
-				<br>
-				<br>
-				<br>
+				<h2></h2>
 			</c:forEach>
-		</div>
+			<a href='/web/guest/addQuestPage'><%=rb.getString("quest-addquest-link-caption")%></a>  <br>
+		</div><br>
 	</form>
 </div>
 
 
-<div style="overflow: hidden" class="contentWrapper_lq" id="viewDiv">
-	<h2 style="margin-left: 20px">Edit Quest</h2>
-	<br>
-	<input type="button" id="editbtn" name="editbtn" value='Edit-Mode'
-			onclick="divShow();" style = "float: right;"/> 
-			<br> <br>
-		
-	<div class="contentWrapper_lq"
-		style="width: 50%; float: left; overflow: hidden">
-			<img src="${questBean.photoURL}" alt=""
-			style="margin-left: 20px"></img>
-		<p style="margin-left: 20px">${questBean.firstName}</p>
-	</div>
-
-	<div class="contentWrapper_lq"
-		style="width: 50%; float: right; overflow: hidden">
-		<c:forEach items="${questMasterList}" var="questMaster">
-			<br>
-			<input type="text" readonly="readonly" name="questName"
-				value="${questMaster.questTitle}">
-			<br>
-			<input type="text" name="questDefinition"
-				value="${questMaster.questDefinition}" readonly="readonly">
-
-			<c:forEach items="${questListAll}" var="questTransaction">
-				<c:if test="${questMaster.questId == questTransaction.quest_id}">
-					<c:if test="${questTransaction.questType eq 'IMAGE'}">
-						<img src="${questTransaction.questLocation}" alt=""></img>
-						<br>
-					</c:if>
-					<c:if
-						test="${questTransaction.questType eq 'VIDEO' || questTransaction.questType eq 'AUDIO'}">
-						<video id="lq_video" class="video-js vjs-default-skin" controls
-							preload="none" width="300" height="264"
-							poster="/LQTheme-theme/images/cti/bkgds/oceans-clip.png"
-							data-setup="{{}}">
-							<source src="${questTransaction.questLocation}" type='video/mp4' />
-						</video>
-					</c:if>
-				</c:if>
-			</c:forEach>
-		</c:forEach>
-	</div>
-</div>

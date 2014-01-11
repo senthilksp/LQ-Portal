@@ -1,3 +1,4 @@
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="/WEB-INF/tld/liferay-ui.tld" prefix="liferay-ui"%>
@@ -16,10 +17,15 @@
 
 <portlet:defineObjects />
 	<div class="contentWrapper_lq" style="overflow: hidden" >
-		<h2><%=rb.getString("leader-no-login-portlet-heading")%></h2>
 			<br>
 				<div class="contentWrapper_lq" style="width: 50%; float: left; ">
-				  <h3> Welcome to Leadership Quest </h3>
+				 <h2>Welcome</h2> <br>
+						<ul style = "margin-left: 55px"> 
+						<li>See the Quests and Leaders Details. 
+						</li> <li>Each Quest have images, audios and videos.  </li> 
+						<li> Visit Leader pages to know about the leader.
+						</li> <li>Visit Quest Pages to see the audios and videos. </li> 
+						</ul>
 				  <br>
 				   <table>
 			<c:forEach items="${leaderList}" var="leader">
@@ -49,7 +55,8 @@
 				</div>
 				<div class="contentWrapper_lq" style="width: 50%; float: right; overflow: hidden" >
 					<!-- AddThis Button BEGIN -->
-					<a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=ra-52ce7b2b414da24b"><img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a>
+					<a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=ra-52ce7b2b414da24b">
+					<img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a>
 				    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
 					<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52ce7b2b414da24b"></script>
 				<!-- AddThis Button END -->
