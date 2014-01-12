@@ -82,7 +82,7 @@ input[type="color"],
   height: $baseLineHeight;
   padding: 4px 6px;
   margin-bottom: $baseLineHeight / 2;;
-  font-size: $baseFontSize;
+  font-size: 12px;
   line-height: $baseLineHeight;
   color: $gray;
   @include border-radius($inputBorderRadius);
