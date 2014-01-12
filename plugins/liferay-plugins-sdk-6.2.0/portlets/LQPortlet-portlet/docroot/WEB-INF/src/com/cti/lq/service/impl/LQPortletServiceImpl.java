@@ -103,12 +103,23 @@ public class LQPortletServiceImpl implements LQPortletService {
 			RenderRequest renderRequest) throws LQPortalException {
 		LOG.info("Entering into populateLeaderNoLoginPortlet");
 		LQLeaderService leaderService = new LQLeaderServiceImpl();
-
+		List<LeaderBean> leaderList1 = new ArrayList<LeaderBean>();
+		List<LeaderBean> leaderList2 = new ArrayList<LeaderBean>();
+		
 		try {
 			String role = LQPortalUserServiceUtil.getRoleName(renderRequest);
 			
 			leaderList = leaderService.getLeaderList(leaderList, renderRequest);
 			renderRequest.setAttribute("leaderList", leaderList);
+			
+			// add the first half of players to teamRed
+			leaderList1.addAll(leaderList.subList(0, leaderList.size() / 2 + leaderList.size()%2));
+			// and the second half to teamBlue
+			leaderList2.addAll(leaderList.subList(leaderList.size() / 2 + leaderList.size()%2, leaderList.size()));
+			
+			renderRequest.setAttribute("leaderList1", leaderList1);
+			renderRequest.setAttribute("leaderList2", leaderList2);
+			
 			renderRequest.setAttribute("roleName", role);
 			renderRequest.setAttribute("userId", LQPortalUserServiceUtil.getUserId(renderRequest));
 
@@ -151,6 +162,7 @@ public class LQPortletServiceImpl implements LQPortletService {
 			leaderBean = leaderService.getLeaderDetails(leaderBean,
 					renderRequest);
 			renderRequest.setAttribute("leaderBean", leaderBean);
+			renderRequest.setAttribute("roleName", role);
 			renderRequest.setAttribute("userId", httpRequest.getParameter("userId"));
 
 		} catch (Exception le) {
