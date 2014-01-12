@@ -79,6 +79,7 @@ public class LQPortletServiceImpl implements LQPortletService {
 					renderRequest);
 			renderRequest.setAttribute("leaderBean", leaderBean);
 			renderRequest.setAttribute("isLeader", isLeader);
+			renderRequest.setAttribute("userId", leaderBean.getUserid());
 
 		} catch (Exception le) {
 			throw new LQPortalException(le.getMessage());
@@ -104,8 +105,12 @@ public class LQPortletServiceImpl implements LQPortletService {
 		LQLeaderService leaderService = new LQLeaderServiceImpl();
 
 		try {
+			String role = LQPortalUserServiceUtil.getRoleName(renderRequest);
+			
 			leaderList = leaderService.getLeaderList(leaderList, renderRequest);
 			renderRequest.setAttribute("leaderList", leaderList);
+			renderRequest.setAttribute("roleName", role);
+			renderRequest.setAttribute("userId", LQPortalUserServiceUtil.getUserId(renderRequest));
 
 		} catch (Exception ex) {
 			throw new LQPortalException(ex.getMessage());

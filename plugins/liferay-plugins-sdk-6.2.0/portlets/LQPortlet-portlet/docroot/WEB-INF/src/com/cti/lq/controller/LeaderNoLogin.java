@@ -58,13 +58,9 @@ public class LeaderNoLogin extends MVCPortlet {
 		List<LeaderBean> leaderList = new ArrayList<LeaderBean>();
 		
 		LQPortletService lqServiceLayer = new LQPortletServiceImpl();
-		String role = LQPortalUserServiceUtil.getRoleName(renderRequest);
-		
 		try {
 			lqServiceLayer.populateLeaderNoLoginPortlet(leaderList, renderRequest);
-			renderRequest.setAttribute("roleName", role);
-			LOG.info("RoleName=========" + role);
-		
+			
 		} catch (LQPortalException le) {
 			LQPortalUtil.processException(le, renderRequest);
 		}

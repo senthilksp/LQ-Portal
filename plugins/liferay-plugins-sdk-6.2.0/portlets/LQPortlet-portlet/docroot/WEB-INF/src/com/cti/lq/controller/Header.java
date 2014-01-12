@@ -48,6 +48,8 @@ public class Header extends MVCPortlet {
 		renderRequest.setAttribute("isSignedIn", lbean.getIsSignedIn());
 		renderRequest.setAttribute("LoggedUserBean", lbean);
 		renderRequest.setAttribute("roleName", role);
+		
+		LOG.info("roleName------------->"+role);
 
 		PortletRequestDispatcher portletRequestDispatcher = getPortletContext()
 				.getRequestDispatcher(viewJSP);

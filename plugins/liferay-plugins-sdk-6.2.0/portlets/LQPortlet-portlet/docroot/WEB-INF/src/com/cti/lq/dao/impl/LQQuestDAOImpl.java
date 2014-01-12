@@ -93,6 +93,8 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 		LOG.info("insQuery" + insQuery);
 		try {
 			con = DBConnectionFactory.getPostgresDBConnection();
+			con.setAutoCommit(false);
+			
 			ps = con.prepareStatement(insQuery.toString());
 			ps.setString(1, questmaster.getQuestTitle());
 			ps.setBoolean(2, questmaster.getAccessMode());
@@ -119,7 +121,8 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 					save2 = ps.executeUpdate();
 				}
 			}
-
+			
+			con.commit();
 		} catch (Exception ex) {
 			if (con != null)
 				con.close();

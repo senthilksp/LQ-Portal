@@ -65,7 +65,8 @@ public class AddQuest extends MVCPortlet {
 			renderRequest.setAttribute("roleName", role);
 
 		} catch (LQPortalException le) {
-			LQPortalUtil.processException(le, renderRequest);
+			le.printStackTrace();
+			//LQPortalUtil.processException(le, renderRequest);
 		}
 
 		if (portletRequestDispatcher == null) {
