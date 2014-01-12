@@ -14,13 +14,14 @@ jQuery(document).ready(function() {
 });
 
 function doSubmit() {
-   
-/* 	if(jQuery("input[name=questName]").val()=='' ) {
+ 	if(jQuery("input[name=image_fileName]").val()== null && 
+ 			jQuery("input[name=audio_fileName]").val()==null &&  
+ 			jQuery("input[name=video_fileName]").val()==null) {
 		jQuery("#questname-error").show();
 	} else {
 		jQuery("#questname-error").hide();
-		//document.questForm.submit();
-	} */
+		document.questForm.submit();
+	} 
 }
 
 </script>
@@ -37,15 +38,16 @@ function doSubmit() {
 			<br>
 			<div style="margin:0px 0px 0px 20px;">
 				<%=rb.getString("quest-addquest-name")%> &nbsp;&nbsp;&nbsp;
-				<input type="text" name="questName"  id="<portlet:namespace />questName" > 
-				<span style="color: red; font: 12px/14px Arial" id="questname-error">This field is required</span>
+				<input type="text" name="questName"  id="<portlet:namespace />questName" required="required"> 
 				
 				<br><%=rb.getString("quest-addquest-definition")%>
-				<input type="text" name="<portlet:namespace />questDefinition" class="required" id="<portlet:namespace />questDefinition" > <br>
+				<input type="text" name="<portlet:namespace />questDefinition" required="required" id="<portlet:namespace />questDefinition" > <br>
 				
 				<%=rb.getString("quest-addquest-accessmode")%>
 				<input type="radio"name= "<portlet:namespace />accessMode" value="PUBLIC" checked="checked" /> Public 
-				<input type="radio"name= "<portlet:namespace />accessMode" value="PRIVATE"  /> Private <br><br><br>
+				<input type="radio"name= "<portlet:namespace />accessMode" value="PRIVATE"  /> Private <br><br>
+				
+				<span style="color: red; font: 12px/14px Arial" id="questname-error">Either Audio or Video Or Image Should be Selected</span> <br> 
 				
 				<%=rb.getString("quest-addquest-image-type")%><br>
 				<input type="file" name="<portlet:namespace />image_fileName" /> <br><br><br>
@@ -55,7 +57,7 @@ function doSubmit() {
 				
 				<%=rb.getString("quest-addquest-video-type")%><br>
 				<input type="file" name="<portlet:namespace />video_fileName" /> <br><br><br>
-				<input type="submit" id="btnSubmit" name="btnSubmit" value='<%=rb.getString("quest-addquest-btn-save")%>' />
+				<input type="button" id="btnSubmit" name="btnSubmit" value='<%=rb.getString("quest-addquest-btn-save")%>' onclick="doSubmit();" />
 				<br>
 		</div>	 
 		</form>

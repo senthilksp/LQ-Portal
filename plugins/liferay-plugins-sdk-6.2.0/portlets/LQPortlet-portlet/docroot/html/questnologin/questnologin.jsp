@@ -7,18 +7,14 @@
 <portlet:defineObjects />
 	
 <div style="overflow: hidden" class="contentWrapper_lq">
-	<h2>Quest Details</h2>
+	<h2 style="width:50%">Quest Details</h2>
 	<br> 
 	
 	<!-- AddThis Button BEGIN -->
-		<div class="addthis_toolbox addthis_default_style ">
-		<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-		<a class="addthis_button_tweet"></a>
-		<a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
-		<a class="addthis_counter addthis_pill_style"></a>
-		</div>
-		<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
-		<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52ce7b2b414da24b"></script>
+					<a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=ra-52ce7b2b414da24b">
+					<img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a>
+				    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+					<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52ce7b2b414da24b"></script>
 	<!-- AddThis Button END -->
 	
 	<table>

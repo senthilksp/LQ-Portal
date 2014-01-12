@@ -23,7 +23,12 @@
 		jQuery("input[name=id1]").val(x);
 		jQuery("input[name=delId]").val("DELETE");
 		document.<portlet:namespace />questForm.submit();
-	}
+	}	
+	
+	function btnMasterSave() {
+		jQuery("input[name=delId]").val("MASTER");
+		document.<portlet:namespace />questForm.submit();
+	}	
 </script>
 
 <%
@@ -67,7 +72,7 @@
 				<input type="hidden" name="questId"
 					id="<portlet:namespace />questId" value="${questMaster.questId}">
 
-				<input type="submit" id="btnEdit" name="btnEdit" value=<%=rb.getString("quest-edit-button-caption")%> />
+				<input type="submit" id="btnMasterSave" name="btnMasterSave" value=<%=rb.getString("quest-edit-button-caption")%> onclick="doMasterSave();" />
 				<c:forEach items="${questListAll}" var="questTransaction">
 					<c:if test="${questMaster.questId == questTransaction.quest_id}">
 						<input type="hidden" name="delId" id="<portlet:namespace />delId" />

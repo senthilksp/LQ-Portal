@@ -13,7 +13,7 @@
 <% String LQ_LEADER_DETAIL_EDIT_PAGE = com.cti.lq.Constants.LQPortalConstants.LQ_LEADER_DETAIL_EDIT_PAGE; %>	
 
 	<div class="contentWrapper_lq">
-		<h2><%=rb.getString("leader-view-portlet-heading")%></h2>
+		<h2 style="width:50%"><%=rb.getString("leader-view-portlet-heading")%></h2>
 		<table>
 		<tr> <td width="40%"><img src="${leaderBean.photoURL}" alt="" ></img> </td> </tr>
 		<tr> <td> <b><%=rb.getString("leader-view-portlet-name")%> </b> : </td> <td> ${leaderBean.firstname}  </td> </tr>

@@ -59,12 +59,19 @@ $(document).ready(function () {
 					<td>
 					<ul>
 					<c:forEach items="${leader.questList}" var="quest">
-					    <c:if test="${roleName == null}">
-				    	 <li><a href='<%=LQ_QUEST_DETAIL_VIEW_PAGE%>?userId=${leader.userid}&questId=${quest.questId}'>${quest.questTitle}</a></li> 
-				    </c:if>
-				    <c:if test="${roleName eq 'LEADER' || roleName eq 'LEADER_ADMIN'}">
+					    <c:if test="${roleName eq 'LEADER_ADMIN'}">
 				           <li><a href='<%=LQ_QUEST_DETAIL_EDIT_FOR_UPLOAD%>?userId=${leader.userid}&questId=${quest.questId}'>${quest.questTitle}</a></li> 
-				    </c:if>
+				    	</c:if>
+					    <c:if test="${roleName == null}">
+				    	 	<li><a href='<%=LQ_QUEST_DETAIL_VIEW_PAGE%>?userId=${leader.userid}&questId=${quest.questId}'>${quest.questTitle}</a></li> 
+				    	</c:if>
+				     	<c:if test="${roleName eq 'LEADER' && quest.userId != userId}">
+							<li><a href='<%=LQ_QUEST_DETAIL_VIEW_PAGE%>?userId=${leader.userid}&questId=${quest.questId}'>${quest.questTitle}</a></li>
+						</c:if>
+					
+						<c:if test="${roleName eq 'LEADER' && quest.userId == userId}">
+							 <li><a href='<%=LQ_QUEST_DETAIL_EDIT_FOR_UPLOAD%>?userId=${leader.userid}&questId=${quest.questId}'>${quest.questTitle}</a></li>
+						</c:if>					    
 					</c:forEach>
 					</ul>
 				</tr>
