@@ -35,10 +35,10 @@
 						</ul> </td>
 					<td> 
 					 <c:if test="${roleName == null}">
-				    	<a href="/web/guest/leaderdetails-viewpage?userId=${leader.userid}">${leader.firstname}</a> 
+				    	<a href="/web/guest/leaderdetails-viewpage?userId=${leader.userid}">${leader.firstname}${leader.lastname}</a> 
 				    </c:if>
 				    <c:if test="${roleName eq 'LEADER' || roleName eq 'LEADER_ADMIN'}">
-				    	<a href="/web/guest/leaerdetails-editpage">${leader.firstname}</a> 
+				    	<a href="/web/guest/leaerdetails-editpage">${leader.firstname} ${leader.lastname}</a> 
 				    </c:if>	
 					</td>
 					

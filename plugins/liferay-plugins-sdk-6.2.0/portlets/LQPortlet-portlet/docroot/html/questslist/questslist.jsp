@@ -33,7 +33,7 @@
 						</tr>
 						<tr>
 						    <td> 
-						    	<a href='<%=LQ_LEADER_DETAIL_VIEW_PAGE%>?userId=${leaderBean.userid}'>${leaderBean.firstname}</a> 
+						    	<a href='<%=LQ_LEADER_DETAIL_VIEW_PAGE%>?userId=${leaderBean.userid}'>${leaderBean.firstname} ${leaderBean.lastname}</a> 
 						    </td>
 					</table>
 					 <a href='/web/guest/addQuestPage'> <%=rb.getString("quest-addquest-link-caption")%></a>  <br>

@@ -35,16 +35,16 @@ function doCancel(userId) {
 		<liferay-ui:error  key="leader-edit-failed" message='<%=rb.getString("leader-editleader-failure-msg")%>'/>
 		
 		<aui:form action="<%=submitLeaderDetailsURL.toString()%>" method="post" name="LeaderDetailsForm" id="LeaderDetailsForm">
-		<div class="contentWrapper_lq"style="width: 60%; float: left; height:1250px;" >	
+		<div class="contentWrapper_lq"style="width: 60%; float: left; height:1270px;" >	
 					<div style="margin:0px 0px 0px 20px;">
 					<%=rb.getString("leader-view-portlet-firstname")%><aui:input label= "" name="firstname" min="2"
-							max="60" id="firstname" type="text" maxlength="60" required="true"  
+							max="60" id="firstname" type="text" maxlength="150" required="true"  
 							value="${leaderBean.firstname}">
 							<aui:validator name="minLength"> '2' </aui:validator>
 					</aui:input>
 					
 					<aui:input label='<%=rb.getString("leader-view-portlet-lastname")%>' name="lastname" min="2"
-							required="true" max="60" id="lastname" type="text" maxlength="60"
+							required="true" max="60" id="lastname" type="text" maxlength="150"
 							value="${leaderBean.lastname}">
 							<aui:validator name="minLength"> '2' </aui:validator>
 						</aui:input>
@@ -65,7 +65,7 @@ function doCancel(userId) {
 							value="${leaderBean.facultyRole}">
 							<aui:validator name="minLength"> '2' </aui:validator>
 					</aui:input>
-					<aui:input label='<%=rb.getString("leader-view-portlet-primaryphone")%>' name="primaryphone" mask="9999999999"
+					<aui:input label='<%=rb.getString("leader-view-portlet-primaryphone")%>' name="primaryphone"
 							min="10" max="11" id="primaryphone" type="text" maxlength="11" 
 							value="${leaderBean.primaryPhone}">
 							<aui:validator name="minLength"> '10' </aui:validator>
@@ -88,7 +88,7 @@ function doCancel(userId) {
 							 <aui:validator name="required" />
 						</aui:input>
 					<aui:input label='<%=rb.getString("leader-view-portlet-country")%>' name="country" id="country"
-							required="true" type="text" value="${leaderBean.country}" maxlength="60">
+							required="true" type="text" value="${leaderBean.country}" maxlength="30">
 							 <aui:validator name="minLength"> '2' </aui:validator>
 						</aui:input>
 					<aui:input label='<%=rb.getString("leader-view-portlet-website")%>' name="website" id="website"
@@ -103,14 +103,11 @@ function doCancel(userId) {
 								<aui:button type="cancel" onClick="doCancel(${userId});" value='<%=rb.getString("leader-login-portlet-btn2-caption")%>' />
 							</c:if>
 						</aui:button-row>
-					<c:if test="${roleName eq'LEADER_ADMIN'}">
-								<a style="btn-primary" href='/web/guest/addLeaderPage'><%=rb.getString("leader-login-portlet-btn3-caption")%></a>
-					</c:if>	
-					 <a class="offsite" href="http://www.coactivenetwork.com/">Co-Active Network</a>
+						<a href="#" onClick="window.open('http://www.coactivenetwork.com', '_blank')">CoActive Network</a> <br> <br>
 					 <br><br>
 			</div>		
 		</div>
-		<div class="contentWrapper_lq" style="width: 40%; float: right; height:1250px;">
+		<div class="contentWrapper_lq" style="width: 40%; float: right; height:1270px;">
 			<h3> Quests Configuration </h3>
 			<b>Quest Title</b>  &nbsp; &nbsp; <b>Quest Mode </b> <br>
 			<c:forEach items="${leaderBean.questList}" var="quest">

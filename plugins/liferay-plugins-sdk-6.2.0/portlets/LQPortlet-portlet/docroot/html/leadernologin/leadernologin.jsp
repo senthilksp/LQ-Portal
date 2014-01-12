@@ -77,7 +77,7 @@ $(document).ready(function () {
 				</tr>
 				<tr>
 				    <td> 
-				    	<a href='<%=LQ_LEADER_DETAIL_VIEW_PAGE%>?userId=${leader.userid}'>${leader.firstname}</a> 
+				    	<a href='<%=LQ_LEADER_DETAIL_VIEW_PAGE%>?userId=${leader.userid}'>${leader.firstname} ${leader.lastname}</a> 
 				    </td>
 				</tr>	
 				

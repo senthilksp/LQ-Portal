@@ -45,22 +45,22 @@ function doSubmit() {
 						</td>
 				</tr>
 				<tr>
-					<td><aui:input label='<%=rb.getString("leader-view-portlet-firstname")%>' name="firstname" maxlength="60"
+					<td><aui:input label='<%=rb.getString("leader-view-portlet-firstname")%>' name="firstname" maxlength="150"
 							       id="firstname" type="text" required="true"	value="">
 							<aui:validator name="minLength"> '2' </aui:validator>
-							<aui:validator name="maxLength"> '30' </aui:validator>
+							<aui:validator name="maxLength"> '150' </aui:validator>
 						</aui:input></td>
-					<td><aui:input label='<%=rb.getString("leader-view-portlet-lastname")%>' name="lastname" maxlength="60"
+					<td><aui:input label='<%=rb.getString("leader-view-portlet-lastname")%>' name="lastname" maxlength="150"
 							required="true" max="60" id="lastname" type="text"
 							value="">
 							<aui:validator name="minLength"> '2' </aui:validator>
-							<aui:validator name="maxLength"> '60' </aui:validator>
+							<aui:validator name="maxLength"> '150' </aui:validator>
 						</aui:input></td>
 				</tr>
 
 				<tr>
 					<td><aui:input label='<%=rb.getString("leader-view-portlet-facultyrole")%>' name="facultyrole"
-							required="true" id="facultyrole" type="text" value="" maxlength="60">
+							required="true" id="facultyrole" type="text" value="" maxlength="30">
 						<aui:validator name="minLength"> '2' </aui:validator>
 						<aui:validator name="maxLength"> '30' </aui:validator>	
 						</aui:input></td>
@@ -69,6 +69,7 @@ function doSubmit() {
 							value="">
 						<aui:validator name="minLength"> '10' </aui:validator>
 						<aui:validator name="maxLength"> '11' </aui:validator>	
+						 <aui:validator name="digits">  </aui:validator>
 						</aui:input></td>
 				</tr>
 				<tr>
@@ -99,13 +100,13 @@ function doSubmit() {
 				</tr>
 				<tr>
 					<td><aui:input label='<%=rb.getString("leader-view-portlet-website")%>' name="website" id="website"
-							type="text" value="" maxlength="30">
+							type="text" value="" maxlength="60">
 						</aui:input></td>
 					<td><aui:input label='<%=rb.getString("leader-view-portlet-biostatement")%>' name="biostatement" style="height:200px;width:500px"
 							required="true" id="biostatement" type="textarea" min="10" max="256" maxlength="256"
 							value="">
 							<aui:validator name="minLength"> '10' </aui:validator>
-							<aui:validator name="maxLength"> '512' </aui:validator>
+							<aui:validator name="maxLength"> '256' </aui:validator>
 						</aui:input></td>
 				</tr>
 				<tr>

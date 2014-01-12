@@ -16,7 +16,7 @@
 		<h2 style="width:50%"><%=rb.getString("leader-view-portlet-heading")%></h2>
 		<table>
 		<tr> <td width="40%"><img src="${leaderBean.photoURL}" alt="" ></img> </td> </tr>
-		<tr> <td> <b><%=rb.getString("leader-view-portlet-name")%> </b> : </td> <td> ${leaderBean.firstname}  </td> </tr>
+		<tr> <td> <b><%=rb.getString("leader-view-portlet-name")%> </b> : </td> <td> ${leaderBean.firstname} ${leaderBean.lastname} </td> </tr>
 		<tr> <td> <b><%=rb.getString("leader-view-portlet-facultyrole")%> </b> : </td> <td> ${leaderBean.facultyRole}  </td> </tr>
 		<tr> <td> <b><%=rb.getString("leader-view-portlet-primaryphone")%> </b> : </td> <td> ${leaderBean.primaryPhone}  </td> </tr>
 		<tr> <td> <b><%=rb.getString("leader-view-portlet-businessname")%> </b> : </td> <td> ${leaderBean.businessName}  </td> </tr>
@@ -28,6 +28,9 @@
 		</table>
 		 <c:if test="${canEdit eq true}">
 			<a href='<%=LQ_LEADER_DETAIL_EDIT_PAGE%>?userId=${userId}' style="float:right">Edit Leader</a> 
-			<br>
 		</c:if>	
+		<c:if test="${roleName eq'LEADER_ADMIN'}">
+			<a style="btn-primary" href='/web/guest/addLeaderPage'><%=rb.getString("leader-login-portlet-btn3-caption")%></a>
+		</c:if>
+		<br><br>
 	</div>
