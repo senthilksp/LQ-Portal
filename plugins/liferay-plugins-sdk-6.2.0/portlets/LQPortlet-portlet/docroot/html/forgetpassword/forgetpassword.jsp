@@ -22,9 +22,6 @@ function doSubmit() {
 	<aui:form action="<%= submitForgetPasswordURL.toString() %>" method="post"
 		name="forgetpasswordForm" id="forgetpasswordForm"> 
 		
-		<aui:input label="Email Address" name="emailId" id="emailId" type="text">
-		</aui:input>
-		
 		<c:choose>
 			<c:when test="${(validUser== true)}">
 				<br>
@@ -42,10 +39,13 @@ function doSubmit() {
 			</c:otherwise>
 		</c:choose>
 		
+		<c:if test="${(validUser== false || validUser==null)}">
+			<aui:input label="Email Address" name="emailId" id="emailId" type="text">
+			</aui:input>
+		</c:if>	
 		<aui:button-row>
 				<aui:button type="submit" value="Next" />
 			</aui:button-row>
-		
 	</aui:form>
 
 </div>

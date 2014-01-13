@@ -39,7 +39,6 @@ $(document).ready(function () {
 			<div id="welcomediv" >
 				 <h2><%=rb.getString("leader-welcome-msg1")%></h2> <br>
 						<ul style = "margin-left: 55px"> 
-							<li><%=rb.getString("leader-welcome-msg2")%> </li>
 							<li><%=rb.getString("leader-welcome-msg2")%> </li> 
 							<li><%=rb.getString("leader-welcome-msg3")%> </li> 
 							<li><%=rb.getString("leader-welcome-msg4")%> </li> 
