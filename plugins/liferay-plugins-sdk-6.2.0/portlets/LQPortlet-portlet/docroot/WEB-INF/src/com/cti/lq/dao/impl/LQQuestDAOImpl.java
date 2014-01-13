@@ -38,6 +38,8 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 			con = DBConnectionFactory.getPostgresDBConnection();
 			ps = con.prepareStatement(query.toString());
 			ps.setInt(1, userId);
+			LOG.info("userId------------------------------------>" + userId);
+			
 
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -51,6 +53,8 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 			}
 			ps.close();
 			rs.close();
+			
+			LOG.info("size----------->" + qustMasterList.size());
 
 		} catch (Exception ex) {
 			if (con != null)

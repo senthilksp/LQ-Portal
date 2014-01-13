@@ -33,7 +33,7 @@ public interface LQLeaderService {
 	Boolean addLeaderDetails(LeaderBean leaderDetails)throws SQLException;
 
 	List<QuestViewBean> getQuestMasterDetails(List<QuestViewBean> questList,
-			RenderRequest renderRequest)throws SQLException;
+			RenderRequest renderRequest, int userId)throws SQLException;
 
 	Boolean resetPassword(PasswordResetBean resetBean);
 

@@ -218,6 +218,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 			
 			ps3 = con.prepareStatement(updQuery3.toString());
 			List<QuestMasterBean> questList = leaderDetails.getQuestList();
+			
 			if(questList!=null && questList.size()>0) {
 				for(QuestMasterBean qb:questList) {
 					ps3.setBoolean(1, qb.getAccessMode());
@@ -225,6 +226,8 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 					ps3.setInt(3,qb.getQuestId());
 					save3 = ps3.executeUpdate();
 				}
+			} else {
+				save3 = 1;
 			}
 			
 			con.commit();
@@ -374,7 +377,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 
 	@Override
 	public List<QuestViewBean> getQuestMasterDetails(
-			RenderRequest renderRequest, List<QuestViewBean> questList)  throws SQLException {
+			RenderRequest renderRequest, List<QuestViewBean> questList,int userId)  throws SQLException {
 		
 		LOG.info("Entering into getleaderDetails");
 
@@ -384,7 +387,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 		questList = new ArrayList<QuestViewBean>();
 		List<QuestViewBean> questList_temp = new ArrayList<QuestViewBean>();
 		
-		int userId = LQPortalUserServiceUtil.getUserId(renderRequest);
+		//int userId = LQPortalUserServiceUtil.getUserId(renderRequest);
 
 		StringBuffer query = new StringBuffer(QueryContants.getQuestInfoByleader);
 		

@@ -197,7 +197,7 @@ public class LQPortletServiceImpl implements LQPortletService {
 						renderRequest, userId, questId);
 			} else { // This method is for getting questlists when login
 				questList = leaderService.getQuestMasterDetails(questList,
-						renderRequest);
+						renderRequest,userId);
 
 			}
 
@@ -230,20 +230,21 @@ public class LQPortletServiceImpl implements LQPortletService {
 		List<QuestMasterBean> questListFiltered = new ArrayList<QuestMasterBean>();
 		List<QuestViewBean> questListAllFiltered = new ArrayList<QuestViewBean>();
 
-		int userId = LQPortalUserServiceUtil.getUserId(renderRequest);
+		//int userId = LQPortalUserServiceUtil.getUserId(renderRequest);
 		questList = new ArrayList<QuestMasterBean>();
 		
 		HttpServletRequest httpRequest = PortalUtil
 				.getOriginalServletRequest(PortalUtil
 						.getHttpServletRequest(renderRequest));
 		
-		int questId = Integer.valueOf(httpRequest.getParameter("questId")); 
+		int questId = Integer.valueOf(httpRequest.getParameter("questId"));
+		int userId = Integer.valueOf(httpRequest.getParameter("userId"));
 
 		try {
 			LQQuestService questService = new LQQuestServiceImpl();
 			questList = questService.getMasterQuestList(userId);
 			questListAll = leaderService.getQuestMasterDetails(questListAll,
-					renderRequest);
+					renderRequest,userId);
 
 			QuestViewBean questBean = new QuestViewBean();
 			if (questList.size() > 0) {

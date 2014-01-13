@@ -74,21 +74,24 @@ public class LQLeaderServiceImpl implements LQLeaderService  {
 		
 	}
 
-	@Override
-	public List<QuestViewBean> getQuestMasterDetails(
-			List<QuestViewBean> questList, RenderRequest renderRequest) throws SQLException {
-		    LOG.info("Entering Leader Service-Layer");
-		
-		    LQLeaderDAO leaderDAO = new LQLeaderDAOImpl();
-		    questList = leaderDAO.getQuestMasterDetails(renderRequest, questList);
-		
-		    return questList;
-	}
 
 	@Override
 	public Boolean resetPassword(PasswordResetBean resetBean) {
 		LQLeaderDAO leaderDAO = new LQLeaderDAOImpl();
 		return leaderDAO.resetPassword(resetBean);
+	}
+
+	@Override
+	public List<QuestViewBean> getQuestMasterDetails(
+			List<QuestViewBean> questList, RenderRequest renderRequest,
+			int userId) throws SQLException {
+		
+		    LOG.info("Entering Leader Service-Layer");
+		
+		    LQLeaderDAO leaderDAO = new LQLeaderDAOImpl();
+		    questList = leaderDAO.getQuestMasterDetails(renderRequest, questList,userId);
+		
+		    return questList;
 	}
 
 
