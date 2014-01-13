@@ -41,16 +41,9 @@ function doSubmit() {
 				<col width="30%"/>
 				<col width="70%"/>
 				<tr>
-					<td><img src="${leaderBean.photoURL}" alt="Upload your Photo" style="min-width:100px; max-width:220px; min-height:100px;"></img>
+				   <td> Photo
+						<input type="file" name="<portlet:namespace />image_fileName" id="image_fileName"/> 
 					</td>
-					<td><aui:input label='<%=rb.getString("leader-login-portlet-photoURL")%>' name="photourl" maxLength="60"
-							style="width:200px" id="firstname" type="text" required="true"
-							value="">
-							<aui:validator name="minLength"> '2' </aui:validator>
-							<aui:validator name="maxLength"> '60' </aui:validator>
-						</aui:input>
-						<input style="width:210px;" id="image-file" type="file" />
-						</td>
 				</tr>
 				<tr><td><br/></td><td><br/></td></tr>
 				<tr><td><br/></td><td><br/></td></tr>

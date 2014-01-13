@@ -3,6 +3,7 @@
  */
 package com.cti.lq.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.portlet.ActionRequest;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.cti.lq.Constants.LQPortalConstants;
 import com.cti.lq.beans.LeaderBean;
 import com.cti.lq.service.LQLeaderService;
 import com.cti.lq.service.impl.LQLeaderServiceImpl;
@@ -24,6 +26,7 @@ import com.cti.lq.util.LQPortalUserServiceUtil;
 import com.cti.lq.util.LQPortalUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -70,38 +73,59 @@ public class AddLeader extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay) httpRequest
 				.getAttribute(WebKeys.THEME_DISPLAY);
 
-		try {
-			leaderDetails.setFirstname(actionRequest.getParameter("firstname"));
-			leaderDetails.setLastname(actionRequest.getParameter("lastname"));
-			leaderDetails.setEmailAddress(actionRequest
-					.getParameter("emailaddress"));
-			leaderDetails.setFacultyRole(actionRequest
-					.getParameter("facultyrole"));
-			leaderDetails.setPrimaryPhone(actionRequest
-					.getParameter("primaryphone"));
-			leaderDetails.setWebsite(actionRequest.getParameter("website"));
-			leaderDetails.setBusinessName(actionRequest
-					.getParameter("businessname"));
-			leaderDetails.setCountry(actionRequest.getParameter("country"));
-			leaderDetails.setCity(actionRequest.getParameter("city"));
-			System.out.println("Bio Statement"
-					+ actionRequest.getParameter("biostatement"));
+		UploadPortletRequest uploadRequest = PortalUtil
+				.getUploadPortletRequest(actionRequest);
 
-			leaderDetails.setBioStatement(actionRequest
+		String path = getPortletContext().getRealPath("/");
+
+		try {
+
+			leaderDetails.setFirstname(uploadRequest.getParameter("firstname"));
+			leaderDetails.setLastname(uploadRequest.getParameter("lastname"));
+			leaderDetails.setEmailAddress(uploadRequest
+					.getParameter("emailaddress"));
+			leaderDetails.setFacultyRole(uploadRequest
+					.getParameter("facultyrole"));
+			leaderDetails.setPrimaryPhone(uploadRequest
+					.getParameter("primaryphone"));
+			leaderDetails.setWebsite(uploadRequest.getParameter("website"));
+			leaderDetails.setBusinessName(uploadRequest
+					.getParameter("businessname"));
+			leaderDetails.setCountry(uploadRequest.getParameter("country"));
+			leaderDetails.setCity(uploadRequest.getParameter("city"));
+			System.out.println("Bio Statement"
+					+ uploadRequest.getParameter("biostatement"));
+
+			leaderDetails.setBioStatement(uploadRequest
 					.getParameter("biostatement"));
-			leaderDetails.setPhotoURL(actionRequest.getParameter("photourl"));
 			leaderDetails.setUserid(userId);
 
-			LQLeaderService lqServiceLayer = new LQLeaderServiceImpl();
-			Boolean isAdded = lqServiceLayer.addLeaderDetails(leaderDetails);
-			LOG.info("insertion done");
-			
-			if (isAdded) {
-				SessionMessages.add(actionRequest, "leader-added-successfully");
-			} else {
-				SessionErrors.add(actionRequest, "leader-add-failed");
-			}
+			// upload photo.
 
+			String imageFileName = uploadRequest.getFileName("image_fileName");
+			String fileLocation = LQPortalConstants.LQ_FILE_LOCATION;
+			fileLocation = fileLocation + "/" + imageFileName;
+
+			if (!(imageFileName == null || "".equals(imageFileName))) {
+				LQPortalUtil.uploadFile(path, uploadRequest, "image_fileName");
+
+				leaderDetails.setPhotoURL(fileLocation);
+
+				LQLeaderService lqServiceLayer = new LQLeaderServiceImpl();
+				Boolean isAdded = lqServiceLayer
+						.addLeaderDetails(leaderDetails);
+
+				LOG.info("insertion done");
+
+				if (isAdded) {
+					SessionMessages.add(actionRequest,
+							"leader-added-successfully");
+				} else {
+					SessionErrors.add(actionRequest, "leader-add-failed");
+				}
+
+			}
+			// upload Ends.
 			User u = LQPortalUserServiceUtil.getUser(
 					leaderDetails.getEmailAddress(),
 					themeDisplay.getCompanyId());
