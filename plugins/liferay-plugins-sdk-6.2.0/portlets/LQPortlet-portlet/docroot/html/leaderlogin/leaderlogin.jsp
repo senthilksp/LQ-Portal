@@ -97,6 +97,7 @@ function doCancel(userId) {
 					<aui:input label='<%=rb.getString("leader-view-portlet-website")%>' name="website" id="website"
 							type="text" value="${leaderBean.website}" maxlength="60">
 						</aui:input>
+						 <aui:input type="hidden" id="userId" name="userId" value="${userId}" readonly="readonly"/>
 					
 					<aui:button-row>
 							 <c:if test="${roleName eq 'LEADER' || roleName eq 'LEADER_ADMIN'}">
