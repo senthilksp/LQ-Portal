@@ -4,9 +4,14 @@
 <%@ taglib uri="http://alloy.liferay.com/tld/aui" prefix="aui"%>
 <%@ page import="com.cti.lq.util.LQPortalUtil" %>
 <%@ page import="com.cti.lq.Constants.LQPortalConstants" %>
+<%@ page import="com.liferay.portal.util.PortalUtil" %>
 
 <portlet:defineObjects />
-<%java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);%>
+
+<%
+java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);
+PortalUtil.setPageTitle("Add Quest", request);
+%>
 
 <script type="text/javascript">
 jQuery(document).ready(function() {

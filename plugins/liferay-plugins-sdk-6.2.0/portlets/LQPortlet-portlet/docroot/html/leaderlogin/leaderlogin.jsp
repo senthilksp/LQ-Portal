@@ -4,9 +4,12 @@
 <%@ taglib uri="http://alloy.liferay.com/tld/aui" prefix="aui"%>
 <%@ page import="com.cti.lq.util.LQPortalUtil" %>
 <%@ page import="com.cti.lq.Constants.LQPortalConstants" %>
+<%@ page import="com.liferay.portal.util.PortalUtil" %>
 
 <portlet:defineObjects />
-<%java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);%>
+<%java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);
+PortalUtil.setPageTitle("Leaders", request);
+%>
 
 <jsp:useBean id="leaderBean" class="com.cti.lq.beans.LeaderBean"
 	scope="request" />
@@ -31,11 +34,11 @@ function doCancel(userId) {
 		<br>
 		<br>
 		<portlet:actionURL name="submitLeaderDetails" var="submitLeaderDetailsURL" />
-		
-		<aui:form action="<%=submitLeaderDetailsURL.toString()%>" method="post" name="LeaderDetailsForm" id="LeaderDetailsForm">
-		<div class="contentWrapper_lq"style="width: 60%; float: left; height:1310px;" >	
 		<liferay-ui:success key="leader-edited-successfully" message='<%=rb.getString("leader-editleader-success-msg")%>'/>
 		<liferay-ui:error  key="leader-edit-failed" message='<%=rb.getString("leader-editleader-failure-msg")%>'/>
+		
+		<aui:form action="<%=submitLeaderDetailsURL.toString()%>" method="post" name="LeaderDetailsForm" id="LeaderDetailsForm">
+		<div class="contentWrapper_lq"style="width: 60%; float: left; height:1270px;" >	
 					<div style="margin:0px 0px 0px 20px;">
 					<%=rb.getString("leader-view-portlet-firstname")%><aui:input label= "" name="firstname" min="2"
 							max="60" id="firstname" type="text" maxlength="150" required="true"  
@@ -78,7 +81,7 @@ function doCancel(userId) {
 							<aui:validator name="minLength"> '2' </aui:validator>
 						</aui:input>
 					<aui:input label = '<%=rb.getString("leader-view-portlet-emailaddress")%>' name="emailaddress" id="emailaddress" 
-					               type="text" value="${leaderBean.emailAddress}" maxlength="60" required="true" readonly="true">
+					               type="text" value="${leaderBean.emailAddress}" maxlength="60" required="true">
 					     <aui:validator name="minLength"> '2' </aui:validator>
 					     <aui:validator name="email" />
 					    </aui:input>
@@ -94,7 +97,7 @@ function doCancel(userId) {
 					<aui:input label='<%=rb.getString("leader-view-portlet-website")%>' name="website" id="website"
 							type="text" value="${leaderBean.website}" maxlength="60">
 						</aui:input>
-					    <aui:input type="hidden" id="userId" name="userId" value="${userId}" readonly="readonly"/>
+					
 					<aui:button-row>
 							 <c:if test="${roleName eq 'LEADER' || roleName eq 'LEADER_ADMIN'}">
 								<aui:button type="submit" onClick="doSubmit();" value='<%=rb.getString("leader-login-portlet-btn1-caption")%>' />
@@ -107,7 +110,7 @@ function doCancel(userId) {
 					 <br><br>
 			</div>		
 		</div>
-		<div class="contentWrapper_lq" style="width: 40%; float: right; height:1310px;">
+		<div class="contentWrapper_lq" style="width: 40%; float: right; height:1270px;">
 			<h3> Quests Configuration </h3>
 			<b>Quest Title</b>  &nbsp; &nbsp; <b>Quest Mode </b> <br>
 			<c:forEach items="${leaderBean.questList}" var="quest">

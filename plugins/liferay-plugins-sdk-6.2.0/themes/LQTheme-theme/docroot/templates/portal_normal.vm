@@ -15,6 +15,11 @@
 	<link type="text/css" rel="stylesheet" href="$css_folder/style.css?t=${build_time}"></link>
 	<link type="text/css" rel="stylesheet" href="$css_folder/jquery/smoothness/jquery-ui-1.10.1.custom.css?t=${build_time}"></link>
 	
+	<script type="text/javascript" src="$javascript_folder/video-js/video.js?t=${build_time}"></script>
+	<script type="text/javascript" src="$javascript_folder/video-js/video.js?t=${build_time}"></script>
+	<script type="text/javascript" src="$javascript_folder/video-js/video-js.swf?t=${build_time}"></script>
+	
+	
 	<script type="text/javascript" src="$javascript_folder/jquery/jQuery-1.9.1.js?t=${build_time}"></script>
 	<script type="text/javascript" src="$javascript_folder/jquery/jquery-ui-1.10.1.custom.js?t=${build_time}"></script>
 	<script type="text/javascript" src="$javascript_folder/jquery.cookies.2.2.0.js?t=${build_time}"></script>
@@ -64,8 +69,9 @@ $theme.include($body_top_include)
 		#end
 	</div>
 	
-	<div id="footer">
-		Copyright © 2010-2013 The Coaches Training Institute. All rights reserved.
+	<div class="footer_lq" id="footer">
+		Copyright &copy; 2010-2013 The Coaches Training Institute. All rights reserved.
+		<br/>
 	</div>
 </div>
 

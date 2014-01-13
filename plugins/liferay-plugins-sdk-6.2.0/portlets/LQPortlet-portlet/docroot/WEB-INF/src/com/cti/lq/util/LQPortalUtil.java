@@ -295,5 +295,9 @@ public class LQPortalUtil {
 		sendEmail(subject, msgBody, emailAddress, null);
 		
 	}
+	
+	public static String getCurrentURL(HttpServletRequest request) {
+		return PortalUtil.getCurrentURL(request);
+	}
 
 }

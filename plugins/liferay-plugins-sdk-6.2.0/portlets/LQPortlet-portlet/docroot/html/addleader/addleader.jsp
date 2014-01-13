@@ -4,9 +4,14 @@
 <%@ taglib uri="http://alloy.liferay.com/tld/aui" prefix="aui"%>
 <%@ page import="com.cti.lq.util.LQPortalUtil" %>
 <%@ page import="com.cti.lq.Constants.LQPortalConstants" %>
+<%@ page import="com.liferay.portal.util.PortalUtil" %>
 
 <portlet:defineObjects />
-<%java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);%>
+
+<%
+java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);
+PortalUtil.setPageTitle("Add Leader", request);
+%>
 
 <jsp:useBean id="leaderBean" class="com.cti.lq.beans.LeaderBean"
 	scope="request" />

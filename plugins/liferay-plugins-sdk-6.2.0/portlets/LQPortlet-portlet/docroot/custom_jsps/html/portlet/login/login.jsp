@@ -15,7 +15,19 @@
 --%>
 
 <%@ include file="/html/portlet/login/init.jsp" %>
+<%@ page import="com.liferay.portal.util.PortalUtil" %>
 
+<%
+PortalUtil.setPageTitle("Sign in", request);
+%>
+<script>
+function clearValue(elem) {
+	if (elem.value == '@liferay.com') {
+		elem.value = '';
+	}
+	return false;
+}
+</script>
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 
@@ -51,7 +63,7 @@
 			authType = company.getAuthType();
 		}
 		%>
-
+	<div class="contentWrapper_lq">
 		<portlet:actionURL secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="loginURL">
 			<portlet:param name="struts_action" value="/login/login" />
 		</portlet:actionURL>
@@ -127,7 +139,7 @@
 				%>
 
 				<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.EXCLUSIVE) || windowState.equals(WindowState.MAXIMIZED) %>" cssClass="clearable" 
-				label="<%= loginLabel %>" name="login" showRequiredLabel="<%= false %>" type="text" value="<%= login %>">
+				label="<%= loginLabel %>" name="login" showRequiredLabel="<%= false %>" type="text" value="" onClick="javascript:clearValue(this);">
 					<aui:validator name="required" />
 				</aui:input>
 
@@ -140,14 +152,16 @@
 				<c:if test="<%= company.isAutoLogin() && !PropsValues.SESSION_DISABLED %>">
 					<aui:input checked="<%= rememberMe %>" name="rememberMe" type="checkbox" />
 				</c:if>
+				<a id="forgetlink" href="/web/guest/forgetpassword-mailing?email=" >Forgot password?</a>
 			</aui:fieldset>
 
 			<aui:button-row>
 				<aui:button type="submit" value="sign-in" />
 			</aui:button-row>
+			<br/><br/><br/><br/><br/><br/>
 		</aui:form>
 
-        <a id="forgetlink" href="/web/guest/forgetpassword-mailing?email=" style="float: right;">Forgot password?</a>
+        
 		<aui:script use="aui-base">
 			var password = A.one('#<portlet:namespace />password');
 
@@ -160,5 +174,6 @@
 				);
 			}
 		</aui:script>
+	</div>
 	</c:otherwise>
 </c:choose>
