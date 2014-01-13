@@ -139,17 +139,33 @@ p {
    background: #FFF;
 }
 
-.leader_column {
+/*----------Leader page columns -------*/
+.left_leader_column {
    float:left;
    max-width: 150px;
    max-height: 150px;
    background: #FFF; 
 }
-.quests_column {
+.right_quests_column {
    float:right;
    max-width: 290px;
    background: #FFF;
 }
+
+
+/*--------Quests page columns ---------*/
+.left_quests_column {
+   float:left;
+   width: 240px;
+   background: #FFF;
+}
+
+.right_leader_column {
+   float:right;
+   width: 240px;
+   background: #FFF; 
+}
+
 
 
 /*---------- Login page ------------*/

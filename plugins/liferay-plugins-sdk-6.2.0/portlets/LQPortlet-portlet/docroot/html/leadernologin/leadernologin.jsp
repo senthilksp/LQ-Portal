@@ -68,11 +68,11 @@ $(document).ready(function () {
 	<div class="content_wrap">
 		<div class="left_column">
 			<div class="column_wrap">
-				<div class="leader_column">
+				<div class="left_leader_column">
 					<img src="${leader.photoURL}" alt="" >
 					<a href='<%=LQ_LEADER_DETAIL_VIEW_PAGE%>?userId=${leader.userid}'>${leader.firstname} ${leader.lastname}</a>
 				</div>
-				<div id="quest_column">
+				<div id="right_quests_column">
 					<c:forEach items="${leader.questList}" var="quest">
 					    <c:if test="${roleName eq 'LEADER_ADMIN'}">
 				           <li><a href='<%=LQ_QUEST_DETAIL_EDIT_FOR_UPLOAD%>?userId=${leader.userid}&questId=${quest.questId}'>${quest.questTitle}</a></li> 
@@ -94,11 +94,11 @@ $(document).ready(function () {
 		</div>
 		<div class="right_column" >
 			<div class="column_wrap">
-				<div class="leader_column">
+				<div class="left_leader_column">
 					<img src="${leader.photoURL}" alt="" >
 					<a href='<%=LQ_LEADER_DETAIL_VIEW_PAGE%>?userId=${leader.userid}'>${leader.firstname} ${leader.lastname}</a>
 				</div>
-				<div id="quest_column">
+				<div id="right_quests_column">
 					<c:forEach items="${leader.questList}" var="quest">
 					    <c:if test="${roleName eq 'LEADER_ADMIN'}">
 				           <li><a href='<%=LQ_QUEST_DETAIL_EDIT_FOR_UPLOAD%>?userId=${leader.userid}&questId=${quest.questId}'>${quest.questTitle}</a></li> 
