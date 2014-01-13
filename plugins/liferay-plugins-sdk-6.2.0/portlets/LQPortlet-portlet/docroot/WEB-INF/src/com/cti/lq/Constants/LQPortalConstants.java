@@ -14,6 +14,7 @@ public class LQPortalConstants {
 	public static String LQ_SOLUTION_ADMIN = "SOLUTION_ADMIN";
 	
 	public static final String LQ_HOME_URL 			  = "/Welcome";
+	public static final String LQ_HOME_LOGIN          = "/web/guest/home";
 	public static final String LQ_LEADER_NO_LOGIN_URL = "/web/guest/leaderdetails-no-login";
 	public static final String LQ_QUEST_NO_LOGIN_URL  = "/web/guest/questdetails-no-login";
 	public static final String LQ_QUEST_DETAILS_URL   = "/web/guest/questdetails";

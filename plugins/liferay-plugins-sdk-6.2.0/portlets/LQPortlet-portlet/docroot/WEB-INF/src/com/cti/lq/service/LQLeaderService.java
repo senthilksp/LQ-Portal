@@ -9,6 +9,7 @@ import java.util.List;
 import javax.portlet.RenderRequest;
 
 import com.cti.lq.beans.LeaderBean;
+import com.cti.lq.beans.PasswordResetBean;
 import com.cti.lq.beans.QuestMasterBean;
 import com.cti.lq.beans.QuestViewBean;
 
@@ -33,6 +34,8 @@ public interface LQLeaderService {
 
 	List<QuestViewBean> getQuestMasterDetails(List<QuestViewBean> questList,
 			RenderRequest renderRequest)throws SQLException;
+
+	Boolean resetPassword(PasswordResetBean resetBean);
 
 
 	

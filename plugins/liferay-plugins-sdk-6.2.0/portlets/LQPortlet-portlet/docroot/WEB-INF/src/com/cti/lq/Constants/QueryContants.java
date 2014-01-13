@@ -18,7 +18,7 @@ public class QueryContants {
 	public static final String updateLeader_LQ = "update user_lq set faculty_role = ?, primary_phone = ?, website = ?,"
 			+ " business_name=?, city=?, country=?, photo = ?, bio_statement=? where userid=?";
 	
-	public static final String updateLeader_lr ="update user_ set firstname=?, lastname=?, emailaddress=? where userid=?";
+	public static final String updateLeader_lr ="update user_ set firstname=?, lastname=? where userid=?";
 	
 	public static final String getQuestInfoByleader = "select * from quest_master_ where userid=? order by quest_id";
 
@@ -44,6 +44,8 @@ public class QueryContants {
 	public static final String getQuestId = "select quest_id from quest_master_ where quest_title=?";
 	
 	public static Object getMaxQuestId = "select max(quest_id) from quest_master_ where userid=?";
+
+	public static String resetPassword = "update user_ set password_ = ? where emailaddress = ?";
 	
 	public static final String updateQuestMaster = "update quest_master_  set quest_title=?, definition=? where quest_id=?";
 	public static final String updateQuestTran   = "update quest_transaction_  set quest_location=? where id=?"; 

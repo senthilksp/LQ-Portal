@@ -13,6 +13,7 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,6 +33,7 @@ import com.cti.lq.util.LQPortalUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 public class LeaderLogin extends MVCPortlet {
@@ -77,10 +79,13 @@ public class LeaderLogin extends MVCPortlet {
 		LOG.info(" Entering submitLeaderDetails()");
 
 		LeaderBean leaderDetails = new LeaderBean();
-		int userId = LQPortalUserServiceUtil.getUserId(actionRequest);
+		//int userId = LQPortalUserServiceUtil.getUserId(actionRequest);
 		Boolean saveSuccess = false;
 
 		try {
+			int userId = Integer.valueOf(actionRequest.getParameter("userId"));
+			LOG.info("userId------>" + userId);
+			
 			leaderDetails.setFirstname(actionRequest.getParameter("firstname")); 
 			leaderDetails.setLastname(actionRequest.getParameter("lastname"));
 			leaderDetails.setEmailAddress(actionRequest.getParameter("emailaddress"));
@@ -101,6 +106,9 @@ public class LeaderLogin extends MVCPortlet {
 			
 			LQQuestService questService = new LQQuestServiceImpl(); 
 			questMasterList = questService.getQuestMasterList(userId);
+			
+			LOG.info("SIZE=====" + questMasterList.size());
+			
 			for(QuestMasterBean qb:questMasterList) {
 				QuestMasterBean newBean = new QuestMasterBean();
 				newBean.setUserId(qb.getUserId());
@@ -113,6 +121,8 @@ public class LeaderLogin extends MVCPortlet {
 						newBean.setAccessMode(true);
 					}
 				}
+				LOG.info("UserId-------->" + newBean.getUserId());
+				LOG.info("Quest Id------->" + newBean.getQuestId());
 				questChangesList.add(newBean);
 			}
 			
