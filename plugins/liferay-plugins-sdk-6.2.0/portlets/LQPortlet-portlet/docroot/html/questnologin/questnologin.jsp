@@ -24,10 +24,13 @@ PortalUtil.setPageTitle("Quests", request);
 		<div style="clear:both;"></div>
 	</div>
 	<br/>
+<%
+String select_column="left_column";
+%>
 <c:forEach items="${leaderList}" var="leader">
 	<c:if test="${not empty leader.questList}">
 	<div class="content_wrap">
-		<div class="left_column">
+		<div class="<%= select_column%>">
 			<div class="column_wrap">
 				<div class="left_quests_column">
 					<c:forEach items="${leader.questList}" var="quest">
@@ -48,29 +51,13 @@ PortalUtil.setPageTitle("Quests", request);
 				    </c:if>	
 				</div>
 				<div style="clear:both;"></div>
-			</div>
-		</div>
-		<div class="right_column" >
-			<div class="column_wrap">
-				<div class="left_quests_column">
-					<c:forEach items="${leader.questList}" var="quest">
-					    <c:if test="${roleName == null}">
-				    	 <li><a href="/web/guest/questdetails-viewpage?userId=${leader.userid}&questId=${quest.questId}">${quest.questTitle}</a></li> 
-				    </c:if>
-				    <c:if test="${roleName eq 'LEADER' || roleName eq 'LEADER_ADMIN'}">
-				    	  <li><a href="/web/guest/questdetails-editpage">${quest.questTitle}</a></li> 
-				    </c:if>
-					</c:forEach>
-				</div>
-				<div id="right_leader_column">
-					<c:if test="${roleName == null}">
-				    	<a href="/web/guest/leaderdetails-viewpage?userId=${leader.userid}">${leader.firstname}${leader.lastname}</a> 
-				    </c:if>
-				    <c:if test="${roleName eq 'LEADER' || roleName eq 'LEADER_ADMIN'}">
-				    	<a href="/web/guest/leaerdetails-editpage">${leader.firstname} ${leader.lastname}</a> 
-				    </c:if>	
-				</div>
-				<div style="clear:both;"></div>
+<%
+if (select_column == "left_column") {
+	select_column = "right_column";
+} else if (select_column == "right_column") {
+	select_column = "left_column";
+}
+%>
 			</div>
 		</div>
 	</div>

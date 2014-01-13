@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="com.cti.lq.util.LQPortalUtil" %>
 <%@ page import="com.cti.lq.Constants.LQPortalConstants" %>
+<%@ page import="com.liferay.portal.util.PortalUtil" %>
 
 <script type="text/javascript">
 jQuery(document).ready(function() {
@@ -31,11 +32,11 @@ function doSubmit() {
 	<%  String LQ_QUEST_DETAILS_PAGE      = com.cti.lq.Constants.LQPortalConstants.LQ_QUEST_DETAILS_URL; %>
 	
 
-<jsp:useBean id="LoggedUserBean" class="com.cti.lq.beans.LoggedUserBean"
-	scope="request" />
+<jsp:useBean id="LoggedUserBean" class="com.cti.lq.beans.LoggedUserBean" scope="request" />
+
 	
 <%
-
+PortalUtil.setPageTitle("Quests", request);
 java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);
 String currentUrl = LQPortalUtil.getCurrentURL(request);
 String styleClass = "level-1";
@@ -53,7 +54,7 @@ if (currentUrl.contains("welcome") || currentUrl.equalsIgnoreCase("/")) {
 }
 %>	
 
-<div class="contentWrapper_lq">
+<div class="content_wrap">
 	<ul class="mainNav">
 		<li class="<%=headers_home %>" id="nav-home">
 			<a href='<%=LQ_HOME_URL%>'><%=rb.getString("header-portlet-Home")%></a> 
@@ -92,17 +93,16 @@ if (currentUrl.contains("welcome") || currentUrl.equalsIgnoreCase("/")) {
 			</li>
 		</c:if>
 	</ul>
-	<div class="contentWrapper_lq">
+	<div class="content_wrap">
 		<div class="interiorBanner1">
 			<h1><%=rb.getString("header-portlet-heading")%></h1>
 		</div>
 	</div>
-	<div class="contentWrapper_lq">
-		<c:if test="${(isSignedIn == true)}">
-			<h6 style="float: right"><%=rb.getString("header-portlet-signin-caption")%>
-				${LoggedUserBean.firstName} ${LoggedUserBean.lastName}</h6>
-		</c:if>
-	</div>
+	<c:if test="${(isSignedIn == true)}">
+		<div class="content_wrap">
+			<h6 style="float:right; padding-right:10px;font-weight:normal;"><%=rb.getString("header-portlet-signin-caption")%> <strong>${LoggedUserBean.firstName} ${LoggedUserBean.lastName}</strong></h6></p>
+		</div>
+	</c:if>
 	<br>
 	<br>
 </div>

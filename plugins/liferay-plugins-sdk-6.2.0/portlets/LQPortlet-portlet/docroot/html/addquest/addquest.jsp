@@ -37,7 +37,7 @@ function doSubmit() {
 
 </script>
 
-	<div class="contentWrapper_lq">
+	<div class="content_wrap">
 		<h2 style="width:50%"><%=rb.getString("quest-addquest-title")%></h2>
 		<portlet:actionURL name="submitQuestDetails" var="submitQuestDetailsURL" />
 		
@@ -46,33 +46,36 @@ function doSubmit() {
 		
 		<form id="<portlet:namespace />questForm" name="<portlet:namespace />questForm" 
 			action="<%=submitQuestDetailsURL.toString()%>" method="post" enctype="multipart/form-data" >
-			<br>
-			<div style="margin:0px 0px 0px 20px;">
-				<%=rb.getString("quest-addquest-name")%> 
-				<input type="text" name="questName"  id="questName" > 
-				&nbsp;&nbsp;&nbsp;
-				<%=rb.getString("quest-addquest-definition")%>
-				<input type="text" name="<portlet:namespace />questDefinition" required="required" id="questDefinition" > <br>
+			<table style="margin: 0px 10px 0px 10px; padding-left:20px;">
+				<col width="20%">
+				<col width="80%">
+				<tr><td>
+				<%=rb.getString("quest-addquest-name")%></td> 
+				<td><input type="text" name="questName"  id="questName" ></td></tr> 
+				<tr><td><%=rb.getString("quest-addquest-definition")%></td>
+				<td><input type="text" name="<portlet:namespace />questDefinition" required="required" id="questDefinition" ></td></tr>
 				
 				<span style="color: red; font: 12px/14px Arial" id="questname-error1">Quest Name or Definition Should not be Blank</span> <br> 
 				
-				<%=rb.getString("quest-addquest-accessmode")%>
-				<input type="radio"name= "<portlet:namespace />accessMode" value="PUBLIC" checked="checked" /> Public 
-				<input type="radio"name= "<portlet:namespace />accessMode" value="PRIVATE"  /> Private <br><br>
+				<tr><td><%=rb.getString("quest-addquest-accessmode")%></td>
+				<td><table><col width="50%"><col width="50%"><tr><td><input type="radio"name= "<portlet:namespace />accessMode" value="PUBLIC" checked="checked" /> Public 
+				<input type="radio"name= "<portlet:namespace />accessMode" value="PRIVATE"  /> Private </td></tr></table></td>
 				
 				<span style="color: red; font: 12px/14px Arial" id="questname-error2">Either Audio or Video Or Image Should be Selected</span> <br> 
+				<tr><td><br/></td><td></td></tr>
+				<tr><td><%=rb.getString("quest-addquest-image-type")%></td>
+				<td><input type="file" name="<portlet:namespace />image_fileName" id="image_fileName"/> </td></tr>
+				<tr><td><br/></td><td></td></tr>
+				<tr><td><%=rb.getString("quest-addquest-audio-type")%></td>
+				<td><input type="file" name="<portlet:namespace />audio_fileName" id="audio_fileName"/></td></tr>
+				<tr><td><br/></td><td></td></tr>
+				<tr><td><%=rb.getString("quest-addquest-video-type")%></td>
+				<td><input type="file" name="<portlet:namespace />video_fileName" id="video_fileName" /></td></tr>
+				<tr><td><br/></td><td></td></tr>
+				<tr><td><br/></td><td></td></tr>
+				<tr><td><input type="button" id="btnSubmit" name="btnSubmit" value='<%=rb.getString("quest-addquest-btn-save")%>' onclick="doSubmit();" /></td><td></td></tr>
 				
-				<%=rb.getString("quest-addquest-image-type")%><br>
-				<input type="file" name="<portlet:namespace />image_fileName" id="image_fileName"/> <br><br><br>
-				
-				<%=rb.getString("quest-addquest-audio-type")%><br>
-				<input type="file" name="<portlet:namespace />audio_fileName" id="audio_fileName"/> <br><br><br>
-				
-				<%=rb.getString("quest-addquest-video-type")%><br>
-				<input type="file" name="<portlet:namespace />video_fileName" id="video_fileName" /> <br><br><br>
-				<input type="button" id="btnSubmit" name="btnSubmit" value='<%=rb.getString("quest-addquest-btn-save")%>' onclick="doSubmit();" />
-				<br><br><br>
-		</div>	 
+			</table>
 		</form>
 	</div>	
 		

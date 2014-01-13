@@ -26,10 +26,9 @@ $(document).ready(function () {
 	if(pathname.indexOf('leader') != -1){
 		$("#welcomediv").hide();
 	    $("#leaderdiv").show();
-	
 	} else {
-		   $("#welcomediv").show();
-		   $("#leaderdiv").hide();
+		$("#welcomediv").show();
+		$("#leaderdiv").hide();
 	}
 });
 
@@ -38,7 +37,7 @@ $(document).ready(function () {
 
 <portlet:defineObjects />
 
-<div class="contentWrapper_lq">
+<div class="content_wrap">
 	<div class="content_wrap">
 		<div class="left_column">
 			<div id="welcomediv" >
@@ -64,9 +63,12 @@ $(document).ready(function () {
 		<div style="clear:both;"></div>
 	</div>
 	<br/>
+<%
+String select_column="left_column";
+%>
 <c:forEach items="${leaderList}" var="leader">
 	<div class="content_wrap">
-		<div class="left_column">
+		<div class="<%= select_column%>">
 			<div class="column_wrap">
 				<div class="left_leader_column">
 					<img src="${leader.photoURL}" alt="" >
@@ -90,37 +92,16 @@ $(document).ready(function () {
 					</c:forEach>
 				</div>
 				<div style="clear:both;"></div>
+<%
+if (select_column == "left_column") {
+	select_column = "right_column";
+} else if (select_column == "right_column") {
+	select_column = "left_column";
+}
+%>
 			</div>
 		</div>
-		<div class="right_column" >
-			<div class="column_wrap">
-				<div class="left_leader_column">
-					<img src="${leader.photoURL}" alt="" >
-					<a href='<%=LQ_LEADER_DETAIL_VIEW_PAGE%>?userId=${leader.userid}'>${leader.firstname} ${leader.lastname}</a>
-				</div>
-				<div id="right_quests_column">
-					<c:forEach items="${leader.questList}" var="quest">
-					    <c:if test="${roleName eq 'LEADER_ADMIN'}">
-				           <li><a href='<%=LQ_QUEST_DETAIL_EDIT_FOR_UPLOAD%>?userId=${leader.userid}&questId=${quest.questId}'>${quest.questTitle}</a></li> 
-				    	</c:if>
-					    <c:if test="${roleName == null}">
-				    	 	<li><a href='<%=LQ_QUEST_DETAIL_VIEW_PAGE%>?userId=${leader.userid}&questId=${quest.questId}'>${quest.questTitle}</a></li> 
-				    	</c:if>
-				     	<c:if test="${roleName eq 'LEADER' && quest.userId != userId}">
-							<li><a href='<%=LQ_QUEST_DETAIL_VIEW_PAGE%>?userId=${leader.userid}&questId=${quest.questId}'>${quest.questTitle}</a></li>
-						</c:if>
-					
-						<c:if test="${roleName eq 'LEADER' && quest.userId == userId}">
-							 <li><a href='<%=LQ_QUEST_DETAIL_EDIT_FOR_UPLOAD%>?userId=${leader.userid}&questId=${quest.questId}'>${quest.questTitle}</a></li>
-						</c:if>					    
-					</c:forEach>
-				</div>
-				<div style="clear:both;"></div>
-			</div>
-		</div>
+
 	</div>
 </c:forEach>
 </div>
-
-
-

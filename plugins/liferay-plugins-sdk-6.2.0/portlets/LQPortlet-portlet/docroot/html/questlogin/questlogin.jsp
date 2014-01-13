@@ -31,7 +31,7 @@ PortalUtil.setPageTitle("Quests", request);
 			<form id="<portlet:namespace />questLoginForm" name="<portlet:namespace />questLoginForm" 
 				action="<%=submitQuestLoginDetailsURL.toString()%>" method="post" enctype="multipart/form-data" >
 				
-				<h5>Quest Pictures</h5>
+				<h5>Pictures</h5>
 				<c:forEach items="${questList}" var="quest">
 					<c:if test="${quest.questType eq 'IMAGE'}">
 					<img src="${quest.questLocation}" alt=""></img>
@@ -41,7 +41,7 @@ PortalUtil.setPageTitle("Quests", request);
 				<input type="file" name="<portlet:namespace />image_fileName" />
 				<input type="submit" id="btnSubmit1" name="btnSubmit1" value='Upload' />
 				<br/>
-				<h5>Quest Audios</h5>
+				<h5>Audios</h5>
 				<c:forEach items="${questList}" var="quest">
 					<c:if test="${quest.questType eq 'AUDIO'}">
 						<br><br>
@@ -55,7 +55,7 @@ PortalUtil.setPageTitle("Quests", request);
 				<input type="hidden" name="<portlet:namespace />quest_id" id="<portlet:namespace />quest_id" value ="${questId}" />
 				<input type="submit" id="btnSubmit2" name="btnSubmit2" value='Upload' />	
 				<br><br>
-				<h5>Quest Videos</h5>
+				<h5>Videos</h5>
 				<c:forEach items="${questList}" var="quest">	
 					<c:if test="${quest.questType eq 'VIDEO'}">
 						<br><br>
