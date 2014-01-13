@@ -12,6 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.cti.lq.beans.LeaderBean;
+import com.cti.lq.beans.PasswordResetBean;
 import com.cti.lq.beans.QuestMasterBean;
 import com.cti.lq.beans.QuestViewBean;
 import com.cti.lq.service.LQLeaderService;
@@ -82,6 +83,12 @@ public class LQLeaderServiceImpl implements LQLeaderService  {
 		    questList = leaderDAO.getQuestMasterDetails(renderRequest, questList);
 		
 		    return questList;
+	}
+
+	@Override
+	public Boolean resetPassword(PasswordResetBean resetBean) {
+		LQLeaderDAO leaderDAO = new LQLeaderDAOImpl();
+		return leaderDAO.resetPassword(resetBean);
 	}
 
 

@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import com.cti.lq.Constants.LQPortalConstants;
 import com.cti.lq.Constants.QueryContants;
 import com.cti.lq.beans.LeaderBean;
+import com.cti.lq.beans.PasswordResetBean;
 import com.cti.lq.beans.QuestMasterBean;
 import com.cti.lq.beans.QuestViewBean;
 import com.cti.lq.dao.LQLeaderDAO;
@@ -212,8 +213,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 			ps2 = con.prepareStatement(updQuery2.toString());
 			ps2.setString(1, leaderDetails.getFirstname());
 			ps2.setString(2, leaderDetails.getLastname());
-			ps2.setString(3, leaderDetails.getEmailAddress());
-			ps2.setInt(4, leaderDetails.getUserid());
+			ps2.setInt(3, leaderDetails.getUserid());
 			save2 = ps2.executeUpdate();
 			
 			ps3 = con.prepareStatement(updQuery3.toString());
@@ -409,6 +409,41 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 
 		return questList;
 	
+	}
+
+	@Override
+	public Boolean resetPassword(PasswordResetBean resetBean) {
+		LOG.info("Password Reset DAO");
+		
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		int save1 = 0;
+		
+		StringBuffer query = new StringBuffer(QueryContants.resetPassword);
+		
+		try {
+			con = DBConnectionFactory.getPostgresDBConnection();
+			ps = con.prepareStatement(query.toString());
+			ps.setString(1, resetBean.getNewPassword());
+			ps.setString(2, resetBean.getEmailAddress());
+			
+			LOG.info("emailAddress" + resetBean.getEmailAddress());
+			
+			save1 = ps.executeUpdate();
+			//save1 = 1;
+		
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		}	
+		LOG.info("save1" + save1);
+		if (save1 > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
 	}
 	
 }
