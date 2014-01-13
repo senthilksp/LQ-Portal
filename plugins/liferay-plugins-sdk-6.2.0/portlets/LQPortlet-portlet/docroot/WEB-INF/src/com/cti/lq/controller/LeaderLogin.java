@@ -32,6 +32,7 @@ import com.cti.lq.util.LQPortalUserServiceUtil;
 import com.cti.lq.util.LQPortalUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -55,8 +56,7 @@ public class LeaderLogin extends MVCPortlet {
 		LeaderBean leaderBean = new LeaderBean();
 		LQPortletService lqServiceLayer = new LQPortletServiceImpl();
 		String role = LQPortalUserServiceUtil.getRoleName(renderRequest);
-		
-		
+
 		try {
 			lqServiceLayer
 					.populateLeaderLoginPortlet(leaderBean, renderRequest);
@@ -79,62 +79,86 @@ public class LeaderLogin extends MVCPortlet {
 		LOG.info(" Entering submitLeaderDetails()");
 
 		LeaderBean leaderDetails = new LeaderBean();
-		//int userId = LQPortalUserServiceUtil.getUserId(actionRequest);
+		// int userId = LQPortalUserServiceUtil.getUserId(actionRequest);
+
+		UploadPortletRequest uploadRequest = PortalUtil
+				.getUploadPortletRequest(actionRequest);
+
+		String path = getPortletContext().getRealPath("/");
+
+		try {
+			int userId = Integer.valueOf(uploadRequest.getParameter("userId"));
+
+			leaderDetails.setFirstname(uploadRequest.getParameter("firstname"));
+			leaderDetails.setLastname(uploadRequest.getParameter("lastname"));
+			leaderDetails.setEmailAddress(uploadRequest
+					.getParameter("emailaddress"));
+			leaderDetails.setFacultyRole(uploadRequest
+					.getParameter("facultyrole"));
+			leaderDetails.setPrimaryPhone(uploadRequest
+					.getParameter("primaryphone"));
+			leaderDetails.setWebsite(uploadRequest.getParameter("website"));
+			leaderDetails.setBusinessName(uploadRequest
+					.getParameter("businessname"));
+			leaderDetails.setCountry(uploadRequest.getParameter("country"));
+			leaderDetails.setCity(uploadRequest.getParameter("city"));
+
+			leaderDetails.setBioStatement(uploadRequest
+					.getParameter("biostatement"));
+			leaderDetails.setPhotoURL(uploadRequest.getParameter("photourl"));
+			leaderDetails.setUserid(userId);
+			
+			String imageFileName = uploadRequest.getFileName("image_fileName");
+			String fileLocation = LQPortalConstants.LQ_FILE_LOCATION;
+			fileLocation = fileLocation + "/" + imageFileName;
+
+			if (!(imageFileName == null || "".equals(imageFileName))) {
+				LQPortalUtil.uploadFile(path, uploadRequest, "image_fileName");
+				leaderDetails.setPhotoURL(fileLocation);
+				updateLeaderDetail(actionRequest, userId, uploadRequest,
+						leaderDetails);
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	private void updateLeaderDetail(ActionRequest actionRequest, int userId,
+			UploadPortletRequest uploadRequest, LeaderBean leaderDetails) {
 		Boolean saveSuccess = false;
 
 		try {
-			int userId = Integer.valueOf(actionRequest.getParameter("userId"));
-			LOG.info("userId------>" + userId);
-			
-			leaderDetails.setFirstname(actionRequest.getParameter("firstname")); 
-			leaderDetails.setLastname(actionRequest.getParameter("lastname"));
-			leaderDetails.setEmailAddress(actionRequest.getParameter("emailaddress"));
-			leaderDetails.setFacultyRole(actionRequest.getParameter("facultyrole")); 
-			leaderDetails.setPrimaryPhone(actionRequest.getParameter("primaryphone"));
-			leaderDetails.setWebsite(actionRequest.getParameter("website"));
-			leaderDetails.setBusinessName(actionRequest.getParameter("businessname")); 
-			leaderDetails.setCountry(actionRequest.getParameter("country"));
-			leaderDetails.setCity(actionRequest.getParameter("city"));
-			
-			leaderDetails.setBioStatement(actionRequest.getParameter("biostatement"));
-			leaderDetails.setPhotoURL(actionRequest.getParameter("photourl"));
-			leaderDetails.setUserid(userId);
-			
 			List<QuestMasterBean> questMasterList = new ArrayList<QuestMasterBean>();
 			List<QuestMasterBean> questChangesList = new ArrayList<QuestMasterBean>();
-			
-			
-			LQQuestService questService = new LQQuestServiceImpl(); 
+			LQQuestService questService = new LQQuestServiceImpl();
 			questMasterList = questService.getQuestMasterList(userId);
-			
-			LOG.info("SIZE=====" + questMasterList.size());
-			
-			for(QuestMasterBean qb:questMasterList) {
+
+			for (QuestMasterBean qb : questMasterList) {
 				QuestMasterBean newBean = new QuestMasterBean();
 				newBean.setUserId(qb.getUserId());
 				newBean.setQuestId(qb.getQuestId());
-				if( actionRequest.getParameter(String.valueOf(qb.getQuestId())) != null) {
+
+				if (uploadRequest.getParameter(String.valueOf(qb.getQuestId())) != null) {
 					newBean.setUserId(userId);
-					if("Private".equalsIgnoreCase(actionRequest.getParameter(String.valueOf(qb.getQuestId())))) {
+					if ("Private".equalsIgnoreCase(uploadRequest
+							.getParameter(String.valueOf(qb.getQuestId())))) {
 						newBean.setAccessMode(false);
 					} else {
 						newBean.setAccessMode(true);
 					}
 				}
-				LOG.info("UserId-------->" + newBean.getUserId());
-				LOG.info("Quest Id------->" + newBean.getQuestId());
 				questChangesList.add(newBean);
 			}
-			
+
 			leaderDetails.setQuestList(questChangesList);
-			
 			LQLeaderService lqServiceLayer = new LQLeaderServiceImpl();
 			saveSuccess = lqServiceLayer.saveLeaderDetails(leaderDetails);
-		
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		if (saveSuccess) {
 			SessionMessages.add(actionRequest, "leader-edited-successfully");
 		} else {

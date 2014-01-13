@@ -56,6 +56,8 @@ function doCancel(userId) {
 							<aui:validator name="minLength"> '10' </aui:validator>
 					</aui:input>	
 					<br> <img src="${leaderBean.photoURL}" alt=""></img> <br>
+						<input type="file" name="<portlet:namespace />image_fileName" id="image_fileName"/> 
+					<br>
 					
 					<aui:input label='<%=rb.getString("leader-login-portlet-photoURL")%>' name="photourl" min="2" max="60"
 							style="width:300px" id="firstname" type="text" required="true" maxlength="60"
