@@ -37,7 +37,9 @@ function doCancel(userId) {
 		<liferay-ui:success key="leader-edited-successfully" message='<%=rb.getString("leader-editleader-success-msg")%>'/>
 		<liferay-ui:error  key="leader-edit-failed" message='<%=rb.getString("leader-editleader-failure-msg")%>'/>
 		
-		<aui:form action="<%=submitLeaderDetailsURL.toString()%>" method="post" name="LeaderDetailsForm" id="LeaderDetailsForm">
+		<aui:form action="<%=submitLeaderDetailsURL.toString()%>" method="post" name="LeaderDetailsForm" 
+				id="LeaderDetailsForm" enctype="multipart/form-data">
+				
 		<div class="contentWrapper_lq"style="width: 60%; float: left; height:1270px;" >	
 					<div style="margin:0px 0px 0px 20px;">
 					<%=rb.getString("leader-view-portlet-firstname")%><aui:input label= "" name="firstname" min="2"
@@ -56,16 +58,9 @@ function doCancel(userId) {
 							<aui:validator name="minLength"> '10' </aui:validator>
 					</aui:input>	
 					<br> <img src="${leaderBean.photoURL}" alt=""></img> <br>
-						<input type="file" name="<portlet:namespace />image_fileName" id="image_fileName"/> 
-					<br>
+					<input type="file" name="<portlet:namespace />image_fileName" id="image_fileName"/> 
 					
-					<aui:input label='<%=rb.getString("leader-login-portlet-photoURL")%>' name="photourl" min="2" max="60"
-							style="width:300px" id="firstname" type="text" required="true" maxlength="60"
-							value="${leaderBean.photoURL}">
-							<aui:validator name="minLength"> '2' </aui:validator>
-					</aui:input>
-						<input id="image-file" type="file" />
-					<aui:input label='<%=rb.getString("leader-view-portlet-facultyrole")%>' name="facultyrole"
+					<br> <aui:input label='<%=rb.getString("leader-view-portlet-facultyrole")%>' name="facultyrole"
 							required="true" id="facultyrole" type="text" maxlength="30"
 							value="${leaderBean.facultyRole}">
 							<aui:validator name="minLength"> '2' </aui:validator>
@@ -99,10 +94,10 @@ function doCancel(userId) {
 					<aui:input label='<%=rb.getString("leader-view-portlet-website")%>' name="website" id="website"
 							type="text" value="${leaderBean.website}" maxlength="60">
 						</aui:input>
-						 <aui:input type="hidden" id="userId" name="userId" value="${userId}" readonly="readonly"/>
-					
+					<aui:input type="hidden" id="userId" name="userId" value="${userId}" readonly="readonly"/>
 					<aui:button-row>
 							 <c:if test="${roleName eq 'LEADER' || roleName eq 'LEADER_ADMIN'}">
+								
 								<aui:button type="submit" onClick="doSubmit();" value='<%=rb.getString("leader-login-portlet-btn1-caption")%>' />
 							</c:if>
 							<c:if test="${roleName eq 'LEADER' || roleName eq 'LEADER_ADMIN'}">
