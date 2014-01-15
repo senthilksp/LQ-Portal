@@ -17,7 +17,6 @@ function doDisplay(divId) {
 		this.pause();
 	});
 	$('#' + divId).show();
-	$('#' + divId).next().play();
 }
 </script>
 
@@ -68,7 +67,7 @@ PortalUtil.setPageTitle("Quests", request);
 							<a href='#!' onclick="doDisplay('${quest.id}')">${quest.questLocation}</a><br>
 							<div id="${quest.id}" class="quest">
 								<video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="50" poster="" data-setup="{{}}">
-									<source src="${quest.questLocation}" type='video/mp4' />
+									<source src="${quest.questLocation}" type='video/mp4' > </source>
 								</video>
 							</div>
 						</c:if>
@@ -90,7 +89,7 @@ PortalUtil.setPageTitle("Quests", request);
 						<a href='#!' onclick="doDisplay('${quest.id}')">${quest.questLocation}</a><br>
 						<div id="${quest.id}" class="quest">
 							<video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="264" poster="" data-setup="{{}}">
-						    	<source src="${quest.questLocation}" type='video/mp4' />
+						    	<source src="${quest.questLocation}" type='video/mp4'> </source>
 							</video>
 						</div>	
 					</c:if>

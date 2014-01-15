@@ -19,7 +19,6 @@
 			this.pause();
 		});
 		$('#' + divId).show();
-		$('#' + divId).next().play();
 	}
 </script>
 
@@ -97,7 +96,7 @@
 						<video id="lq_video" class="video-js vjs-default-skin" controls
 							preload="none" width="300" height="50" poster=""
 							data-setup="{{}}">
-							<source src="${quest.questLocation}" type='video/mp4' />
+							<source src="${quest.questLocation}" type='video/mp4' > </source>
 						</video>
 						</div>
 					</c:if>
@@ -121,7 +120,7 @@
 							<video id="lq_video" class="video-js vjs-default-skin" controls
 								preload="none" width="300" height="250" poster=""
 								data-setup="{{}}">
-								<source src="${quest.questLocation}" type='video/mp4' />
+								<source src="${quest.questLocation}" type='video/mp4'> </source>
 							</video>
 						</div>
 

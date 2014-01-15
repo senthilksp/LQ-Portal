@@ -20,7 +20,6 @@
 			this.pause();
 		});
 		$('#' + divId).show();
-		$('#' + divId).next().play();
 	}
 
 	function doSubmit(x) {
@@ -105,7 +104,7 @@
 									preload="none" width="300" height="50"
 									poster=""
 									data-setup="{{}}">
-									<source src="${questTransaction.questLocation}" type='video/mp4' />
+									<source src="${questTransaction.questLocation}" type='video/mp4' > </source>
 								</video>
 							</div>	
 							<input type="hidden" name="id1" id="<portlet:namespace />id1" />"
@@ -126,7 +125,7 @@
 									preload="none" width="300" height="264"
 									poster=""
 									data-setup="{{}}">
-									<source src="${questTransaction.questLocation}" type='video/mp4' />
+									<source src="${questTransaction.questLocation}" type='video/mp4' > </source>
 								</video>
 							</div>	
 							<input type="file" name="${questTransaction.questTransId}"
