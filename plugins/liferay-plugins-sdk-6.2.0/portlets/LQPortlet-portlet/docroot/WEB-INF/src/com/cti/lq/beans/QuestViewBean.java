@@ -9,6 +9,7 @@ package com.cti.lq.beans;
  */
 public class QuestViewBean {
 
+	private int id;
 	private int quest_id;
 	private String quest_title;
 	private Boolean access_mode;
@@ -19,6 +20,13 @@ public class QuestViewBean {
 	private String firstName;
 	private String photoURL;
 	private int questTransId;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public int getQuestTransId() {
 		return questTransId;

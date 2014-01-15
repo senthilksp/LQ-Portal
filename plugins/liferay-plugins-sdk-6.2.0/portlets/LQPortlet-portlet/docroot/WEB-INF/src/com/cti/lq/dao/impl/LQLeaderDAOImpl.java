@@ -352,6 +352,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				QuestViewBean qb = new QuestViewBean();
+				qb.setId(rs.getInt("id"));
 				qb.setQuest_id(rs.getInt("quest_id"));
 				qb.setQuest_title(rs.getString("quest_title"));
 				qb.setAccess_mode(rs.getBoolean("access_mode"));

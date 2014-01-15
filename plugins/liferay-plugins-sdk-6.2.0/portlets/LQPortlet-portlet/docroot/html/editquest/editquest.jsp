@@ -11,8 +11,17 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-
+		(".quest").hide();
 	});
+	
+	function doDisplay(divId) {
+		$(".quest").hide();
+		$("video").each(function() {
+			this.pause();
+		});
+		$('#' + divId).show();
+		$('#' + divId).next().play();
+	}
 
 	function doSubmit(x) {
 		jQuery("input[name=id1]").val(x);
@@ -90,12 +99,15 @@
 								onclick="doDelete('${questTransaction.questTransId}');" />	
 						</c:if>
 						<c:if test="${questTransaction.questType eq 'AUDIO'}">
-							<video id="lq_video" class="video-js vjs-default-skin" controls
-								preload="none" width="300" height="264"
-								poster=""
-								data-setup="{{}}">
-								<source src="${questTransaction.questLocation}" type='video/mp4' />
-							</video>
+						    <a href='#!' onclick="doDisplay('${quest.id}')">${quest.questLocation}</a><br>
+							<div id="${quest.id}" class="quest">
+								<video id="lq_video" class="video-js vjs-default-skin" controls
+									preload="none" width="300" height="50"
+									poster=""
+									data-setup="{{}}">
+									<source src="${questTransaction.questLocation}" type='video/mp4' />
+								</video>
+							</div>	
 							<input type="hidden" name="id1" id="<portlet:namespace />id1" />"
 							<input type="file" name="${questTransaction.questTransId}"
 								id="${questTransaction.questTransId}" />
@@ -107,12 +119,16 @@
 						<c:if test="${questTransaction.questType eq 'VIDEO' }">
 							<br>
 							<br>
-							<video id="lq_video" class="video-js vjs-default-skin" controls
-								preload="none" width="300" height="264"
-								poster=""
-								data-setup="{{}}">
-								<source src="${questTransaction.questLocation}" type='video/mp4' />
-							</video>
+							<a href='#!' onclick="doDisplay('${quest.id}')">${quest.questLocation}</a>
+							<br>
+							<div id="${quest.id}" class="quest">
+								<video id="lq_video" class="video-js vjs-default-skin" controls
+									preload="none" width="300" height="264"
+									poster=""
+									data-setup="{{}}">
+									<source src="${questTransaction.questLocation}" type='video/mp4' />
+								</video>
+							</div>	
 							<input type="file" name="${questTransaction.questTransId}"
 								id="${questTransaction.questTransId}" />
 							<input type="button" id="btnEdit" name="btnEdit" value=<%=rb.getString("quest-edit-button-caption")%>

@@ -6,7 +6,24 @@
 <%@ page import="com.cti.lq.Constants.LQPortalConstants" %>
 <%@ page import="com.liferay.portal.util.PortalUtil" %>
 
+<script type="text/javascript">
+$(document).ready(function() {
+	(".quest").hide();
+});
+
+function doDisplay(divId) {
+	$(".quest").hide();
+	$("video").each(function() {
+		this.pause();
+	});
+	$('#' + divId).show();
+	$('#' + divId).next().play();
+}
+</script>
+
+
 <portlet:defineObjects />
+
 
 <%java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);
 PortalUtil.setPageTitle("Quests", request);
@@ -43,12 +60,20 @@ PortalUtil.setPageTitle("Quests", request);
 				<br/>
 				<h5>Audios</h5>
 				<c:forEach items="${questList}" var="quest">
-					<c:if test="${quest.questType eq 'AUDIO'}">
-						<br><br>
-						<video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="264" poster="" data-setup="{{}}">
-							<source src="${quest.questLocation}" type='video/mp4' />
-						</video>
-					</c:if>
+				<a href='#' onclick="showAudio();">${quest.questLocation}</a>	
+					
+					<div id="audiodiv" >
+						<c:if test="${quest.questType eq 'AUDIO'}">
+							<br><br>
+							<a href='#!' onclick="doDisplay('${quest.id}')">${quest.questLocation}</a><br>
+							<div id="${quest.id}" class="quest">
+								<video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="50" poster="" data-setup="{{}}">
+									<source src="${quest.questLocation}" type='video/mp4' />
+								</video>
+							</div>
+						</c:if>
+					</div>
+				
 				</c:forEach>
 				<br/>
 				<input type="file" name="<portlet:namespace />audio_fileName" />
@@ -56,13 +81,21 @@ PortalUtil.setPageTitle("Quests", request);
 				<input type="submit" id="btnSubmit2" name="btnSubmit2" value='Upload' />	
 				<br><br>
 				<h5>Videos</h5>
-				<c:forEach items="${questList}" var="quest">	
+				<c:forEach items="${questList}" var="quest">
+				<a href='#' onclick="showVideo();">${quest.questLocation}</a>		
+					
+					<div id="videodiv" >
 					<c:if test="${quest.questType eq 'VIDEO'}">
 						<br><br>
-						<video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="264" poster="" data-setup="{{}}">
-					    	<source src="${quest.questLocation}" type='video/mp4' />
-						</video>
+						<a href='#!' onclick="doDisplay('${quest.id}')">${quest.questLocation}</a><br>
+						<div id="${quest.id}" class="quest">
+							<video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="264" poster="" data-setup="{{}}">
+						    	<source src="${quest.questLocation}" type='video/mp4' />
+							</video>
+						</div>	
 					</c:if>
+					</div>
+					
 				</c:forEach>
 				<br/>
 				<input type="file" name="<portlet:namespace />video_fileName" />
