@@ -20,6 +20,7 @@ public class QuestViewBean {
 	private String firstName;
 	private String photoURL;
 	private int questTransId;
+	private String qlocationForDisplay;
 	
 	public int getId() {
 		return id;
@@ -87,6 +88,13 @@ public class QuestViewBean {
 	}
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+	
+	public String getQlocationForDisplay() {
+		return qlocationForDisplay;
+	}
+	public void setQlocationForDisplay(String qlocationForDisplay) {
+		this.qlocationForDisplay = qlocationForDisplay;
 	}
 	
 

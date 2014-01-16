@@ -110,7 +110,7 @@
 					<c:forEach items="${questListAll}" var="questTransaction">
 						<c:if test="${questMaster.questId == questTransaction.quest_id}">	
 							<c:if test="${questTransaction.questType eq 'AUDIO'}">
-							<a href='#!' onclick="doDisplay('${questTransaction.id}')">${questTransaction.questLocation}</a>
+							<a href='#!' onclick="doDisplay('${questTransaction.id}')">${questTransaction.qlocationForDisplay}</a>
 							<div id="${questTransaction.id}" class="quest">
 									<video id="lq_video" class="video-js vjs-default-skin" controls
 										preload="none" width="300" height="50" poster=""
@@ -138,7 +138,7 @@
 						<c:if test="${questMaster.questId == questTransaction.quest_id}">
 						<c:if test="${questTransaction.questType eq 'VIDEO' }">
 						<br>
-						<a href='#!' onclick="doDisplay('${questTransaction.id}')">${questTransaction.questLocation}</a>
+						<a href='#!' onclick="doDisplay('${questTransaction.id}')">${questTransaction.qlocationForDisplay}</a>
 								<div id="${questTransaction.id}" class="quest">
 									<video id="lq_video" class="video-js vjs-default-skin" controls
 										preload="none" width="300" height="264" poster=""

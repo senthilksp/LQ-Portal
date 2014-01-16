@@ -62,7 +62,7 @@ PortalUtil.setPageTitle("Quests", request);
 					<div id="audiodiv" >
 						<c:if test="${quest.questType eq 'AUDIO'}">
 							<br><br>
-							<a href='#!' onclick="doDisplay('${quest.id}')">${quest.questLocation}</a><br>
+							<a href='#!' onclick="doDisplay('${quest.id}')">${quest.qlocationForDisplay}</a><br>
 							<div id="${quest.id}" class="quest">
 								<video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="50" poster="" data-setup="{{}}">
 									<source src="${quest.questLocation}" type='video/mp4' />
@@ -82,7 +82,7 @@ PortalUtil.setPageTitle("Quests", request);
 					<div id="videodiv" >
 					<c:if test="${quest.questType eq 'VIDEO'}">
 						<br><br>
-						<a href='#!' onclick="doDisplay('${quest.id}')">${quest.questLocation}</a><br>
+						<a href='#!' onclick="doDisplay('${quest.id}')">${quest.qlocationForDisplay}</a><br>
 						<div id="${quest.id}" class="quest">
 							<video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="264" poster="" data-setup="{{}}">
 						    	<source src="${quest.questLocation}" type='video/mp4' />
