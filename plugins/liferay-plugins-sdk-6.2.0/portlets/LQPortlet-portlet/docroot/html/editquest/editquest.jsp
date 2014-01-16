@@ -11,7 +11,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		(".quest").hide();
+		$(".quest").hide();	
 	});
 	
 	function doDisplay(divId) {
@@ -44,7 +44,7 @@
 			.getResourceBundle(request);
 %>
 
-<div style="overflow: hidden" class="contentWrapper_lq" >
+<div style="overflow: hidden" class="contentWrapper_lq">
 	<br>
 	<div class="contentWrapper_lq"
 		style="width: 50%; float: left; overflow: hidden">
@@ -80,7 +80,11 @@
 				<input type="hidden" name="questId"
 					id="<portlet:namespace />questId" value="${questMaster.questId}">
 
-				<input type="submit" id="btnMasterSave" name="btnMasterSave" value=<%=rb.getString("quest-edit-button-caption")%> onclick="doMasterSave();" />
+				<input type="submit" id="btnMasterSave" name="btnMasterSave"
+					value=<%=rb.getString("quest-edit-button-caption")%>
+					onclick="doMasterSave();" />
+				<br>
+				<h5>Pictures</h5>	
 				<c:forEach items="${questListAll}" var="questTransaction">
 					<c:if test="${questMaster.questId == questTransaction.quest_id}">
 						<input type="hidden" name="delId" id="<portlet:namespace />delId" />
@@ -90,60 +94,77 @@
 							<img src="${questTransaction.questLocation}" alt=""></img>
 							<br>
 							<input type="hidden" name="id1" id="<portlet:namespace />id1" />
-							<input type="file" name="${questTransaction.questTransId}"
-								id="${questTransaction.questTransId}" accept="image/*"/>
-							<input type="button" id="btnEdit" name="btnEdit" value=<%=rb.getString("quest-edit-button-caption")%>
-								onclick="doSubmit('${questTransaction.questTransId}');" />
-							<input type="button" id="btnDelete" name="btnDelete" value=<%=rb.getString("quest-delete-button-caption")%>
-								onclick="doDelete('${questTransaction.questTransId}');" />	
+							<input type="file" name="${questTransaction.id}"
+								id="${questTransaction.questTransId}" accept="image/*" />
+							<input type="button" id="btnEdit" name="btnEdit"
+								value=<%=rb.getString("quest-edit-button-caption")%>
+								onclick="doSubmit('${questTransaction.id}');" />
+							<input type="button" id="btnDelete" name="btnDelete"
+								value=<%=rb.getString("quest-delete-button-caption")%>
+								onclick="doDelete('${questTransaction.id}');" />
 						</c:if>
-						<c:if test="${questTransaction.questType eq 'AUDIO'}">
-						    <a href='#!' onclick="doDisplay('${quest.id}')">${quest.questLocation}</a><br>
-							<div id="${quest.id}" class="quest">
-								<video id="lq_video" class="video-js vjs-default-skin" controls
-									preload="none" width="300" height="50"
-									poster=""
-									data-setup="{{}}">
-									<source src="${questTransaction.questLocation}" type='video/mp4' > </source>
-								</video>
-							</div>	
-							<input type="hidden" name="id1" id="<portlet:namespace />id1" />"
-							<input type="file" name="${questTransaction.questTransId}"
-								id="${questTransaction.questTransId}" />
-							<input type="button" id="btnEdit" name="btnEdit" value=<%=rb.getString("quest-edit-button-caption")%>
-								onclick="doSubmit('${questTransaction.questTransId}');" />
-							<input type="button" id="btnDelete" name="btnDelete" value=<%=rb.getString("quest-delete-button-caption")%>
-								onclick="doSubmit('${questTransaction.questTransId}'');" />		
-						</c:if>
+					  </c:if>	
+					</c:forEach>
+					
+					<h5>Audios</h5>
+					<c:forEach items="${questListAll}" var="questTransaction">
+						<c:if test="${questMaster.questId == questTransaction.quest_id}">	
+							<c:if test="${questTransaction.questType eq 'AUDIO'}">
+							<a href='#!' onclick="doDisplay('${questTransaction.id}')">${questTransaction.questLocation}</a>
+							<div id="${questTransaction.id}" class="quest">
+									<video id="lq_video" class="video-js vjs-default-skin" controls
+										preload="none" width="300" height="50" poster=""
+										data-setup="{{}}">
+										<source src="${questTransaction.questLocation}"
+											type='video/mp4' > </source>
+									</video>
+							<input type="hidden" name="id1" id="<portlet:namespace />id1" />
+								<input type="file" name="${questTransaction.id}"
+									id="${questTransaction.id}" /> <input type="button"
+									id="btnEdit" name="btnEdit"
+									value=<%=rb.getString("quest-edit-button-caption")%>
+									onclick="doSubmit('${questTransaction.id}');" /> <input
+									type="button" id="btnDelete" name="btnDelete"
+									value=<%=rb.getString("quest-delete-button-caption")%>
+									onclick="doDelete('${questTransaction.id}');" />	
+							</div>
+							<br>	
+							</c:if>
+					  </c:if>	
+					</c:forEach>
+					
+					<h5>Videos</h5>
+					<c:forEach items="${questListAll}" var="questTransaction">
+						<c:if test="${questMaster.questId == questTransaction.quest_id}">
 						<c:if test="${questTransaction.questType eq 'VIDEO' }">
-							<br>
-							<br>
-							<a href='#!' onclick="doDisplay('${quest.id}')">${quest.questLocation}</a>
-							<br>
-							<div id="${quest.id}" class="quest">
-								<video id="lq_video" class="video-js vjs-default-skin" controls
-									preload="none" width="300" height="264"
-									poster=""
-									data-setup="{{}}">
-									<source src="${questTransaction.questLocation}" type='video/mp4' > </source>
-								</video>
-							</div>	
-							<input type="file" name="${questTransaction.questTransId}"
-								id="${questTransaction.questTransId}" />
-							<input type="button" id="btnEdit" name="btnEdit" value=<%=rb.getString("quest-edit-button-caption")%>
-								onclick="doSubmit('${questTransaction.questTransId}');" />
-							<input type="button" id="btnDelete" name="btnDelete" value=<%=rb.getString("quest-delete-button-caption")%>
-								onclick="doSubmit('${questTransaction.questTransId}');" />		
-							<br>
-							<br>
-							<br>
+						<br>
+						<a href='#!' onclick="doDisplay('${questTransaction.id}')">${questTransaction.questLocation}</a>
+								<div id="${questTransaction.id}" class="quest">
+									<video id="lq_video" class="video-js vjs-default-skin" controls
+										preload="none" width="300" height="264" poster=""
+										data-setup="{{}}">
+										<source src="${questTransaction.questLocation}"
+											type='video/mp4' > </source>
+									</video>
+								<input type="file" name="${questTransaction.questTransId}"
+									id="${questTransaction.questTransId}" /> <input type="button"
+									id="btnEdit" name="btnEdit"
+									value=<%=rb.getString("quest-edit-button-caption")%>
+									onclick="doSubmit('${questTransaction.id}');" /> <input
+									type="button" id="btnDelete" name="btnDelete"
+									value=<%=rb.getString("quest-delete-button-caption")%>
+								    onclick="doDelete('${questTransaction.id}');" />
+								</div>
+							<br>	
 						</c:if>
 					</c:if>
 				</c:forEach>
 				<h2></h2>
 			</c:forEach>
-			<a href='/web/guest/addQuestPage'><%=rb.getString("quest-addquest-link-caption")%></a>  <br>
-		</div><br>
+			<a href='/web/guest/addQuestPage'><%=rb.getString("quest-addquest-link-caption")%></a>
+			<br>
+		</div>
+		<br>
 	</form>
 </div>
 

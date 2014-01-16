@@ -8,7 +8,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	(".quest").hide();
+		$(".quest").hide();	
 });
 
 function doDisplay(divId) {
@@ -59,15 +59,13 @@ PortalUtil.setPageTitle("Quests", request);
 				<br/>
 				<h5>Audios</h5>
 				<c:forEach items="${questList}" var="quest">
-				<a href='#' onclick="showAudio();">${quest.questLocation}</a>	
-					
 					<div id="audiodiv" >
 						<c:if test="${quest.questType eq 'AUDIO'}">
 							<br><br>
 							<a href='#!' onclick="doDisplay('${quest.id}')">${quest.questLocation}</a><br>
 							<div id="${quest.id}" class="quest">
 								<video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="50" poster="" data-setup="{{}}">
-									<source src="${quest.questLocation}" type='video/mp4' > </source>
+									<source src="${quest.questLocation}" type='video/mp4' />
 								</video>
 							</div>
 						</c:if>
@@ -81,15 +79,13 @@ PortalUtil.setPageTitle("Quests", request);
 				<br><br>
 				<h5>Videos</h5>
 				<c:forEach items="${questList}" var="quest">
-				<a href='#' onclick="showVideo();">${quest.questLocation}</a>		
-					
 					<div id="videodiv" >
 					<c:if test="${quest.questType eq 'VIDEO'}">
 						<br><br>
 						<a href='#!' onclick="doDisplay('${quest.id}')">${quest.questLocation}</a><br>
 						<div id="${quest.id}" class="quest">
 							<video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="264" poster="" data-setup="{{}}">
-						    	<source src="${quest.questLocation}" type='video/mp4'> </source>
+						    	<source src="${quest.questLocation}" type='video/mp4' />
 							</video>
 						</div>	
 					</c:if>
