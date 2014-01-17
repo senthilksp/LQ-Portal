@@ -304,15 +304,4 @@ public class LQPortalUtil {
 		return PortalUtil.getCurrentURL(request);
 	}
 	
-	
-	public static void main(String args[]) {
-		
-		try {
-			UserLocalServiceUtil.updatePassword(10774, "testing-1", "tesing-1", false);
-		} catch (PortalException | SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	};
 }
