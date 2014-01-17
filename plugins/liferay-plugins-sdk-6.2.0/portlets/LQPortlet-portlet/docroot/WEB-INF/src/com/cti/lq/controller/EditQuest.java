@@ -80,26 +80,18 @@ public class EditQuest extends MVCPortlet {
 				String action = uploadRequest.getParameter("delId");
 				
 				
-				switch (action) {
-					case "DELETE": {
-						doDelete(uploadRequest, actionRequest);
-						actionResponse.sendRedirect(LQPortalConstants.LQ_QUEST_DETAILS_URL);
-						break;
-					}
-					case "MASTER": {
-						doMasterSave(uploadRequest, actionRequest);
-						actionResponse.sendRedirect(LQPortalConstants.LQ_QUEST_DETAILS_URL);
-						break;
-					}
-					case "DELETEALL": {
-						doMasterDelete(uploadRequest, actionRequest);
-						actionResponse.sendRedirect(LQPortalConstants.LQ_QUEST_DETAILS_URL);
-						break;
-					}
-					case "MODIFY": {
-						doUpdate(uploadRequest, actionRequest);
-						actionResponse.sendRedirect(LQPortalConstants.LQ_QUEST_DETAILS_URL);
-					}
+				if (action.equalsIgnoreCase("DELETE")) {
+					doDelete(uploadRequest, actionRequest);
+					actionResponse.sendRedirect(LQPortalConstants.LQ_QUEST_DETAILS_URL);
+				} else if (action.equalsIgnoreCase("MASTER")) {
+					doMasterSave(uploadRequest, actionRequest);
+					actionResponse.sendRedirect(LQPortalConstants.LQ_QUEST_DETAILS_URL);
+				} else if (action.equalsIgnoreCase("DELETEALL")) {
+					doMasterDelete(uploadRequest, actionRequest);
+					actionResponse.sendRedirect(LQPortalConstants.LQ_QUEST_DETAILS_URL);
+				} else if (action.equalsIgnoreCase("MODIFY")) {
+					doUpdate(uploadRequest, actionRequest);
+					actionResponse.sendRedirect(LQPortalConstants.LQ_QUEST_DETAILS_URL);
 				}
 
 			
