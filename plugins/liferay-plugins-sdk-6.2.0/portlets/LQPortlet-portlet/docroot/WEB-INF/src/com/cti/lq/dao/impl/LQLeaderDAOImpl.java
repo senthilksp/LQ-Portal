@@ -360,12 +360,12 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 				qb.setUserId(rs.getInt("userid"));
 				qb.setQuestType(rs.getString("quest_type"));
 				qb.setQuestLocation(rs.getString("quest_location"));
-				
+
 				String showLocation = qb.getQuestLocation().substring(
 						qb.getQuestLocation().lastIndexOf("/") + 1,
 						qb.getQuestLocation().length());
 				qb.setQlocationForDisplay(showLocation);
-				
+
 				qb.setFirstName(rs.getString("firstname"));
 				qb.setPhotoURL(rs.getString("photo"));
 				qb.setQuestTransId(rs.getInt("id"));
@@ -454,6 +454,15 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 			return false;
 		}
 		
+	}
+	
+	
+	public static void main(String args[]) {
+		
+		String str = "/LQPortlet-portlet/lqfiles/karthi.jpg";
+		String str1 = str.substring(str.lastIndexOf("/")+1,str.length());
+		System.out.println("str1=====" + str1);
+	
 	}
 	
 }
