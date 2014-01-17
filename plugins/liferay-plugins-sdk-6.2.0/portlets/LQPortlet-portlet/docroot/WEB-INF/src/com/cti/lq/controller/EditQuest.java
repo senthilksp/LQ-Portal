@@ -79,7 +79,6 @@ public class EditQuest extends MVCPortlet {
 
 				String action = uploadRequest.getParameter("delId");
 				
-				LOG.info("Action----" + action);
 				
 				switch (action) {
 					case "DELETE": {

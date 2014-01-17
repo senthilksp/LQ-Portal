@@ -268,7 +268,6 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 			rs  = ps1.executeQuery();
 			while (rs.next()) {
 				leaderDetails.setRoleid(rs.getInt(1));
-				LOG.info("role in DAO----------->" + rs.getInt(1));
 			}
 			rs.close();
 			
@@ -276,7 +275,6 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 			rs  = ps1.executeQuery();
 			while (rs.next()) {
 				leaderDetails.setUserid(rs.getInt(1)+1);
-				LOG.info("userid in DAO----------->" + rs.getInt(1));
 			}
 			rs.close();
 			
@@ -454,15 +452,6 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 			return false;
 		}
 		
-	}
-	
-	
-	public static void main(String args[]) {
-		
-		String str = "/LQPortlet-portlet/lqfiles/karthi.jpg";
-		String str1 = str.substring(str.lastIndexOf("/")+1,str.length());
-		System.out.println("str1=====" + str1);
-	
 	}
 	
 }
