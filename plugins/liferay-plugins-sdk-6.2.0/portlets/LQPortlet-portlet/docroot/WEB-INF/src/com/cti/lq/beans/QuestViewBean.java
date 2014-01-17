@@ -22,6 +22,7 @@ public class QuestViewBean {
 	private int questTransId;
 	private String qlocationForDisplay;
 	
+	
 	public int getId() {
 		return id;
 	}

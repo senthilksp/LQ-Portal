@@ -30,6 +30,7 @@ import com.cti.lq.Constants.LQPortalConstants;
 import com.cti.lq.controller.Header;
 import com.cti.lq.exceptions.LQPortalException;
 import com.liferay.mail.service.MailServiceUtil;
+import com.liferay.portal.PwdEncryptorException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.mail.MailMessage;
@@ -37,8 +38,11 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.pwd.PasswordEncryptor;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.security.pwd.PasswordEncryptor;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 /**
  * @author senthil Date Created : 20/12/2013. Function : This class is for
@@ -299,5 +303,16 @@ public class LQPortalUtil {
 	public static String getCurrentURL(HttpServletRequest request) {
 		return PortalUtil.getCurrentURL(request);
 	}
-
+	
+	
+	public static void main(String args[]) {
+		
+		try {
+			UserLocalServiceUtil.updatePassword(10774, "testing-1", "tesing-1", false);
+		} catch (PortalException | SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	};
 }

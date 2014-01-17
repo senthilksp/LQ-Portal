@@ -23,6 +23,8 @@ public interface LQQuestService {
 
 	Boolean updateQuestMaster(QuestMasterBean questMaster) throws SQLException;
 
-	Boolean deleteQuestTransaction(int id1) throws SQLException;;
+	Boolean deleteQuestTransaction(int id1) throws SQLException;
+
+	Boolean deleteQuestMaster(int questId) throws SQLException;
 
 }

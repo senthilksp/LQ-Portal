@@ -281,4 +281,48 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 			return false;
 		}
 	}
+
+	@Override
+	public Boolean deleteQuestMaster(int questId) throws SQLException {
+		LOG.info("Entering into deleteQuestMaster");
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int save1 = 0; int save2 = 0;
+
+		try {
+			con = DBConnectionFactory.getPostgresDBConnection();
+			con.setAutoCommit(false);
+			
+			ps = con.prepareStatement(QueryContants.deleteQuestTransaction
+					.toString());
+			ps.setInt(1, questId);
+			save1 = ps.executeUpdate();
+			ps.close();
+			
+			ps =  con.prepareStatement(QueryContants.deleteQuestMaster
+					.toString());
+			ps.setInt(1, questId);
+			save2 = ps.executeUpdate();
+			ps.close();
+			
+			con.commit();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			if (con != null)
+				con.close();
+
+		} finally {
+			closeDBOperations(con, ps, rs);
+		}
+
+		if (save1 > 0 && save2 > 0) {
+			LOG.info("Deletion Done");
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

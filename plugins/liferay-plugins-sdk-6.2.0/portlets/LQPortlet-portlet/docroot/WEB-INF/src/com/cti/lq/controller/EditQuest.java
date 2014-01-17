@@ -76,19 +76,35 @@ public class EditQuest extends MVCPortlet {
 		try {
 			UploadPortletRequest uploadRequest = PortalUtil
 					.getUploadPortletRequest(actionRequest);
-			if (uploadRequest.getParameter("id1") != null
-					&& (uploadRequest.getParameter("delId") != null)) {
-				if (uploadRequest.getParameter("delId").equalsIgnoreCase(
-						"DELETE")) {
-					doDelete(uploadRequest, actionRequest);
-				} else {
-					doMasterSave(uploadRequest, actionRequest);
+
+				String action = uploadRequest.getParameter("delId");
+				
+				LOG.info("Action----" + action);
+				
+				switch (action) {
+					case "DELETE": {
+						doDelete(uploadRequest, actionRequest);
+						actionResponse.sendRedirect(LQPortalConstants.LQ_QUEST_DETAILS_URL);
+						break;
+					}
+					case "MASTER": {
+						doMasterSave(uploadRequest, actionRequest);
+						actionResponse.sendRedirect(LQPortalConstants.LQ_QUEST_DETAILS_URL);
+						break;
+					}
+					case "DELETEALL": {
+						doMasterDelete(uploadRequest, actionRequest);
+						actionResponse.sendRedirect(LQPortalConstants.LQ_QUEST_DETAILS_URL);
+						break;
+					}
+					case "MODIFY": {
+						doUpdate(uploadRequest, actionRequest);
+						actionResponse.sendRedirect(LQPortalConstants.LQ_QUEST_DETAILS_URL);
+					}
 				}
-			} else {
-				doUpdate(uploadRequest, actionRequest);
-			}
-			actionResponse.sendRedirect(LQPortalConstants.LQ_QUEST_DETAILS_URL);
-		
+
+			
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -98,7 +114,7 @@ public class EditQuest extends MVCPortlet {
 			ActionRequest actionRequest) {
 		LOG.info("Update Method");
 		QuestMasterBean questMaster = null;
-		Boolean masterSaved 		= false;
+		Boolean masterSaved = false;
 		LQQuestService questService = new LQQuestServiceImpl();
 
 		try {
@@ -188,6 +204,36 @@ public class EditQuest extends MVCPortlet {
 				SessionMessages.add(actionRequest, "quest-edited-successfully");
 			} else {
 				SessionErrors.add(actionRequest, "quest-update-failed");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void doMasterDelete(UploadPortletRequest uploadRequest,
+			ActionRequest actionRequest) {
+		
+		LOG.info("doMasterDelete");
+		QuestMasterBean questMaster = null;
+		Boolean masterDeleted = false;
+		LQQuestService questService = new LQQuestServiceImpl();
+
+		try {
+			if (uploadRequest.getParameter("questId") != null) {
+
+				int questId = Integer.valueOf(uploadRequest
+						.getParameter("questId"));
+
+				masterDeleted = questService.deleteQuestMaster(questId);
+
+				if (masterDeleted) {
+					SessionMessages.add(actionRequest,
+							"quest-edited-successfully");
+				} else {
+					SessionErrors.add(actionRequest, "quest-update-failed");
+				}
 			}
 
 		} catch (Exception e) {

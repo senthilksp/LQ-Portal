@@ -22,5 +22,7 @@ public interface LQQuestDAO {
 
 	Boolean deleteQuestTransaction(int id1) throws SQLException;
 
+	Boolean deleteQuestMaster(int questId) throws SQLException;
+
 
 }

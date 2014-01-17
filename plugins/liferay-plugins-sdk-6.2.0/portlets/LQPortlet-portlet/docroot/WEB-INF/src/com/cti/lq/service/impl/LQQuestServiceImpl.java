@@ -64,4 +64,10 @@ public class LQQuestServiceImpl implements LQQuestService {
 		return questDAO.deleteQuestTransaction(id1);
 	}
 
+	@Override
+	public Boolean deleteQuestMaster(int questId) throws SQLException{
+		LQQuestDAO questDAO = new LQQuestDAOImpl();
+		return questDAO.deleteQuestMaster(questId);
+	}
+
 }

@@ -22,7 +22,7 @@ public class QueryContants {
 	
 	public static final String getQuestInfoByleader = "select * from quest_master_ where userid=? order by quest_id";
 
-	public static String getQuestInfo = "select  a.quest_id, b.id,a.quest_title,a.access_mode, a.definition,a.userid,c.firstname,d.photo, b.quest_type, b.quest_location "
+	public static String getQuestInfo = "select b.id, a.quest_id, b.id,a.quest_title,a.access_mode, a.definition,a.userid,c.firstname,d.photo, b.quest_type, b.quest_location "
 			+ "from quest_master_ a, quest_transaction_ b, user_ c, user_lq d where "
 			+ "a.quest_id = b.quest_id and a.userid = c.userid and c.userid = d.userid and a.userid=? and a.quest_id=? order by quest_id, quest_type" ;
 
@@ -47,9 +47,10 @@ public class QueryContants {
 
 	public static String resetPassword = "update user_ set password_ = ? where emailaddress = ?";
 	
-	public static final String updateQuestMaster = "update quest_master_  set quest_title=?, definition=? where quest_id=?";
-	public static final String updateQuestTran   = "update quest_transaction_  set quest_location=? where id=?"; 
-	public static final String deleteQuestTran   = "delete from quest_transaction_ where id=?";
-	
+	public static final String updateQuestMaster 	  = "update quest_master_  set quest_title=?, definition=? where quest_id=?";
+	public static final String updateQuestTran   	  = "update quest_transaction_  set quest_location=? where id=?"; 
+	public static final String deleteQuestTran   	  = "delete from quest_transaction_ where id=?";
+	public static final String deleteQuestMaster 	  = "delete from quest_master_ where quest_id=?";
+	public static final String deleteQuestTransaction = "delete from quest_transaction_ where quest_id=?";
 
 }
