@@ -20,7 +20,7 @@ public class StudentQuestViewTest {
 	// This class tests for all details of a quest can be viewable by a student.
 	// Sample Quest-Id and User_id combination is taken from
 	// "UnitTest.properties" file.
-	
+
 	@BeforeClass
 	public static void setUpDataSource() throws Exception {
 		LQUnitTestDataSourceSetup.setUpDataSource();
@@ -36,7 +36,7 @@ public class StudentQuestViewTest {
 
 		if (quest.length > 0) {
 
-			int userId  = Integer.valueOf(quest[0]);
+			int userId = Integer.valueOf(quest[0]);
 			int questId = Integer.valueOf(quest[1]);
 
 			LQLeaderService leaderService = new LQLeaderServiceImpl();
@@ -44,7 +44,6 @@ public class StudentQuestViewTest {
 
 			questList = leaderService.getQuestDetails(questList, null, userId,
 					questId);
-			System.out.println("questList size=" + questList.size());
 			assertTrue(questList.size() > 0);
 		}
 

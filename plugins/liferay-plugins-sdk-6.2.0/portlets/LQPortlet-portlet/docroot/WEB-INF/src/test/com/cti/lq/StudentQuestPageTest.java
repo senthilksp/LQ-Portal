@@ -19,12 +19,12 @@ public class StudentQuestPageTest {
 
 	// This test is for whether a single quest is exists or not.
 	// This is not going to check all the leaders have quest or not.
-	
+
 	@BeforeClass
 	public static void setUpDataSource() throws Exception {
 		LQUnitTestDataSourceSetup.setUpDataSource();
 	}
-	
+
 	@Test
 	public void testQuestsExists() {
 		LQLeaderService leaderService = new LQLeaderServiceImpl();
@@ -42,7 +42,6 @@ public class StudentQuestPageTest {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("questList size=" + questList.size());
 		assertTrue(questList.size() > 0);
 	}
 
