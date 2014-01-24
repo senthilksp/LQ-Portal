@@ -2,5 +2,71 @@
 <!DOCTYPE project>
 
 <project name="LQPortlet-portlet" basedir="." default="deploy">
-	<import file="C:\LQuest\Development\plugins\liferay-plugins-sdk-6.2.0\portlets/build-common-portlet.xml" />
+	<import file="C:\Intel\plugins\liferay-plugins-sdk-6.2.0\portlets/build-common-portlet.xml" />
+
+	<property name="JUnit_HOME" location="docroot/WEB-INF/lib/junit4.9b2" />
+
+	<target name="deploy-test">
+		<antcall target="unit_tests" />
+	</target>
+
+	<!-- Compile and run unit tests -->
+	<target name="unit_tests">
+		<if>
+			<available file="docroot/WEB-INF/src/test" />
+			<then>
+				<echo message="Unit testing Starts ..." />
+				<delete dir="docroot/WEB-INF/classes/test" />
+				<delete dir="docroot/WEB-INF/classes/test-reports" />
+				<mkdir dir="docroot/WEB-INF/classes/test-reports" />
+
+				<path id="plugin-lib.classpath">
+					<fileset dir="docroot/WEB-INF/lib" includes="*.jar" />
+					<fileset dir="${app.server.dir}/lib" includes="*.jar" />
+					<pathelement location="docroot/WEB-INF/classes" />
+				</path>
+
+				<path id="plugin-test-lib.classpath">
+					<pathelement location="docroot/WEB-INF/src/test" />
+					<pathelement location="docroot/WEB-INF/classes/test" />
+					<fileset dir="${JUnit_HOME}">
+						<include name="*.jar" />
+					</fileset>
+					<path refid="plugin-lib.classpath" />
+				</path>
+
+				<!-- compile tests -->
+				<echo message="Compiling Unit Test cases ..." />
+				<antcall target="compile-java">
+					<param name="javac.classpathref" value="plugin.classpath" />
+					<param name="javac.destdir" value="docroot/WEB-INF/classes/test" />
+					<param name="javac.srcdir" value="docroot/WEB-INF/src/test" />
+					<reference refid="plugin-test-lib.classpath" torefid="plugin-lib.classpath" />
+				</antcall>
+
+				<!-- Run tests -->
+				<echo message="Testing ... basedir = ${basedir}" />
+				<junit fork="yes" forkmode="once" haltonfailure="yes">
+					<classpath>
+						<path refid="plugin-test-lib.classpath" />
+						<fileset dir="${app.server.lib.global.dir}" includes="*.jar" />
+						<fileset dir="${app.server.lib.portal.dir}" includes="annotations.jar,commons-logging.jar,log4j.jar,util-bridges.jar,util-java.jar,util-taglib.jar" />
+						<fileset dir="${sdk.dir}/lib" includes="activation.jar,javax.servlet-api.jar,jsp-api.jar,mail.jar" />
+					</classpath>
+
+					<batchtest fork="yes" todir="docroot/WEB-INF/classes/test-reports">
+						<formatter type="plain" />
+						<fileset dir="docroot/WEB-INF/classes/test">
+							<include name="**/*Test.class" />
+						</fileset>
+					</batchtest>
+
+				</junit>
+			</then>
+		</if>
+	</target>
+
+
+
 </project>
+
