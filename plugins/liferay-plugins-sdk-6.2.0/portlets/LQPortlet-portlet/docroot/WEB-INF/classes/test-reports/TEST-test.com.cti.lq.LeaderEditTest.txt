@@ -1,0 +1,12 @@
+Testsuite: test.com.cti.lq.LeaderEditTest
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.488 sec
+------------- Standard Output ---------------
+SaveSucess=true
+------------- ---------------- ---------------
+------------- Standard Error -----------------
+log4j:WARN No appenders could be found for logger (com.cti.lq.dao.LQLeaderDAO).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+------------- ---------------- ---------------
+
+Testcase: testSaveEditLeaderValid took 0.368 sec

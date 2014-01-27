@@ -717,6 +717,9 @@ Please find a solution that does not require portal-impl.jar.
 				</if>
 			</then>
 		</if>
+		<antcall target="deploy-test">
+			<reference refid="plugin-lib.classpath" torefid="plugin-lib.classpath" />
+		</antcall>
 
 		<antcall target="merge" />
 	</target>
