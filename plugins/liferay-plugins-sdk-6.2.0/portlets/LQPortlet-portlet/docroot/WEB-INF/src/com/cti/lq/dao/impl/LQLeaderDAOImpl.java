@@ -65,8 +65,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 				rs2 = ps2.executeQuery();
 				String role = renderRequest == null ? null
 						: LQPortalUserServiceUtil.getRoleName(renderRequest);
-				// renderRequest = null in the case of Unit testing. 
-				
+				// renderRequest = null in the case of Unit testing.
 
 				while (rs2.next()) {
 					QuestMasterBean qb = new QuestMasterBean();
@@ -103,7 +102,8 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 		}
 
 		finally {
-			con.close();
+			closeDBOperations(con, ps1, rs1);
+			closeDBOperations(con, ps2, rs2);
 		}
 
 		LOG.info("Leaving from LeaderDAO");
@@ -156,7 +156,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
-			con.close();
+			closeDBOperations(con, ps, rs);
 		}
 
 		return lb;
@@ -180,7 +180,6 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 			lb.setFacultyRole(rs.getString("faculty_role"));
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return lb;
@@ -247,7 +246,10 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
-			con.close();
+			closeDBOperations(con, ps1, null);
+			closeDBOperations(con, ps2, null);
+			closeDBOperations(con, ps3, null);
+
 		}
 
 		saveFlag = (save1 > 0 && save2 > 0 && save3 > 0) ? true : false;
@@ -284,12 +286,17 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 			}
 			rs.close();
 
-			ps1 = con.prepareStatement(userIdQuery.toString());
-			rs = ps1.executeQuery();
-			while (rs.next()) {
-				leaderDetails.setUserid(rs.getInt(1) + 1);
+			// if userId=0 then, this method is called by UserLayer. Otherwise
+			// it is called by unit test
+
+			if (leaderDetails.getUserid() == 0) {
+				ps1 = con.prepareStatement(userIdQuery.toString());
+				rs = ps1.executeQuery();
+				while (rs.next()) {
+					leaderDetails.setUserid(rs.getInt(1) + 1);
+				}
+				rs.close();
 			}
-			rs.close();
 
 			ps2 = con.prepareStatement(insertQuery1.toString());
 			ps2.setString(1, leaderDetails.getFirstname());
@@ -324,7 +331,8 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
-			con.close();
+			closeDBOperations(con, ps1, rs);
+			closeDBOperations(con, ps2, null);
 		}
 
 		return saveSuccess;
@@ -385,7 +393,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
-			con.close();
+			closeDBOperations(con, ps, rs);
 		}
 		return questList;
 	}
@@ -424,7 +432,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
-			con.close();
+			closeDBOperations(con, ps, rs);
 		}
 
 		return questList;
@@ -432,7 +440,8 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 	}
 
 	@Override
-	public Boolean resetPassword(PasswordResetBean resetBean) {
+	public Boolean resetPassword(PasswordResetBean resetBean)
+			throws SQLException {
 		LOG.info("Password Reset DAO");
 
 		Connection con = null;
@@ -447,20 +456,74 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 			ps.setString(1, resetBean.getNewPassword());
 			ps.setString(2, resetBean.getEmailAddress());
 
-			LOG.info("emailAddress" + resetBean.getEmailAddress());
+			System.out.println("emailAddress" + resetBean.getEmailAddress());
+			System.out.println("password" + resetBean.getcNewPassword());
 
 			save1 = ps.executeUpdate();
-			// save1 = 1;
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
+		} finally {
+			closeDBOperations(con, ps, null);
 		}
-		LOG.info("save1" + save1);
+
+		System.out.println("password save1" + save1);
 		if (save1 > 0) {
 			return true;
 		} else {
 			return false;
 		}
+
+	}
+
+	@Override
+	public Boolean deleteLeader(LeaderBean lb) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int save1 = 0;
+		int save2 = 0;
+
+		StringBuffer query1 = new StringBuffer(QueryContants.deleteLeader1);
+		StringBuffer query2 = new StringBuffer(QueryContants.deleteLeader2);
+
+		try {
+			con = DBConnectionFactory.getPostgresDBConnection();
+			con.setAutoCommit(false);
+
+			ps = con.prepareStatement(query1.toString());
+			ps.setInt(1, lb.getUserid());
+
+			save1 = ps.executeUpdate();
+			ps.close();
+
+			ps = con.prepareStatement(query2.toString());
+			ps.setInt(1, lb.getUserid());
+
+			save2 = ps.executeUpdate();
+
+			con.commit();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			closeDBOperations(con, ps, null);
+		}
+
+		if (save1 > 0 && save2 > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private void closeDBOperations(Connection con, PreparedStatement ps,
+			ResultSet rs) throws SQLException {
+		if (con != null)
+			con.close();
+		if (ps != null)
+			ps.close();
+		if (rs != null)
+			rs.close();
 
 	}
 

@@ -10,11 +10,9 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.cti.lq.Constants.LQPortalConstants;
 import com.cti.lq.Constants.QueryContants;
 import com.cti.lq.beans.QuestMasterBean;
 import com.cti.lq.beans.QuestTransactionBean;
-import com.cti.lq.beans.QuestViewBean;
 import com.cti.lq.dao.LQQuestDAO;
 import com.cti.lq.persistence.DBConnectionFactory;
 
@@ -38,7 +36,6 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 			con = DBConnectionFactory.getPostgresDBConnection();
 			ps = con.prepareStatement(query.toString());
 			ps.setInt(1, userId);
-			
 
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -52,7 +49,6 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 			}
 			ps.close();
 			rs.close();
-			
 
 		} catch (Exception ex) {
 			if (con != null)
@@ -65,17 +61,6 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 		}
 
 		return qustMasterList;
-	}
-
-	private void closeDBOperations(Connection con, PreparedStatement ps,
-			ResultSet rs) throws SQLException {
-		if (con != null)
-			con.close();
-		if (ps != null)
-			ps.close();
-		if (rs != null)
-			rs.close();
-
 	}
 
 	@Override
@@ -96,7 +81,7 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 		try {
 			con = DBConnectionFactory.getPostgresDBConnection();
 			con.setAutoCommit(false);
-			
+
 			ps = con.prepareStatement(insQuery.toString());
 			ps.setString(1, questmaster.getQuestTitle());
 			ps.setBoolean(2, questmaster.getAccessMode());
@@ -123,7 +108,7 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 					save2 = ps.executeUpdate();
 				}
 			}
-			
+
 			con.commit();
 		} catch (Exception ex) {
 			if (con != null)
@@ -140,10 +125,9 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 		}
 	}
 
-	
 	@Override
 	public Boolean saveQuestTransactions(List<QuestTransactionBean> qTransList,
-			int userId,int questId) throws SQLException {
+			int userId, int questId) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -182,7 +166,7 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 	public Boolean updateQuestTransaction(QuestTransactionBean transBean)
 			throws SQLException {
 		// TODO Auto-generated method stub
-		
+
 		LOG.info("Enterint into updateQuestTransaction");
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -218,7 +202,7 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 	public Boolean updateQuestMaster(QuestMasterBean questMaster)
 			throws SQLException {
 		LOG.info("Entering into updateQuestMaster");
-		
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -231,7 +215,8 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 					.toString());
 			ps.setString(1, questMaster.getQuestTitle());
 			ps.setString(2, questMaster.getQuestDefinition());
-			ps.setInt(3, questMaster.getQuestId());
+			ps.setBoolean(3, questMaster.getAccessMode());
+			ps.setInt(4, questMaster.getQuestId());
 			save1 = ps.executeUpdate();
 
 		} catch (Exception ex) {
@@ -262,7 +247,7 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 			ps = con.prepareStatement(QueryContants.deleteQuestTran.toString());
 			ps.setInt(1, id1);
 			save1 = ps.executeUpdate();
-			
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			if (con != null)
@@ -282,28 +267,29 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 	@Override
 	public Boolean deleteQuestMaster(int questId) throws SQLException {
 		LOG.info("Entering into deleteQuestMaster");
-		
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		int save1 = 0; int save2 = 0;
+		int save1 = 0;
+		int save2 = 0;
 
 		try {
 			con = DBConnectionFactory.getPostgresDBConnection();
 			con.setAutoCommit(false);
-			
+
 			ps = con.prepareStatement(QueryContants.deleteQuestTransaction
 					.toString());
 			ps.setInt(1, questId);
 			save1 = ps.executeUpdate();
 			ps.close();
-			
-			ps =  con.prepareStatement(QueryContants.deleteQuestMaster
+
+			ps = con.prepareStatement(QueryContants.deleteQuestMaster
 					.toString());
 			ps.setInt(1, questId);
 			save2 = ps.executeUpdate();
 			ps.close();
-			
+
 			con.commit();
 
 		} catch (Exception ex) {
@@ -321,5 +307,50 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public int findQuestId(QuestMasterBean questmaster) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int questId = 0;
+
+		try {
+			con = DBConnectionFactory.getPostgresDBConnection();
+			con.setAutoCommit(false);
+
+			ps = con.prepareStatement(QueryContants.findQuestId.toString());
+			ps.setString(1, questmaster.getQuestTitle());
+			ps.setString(2, questmaster.getQuestDefinition());
+			ps.setInt(3, questmaster.getUserId());
+
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				questId = rs.getInt(1);
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			if (con != null)
+				con.close();
+
+		} finally {
+			closeDBOperations(con, ps, rs);
+		}
+
+		return questId;
+
+	}
+
+	private void closeDBOperations(Connection con, PreparedStatement ps,
+			ResultSet rs) throws SQLException {
+		if (con != null)
+			con.close();
+		if (ps != null)
+			ps.close();
+		if (rs != null)
+			rs.close();
+
 	}
 }

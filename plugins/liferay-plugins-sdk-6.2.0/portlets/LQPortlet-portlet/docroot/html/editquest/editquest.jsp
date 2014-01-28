@@ -86,6 +86,9 @@
 					value="${questMaster.questDefinition}">
 				<input type="hidden" name="questId"
 					id="<portlet:namespace />questId" value="${questMaster.questId}">
+				
+				<input type="hidden" name="accessMode"
+					id="<portlet:namespace />questId" value="${questMaster.accessMode}">
 
 				<input type="submit" id="btnMasterSave" name="btnMasterSave"
 					value=<%=rb.getString("quest-edit-button-caption")%>

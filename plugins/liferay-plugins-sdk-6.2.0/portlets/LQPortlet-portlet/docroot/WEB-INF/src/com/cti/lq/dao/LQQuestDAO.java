@@ -24,5 +24,7 @@ public interface LQQuestDAO {
 
 	Boolean deleteQuestMaster(int questId) throws SQLException;
 
+	int findQuestId(QuestMasterBean questmaster) throws SQLException;
+
 
 }

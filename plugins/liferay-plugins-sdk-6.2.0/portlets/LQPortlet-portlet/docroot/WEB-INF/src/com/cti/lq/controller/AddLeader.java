@@ -65,7 +65,6 @@ public class AddLeader extends MVCPortlet {
 		LOG.info(" Entering submitLeaderDetails()");
 
 		LeaderBean leaderDetails = new LeaderBean();
-		int userId = LQPortalUserServiceUtil.getUserId(actionRequest);
 
 		HttpServletRequest httpRequest = PortalUtil
 				.getHttpServletRequest(actionRequest);
@@ -98,7 +97,7 @@ public class AddLeader extends MVCPortlet {
 
 			leaderDetails.setBioStatement(uploadRequest
 					.getParameter("biostatement"));
-			leaderDetails.setUserid(userId);
+			leaderDetails.setUserid(0);
 
 			// upload photo.
 

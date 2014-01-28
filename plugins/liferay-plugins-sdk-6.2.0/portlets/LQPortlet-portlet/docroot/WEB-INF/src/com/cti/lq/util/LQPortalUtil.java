@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -27,22 +28,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.cti.lq.Constants.LQPortalConstants;
-import com.cti.lq.controller.Header;
 import com.cti.lq.exceptions.LQPortalException;
 import com.liferay.mail.service.MailServiceUtil;
-import com.liferay.portal.PwdEncryptorException;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.security.pwd.PasswordEncryptor;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.security.pwd.PasswordEncryptor;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 /**
  * @author senthil Date Created : 20/12/2013. Function : This class is for
@@ -148,32 +142,31 @@ public class LQPortalUtil {
 		}
 		return msgbody.toString();
 	}
-	
-	
+
 	private static String constructPasswordSuccessMail(ResourceBundle rb,
 			String firstName, String URL) {
-		
+
 		StringBuffer msgbody = null;
-			try {
+		try {
 
-				String[] textParagraphs = new String[5];
-				textParagraphs[0] = rb.getString("password-reset-email-hi")
-						.concat(" ").concat(firstName);
-				textParagraphs[1] = rb.getString("password-reset-email-msg1");
-				textParagraphs[2] = rb.getString("password-reset-email-msg2");
-				textParagraphs[3] = rb.getString("password-reset-email-msg3");
-				
-				msgbody = new StringBuffer(textParagraphs[0] + "<br>" + "<br>");
-				msgbody.append(textParagraphs[1]);
-				msgbody.append(textParagraphs[2]+ "<br>" + "<br>");
-				msgbody.append(textParagraphs[3] + "<br>" + "<br>");
+			String[] textParagraphs = new String[5];
+			textParagraphs[0] = rb.getString("password-reset-email-hi")
+					.concat(" ").concat(firstName);
+			textParagraphs[1] = rb.getString("password-reset-email-msg1");
+			textParagraphs[2] = rb.getString("password-reset-email-msg2");
+			textParagraphs[3] = rb.getString("password-reset-email-msg3");
 
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return msgbody.toString();
+			msgbody = new StringBuffer(textParagraphs[0] + "<br>" + "<br>");
+			msgbody.append(textParagraphs[1]);
+			msgbody.append(textParagraphs[2] + "<br>" + "<br>");
+			msgbody.append(textParagraphs[3] + "<br>" + "<br>");
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return msgbody.toString();
+	}
 
 	public static void sendEmail(String msgSubject, String msgBody,
 			String emailAddress, String senderEmailAddress) {
@@ -197,7 +190,7 @@ public class LQPortalUtil {
 	}
 
 	public static Boolean uploadFile(String path,
-			UploadPortletRequest uploadRequest,String fileName) {
+			UploadPortletRequest uploadRequest, String fileName) {
 		Boolean isFileUploaded = false;
 		LOG.info("Entering into uploadFile()");
 
@@ -212,7 +205,8 @@ public class LQPortalUtil {
 				String sourceFileName = uploadRequest.getFileName(fileName);
 				File file = uploadRequest.getFile(fileName);
 
-				LOG.info("Name of the file:" + uploadRequest.getFileName(fileName));
+				LOG.info("Name of the file:"
+						+ uploadRequest.getFileName(fileName));
 				File newFile = null;
 				newFile = new File(path + "/" + sourceFileName);
 				LOG.info("New file name: " + newFile.getName());
@@ -246,24 +240,27 @@ public class LQPortalUtil {
 
 		return isFileUploaded;
 	}
-	
+
 	public static Boolean fileMakerLeaderCheck(String email) {
 		LOG.info("Authentication success.");
 		Boolean isLeader = false;
 		URL url;
 		email = "ping@me.com";
-		 
+
 		try {
 			// get URL content //1 Leader 0-noleader
-			//url = new URL("http://crm.thecoaches.com/fmi-test/webcomp2_newFM/abletogetrecord.php?postkey=fjgh15t&em=ping@me.com");
-			url = new URL("http://crm.thecoaches.com/fmi-test/webcomp2_newFM/authenticate_leader.php?postkey=fjgh15t&em=ping@me.com");
+			// url = new
+			// URL("http://crm.thecoaches.com/fmi-test/webcomp2_newFM/abletogetrecord.php?postkey=fjgh15t&em=ping@me.com");
+			url = new URL(
+					"http://crm.thecoaches.com/fmi-test/webcomp2_newFM/authenticate_leader.php?postkey=fjgh15t&em=ping@me.com");
 			URLConnection conn = url.openConnection();
- 
+
 			// open the stream and put it into BufferedReader
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
- 
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					conn.getInputStream()));
+
 			String inputLine;
- 
+
 			while ((inputLine = br.readLine()) != null) {
 				LOG.info("inputLine=====" + inputLine);
 				if (inputLine.equalsIgnoreCase("ok")) {
@@ -272,8 +269,8 @@ public class LQPortalUtil {
 					break;
 				}
 			}
- 
-			br.close(); 
+
+			br.close();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -284,24 +281,51 @@ public class LQPortalUtil {
 
 	public static void sendPasswordResetSuccessEmail(
 			ActionRequest actionRequest, String emailAddress, String firstName) {
-		
+
 		LOG.info("Sending password reset email to: " + emailAddress);
 		HttpServletRequest httpRequest = PortalUtil
 				.getHttpServletRequest(actionRequest);
 
 		ResourceBundle rb = LQPortalUtil.getResourceBundle(httpRequest);
 		String subject = rb.getString("password-reset-email-subject");
-		
-		
+
 		String URL = LQPortalConstants.LQ_PORTAL_LOGIN_URL;
 		String msgBody = constructPasswordSuccessMail(rb, firstName, URL);
-				
+
 		sendEmail(subject, msgBody, emailAddress, null);
-		
+
 	}
-	
+
 	public static String getCurrentURL(HttpServletRequest request) {
 		return PortalUtil.getCurrentURL(request);
 	}
-	
+
+	public static void uploadFilesForTesting(String toLocation, String fromLocation,String fileName) {
+		InputStream inStream = null;
+		OutputStream outStream = null;
+		try {
+
+			File afile = new File(fromLocation + "//" + fileName);
+			File bfile = new File(toLocation + "//" + fileName);
+
+			inStream = new FileInputStream(afile);
+			outStream = new FileOutputStream(bfile);
+
+			byte[] buffer = new byte[1024];
+
+			int length;
+			// copy the file content in bytes
+			while ((length = inStream.read(buffer)) > 0) {
+				outStream.write(buffer, 0, length);
+			}
+
+			inStream.close();
+			outStream.close();
+			System.out.println("File is copied successful!");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

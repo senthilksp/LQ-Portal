@@ -120,6 +120,8 @@ public class EditQuest extends MVCPortlet {
 						.getParameter("questDefinition"));
 				questMaster.setQuestTitle(uploadRequest
 						.getParameter("questName"));
+				questMaster.setAccessMode(Boolean.valueOf(uploadRequest
+						.getParameter("accessMode")));
 
 				if (questMaster != null) {
 					masterSaved = questService.updateQuestMaster(questMaster);

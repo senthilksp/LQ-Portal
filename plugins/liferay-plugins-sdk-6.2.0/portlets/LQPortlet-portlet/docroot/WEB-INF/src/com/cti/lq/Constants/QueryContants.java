@@ -31,7 +31,7 @@ public class QueryContants {
 	
 	public static final String insertLeader_LR = "insert into user_ (firstname,lastname,companyid,createdate,modifieddate,defaultuser,screenname,emailaddress,"
 												+ "languageid,timezoneid,greeting,jobtitle,failedloginattempts,lockout,userid) "
-												+ "values(?,?,10157,?,?,false,?,?,'en_US','UTC','WELCOME!','LEADER_ADMIN',0,false,?)";
+												+ "values(?,?,10157,?,?,false,?,?,'en_US','UTC','WELCOME!','LEADER',0,false,?)";
 	
 	public static final String selectRole = "select roleid from role_ where name = 'LEADER'";
 	
@@ -47,10 +47,15 @@ public class QueryContants {
 
 	public static String resetPassword = "update user_ set password_ = ? where emailaddress = ?";
 	
-	public static final String updateQuestMaster 	  = "update quest_master_  set quest_title=?, definition=? where quest_id=?";
+	public static final String updateQuestMaster 	  = "update quest_master_  set quest_title=?, definition=?,access_mode=? where quest_id=?";
 	public static final String updateQuestTran   	  = "update quest_transaction_  set quest_location=? where id=?"; 
 	public static final String deleteQuestTran   	  = "delete from quest_transaction_ where id=?";
 	public static final String deleteQuestMaster 	  = "delete from quest_master_ where quest_id=?";
 	public static final String deleteQuestTransaction = "delete from quest_transaction_ where quest_id=?";
+	
+	public static String deleteLeader1 = "delete from user_lq where userid=?";
+	public static String deleteLeader2 = "delete from user_   where userid=?";
+	
+	public static String findQuestId = "select quest_id from quest_master_ where quest_title=? and definition=? and userid=?";
 
 }

@@ -10,15 +10,19 @@ import org.postgresql.jdbc3.Jdbc3PoolingDataSource;
 
 public class LQUnitTestDataSourceSetup {
 
-	public static void setUpDataSource() throws Exception {
+	public static InitialContext setUpDataSource() throws Exception {
+		
+		
+		InitialContext ic = null;
+		
 		try {
 			System.setProperty(Context.INITIAL_CONTEXT_FACTORY,
 					"org.apache.naming.java.javaURLContextFactory");
 			System.setProperty(Context.URL_PKG_PREFIXES, "org.apache.naming");
-			InitialContext ic = new InitialContext();
+			
 			
 			java.util.ResourceBundle rb= ResourceBundle.getBundle("test.com.cti.lq.UnitTest");
-			
+		    ic = new InitialContext();
 			ic.createSubcontext("java:");
 			ic.createSubcontext("java:comp");
 			ic.createSubcontext("java:comp/env");
@@ -38,6 +42,7 @@ public class LQUnitTestDataSourceSetup {
 			ex.printStackTrace();
 
 		}
+		return ic;
 
 	}
 
