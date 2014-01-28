@@ -27,12 +27,14 @@ public class StudentHomePageTest {
 
 	@BeforeClass
 	public static void setUpDataSource() throws Exception {
-		LQUnitTestDataSourceSetup.setUpDataSource();
+		if(LQUnitTestDataSourceSetup.setUpDataSource() != null) {
+			LQUnitTestDataSourceSetup.setUpDataSource();
+		};
 	}
 
 
 	@Test
-	public void testLeaderExists() {
+	public void testGetLeaderList() {
 		LQLeaderService leaderService = new LQLeaderServiceImpl();
 		List<LeaderBean> leaderList   = new ArrayList<LeaderBean>();
 

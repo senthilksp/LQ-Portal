@@ -8,6 +8,8 @@ import static org.junit.Assert.assertTrue;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import junit.framework.TestCase;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -27,12 +29,13 @@ public class StudentLeaderViewTest {
 	
 	@BeforeClass
 	public static void setUpDataSource() throws Exception {
-		LQUnitTestDataSourceSetup.setUpDataSource();
+		if(LQUnitTestDataSourceSetup.setUpDataSource() != null) {
+			LQUnitTestDataSourceSetup.setUpDataSource();
+		};
 	}
-
 	
 	@Test
-	public void studentLeaderView() {
+	public void testGetLeaderDetails() {
 
 		LQLeaderService leaderService = new LQLeaderServiceImpl();
 		java.util.ResourceBundle rb = ResourceBundle

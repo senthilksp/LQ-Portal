@@ -1,10 +1,12 @@
 package test.com.cti.lq;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import junit.framework.TestCase;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -22,7 +24,10 @@ public class StudentQuestPageTest {
 
 	@BeforeClass
 	public static void setUpDataSource() throws Exception {
-		LQUnitTestDataSourceSetup.setUpDataSource();
+		if (LQUnitTestDataSourceSetup.setUpDataSource() != null) {
+			LQUnitTestDataSourceSetup.setUpDataSource();
+		}
+		;
 	}
 
 	@Test
@@ -35,7 +40,10 @@ public class StudentQuestPageTest {
 			leaderList = leaderService.getLeaderList(leaderList, null);
 			if (leaderList.size() > 0) {
 				for (LeaderBean leader : leaderList) {
-					questList = leader.getQuestList();
+					if (leader.getQuestList() != null
+							&& leader.getQuestList().size() > 0) {
+						questList.addAll(leader.getQuestList());
+					}
 				}
 			}
 

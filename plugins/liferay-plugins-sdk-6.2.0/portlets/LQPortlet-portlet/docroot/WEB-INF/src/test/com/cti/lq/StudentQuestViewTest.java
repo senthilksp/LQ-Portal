@@ -23,11 +23,14 @@ public class StudentQuestViewTest {
 
 	@BeforeClass
 	public static void setUpDataSource() throws Exception {
-		LQUnitTestDataSourceSetup.setUpDataSource();
+		if (LQUnitTestDataSourceSetup.setUpDataSource() != null) {
+			LQUnitTestDataSourceSetup.setUpDataSource();
+		}
+		;
 	}
 
 	@Test
-	public void studentQuestView() throws SQLException {
+	public void testGetQuestDetails() throws SQLException {
 
 		java.util.ResourceBundle rb = ResourceBundle
 				.getBundle("test.com.cti.lq.UnitTest");

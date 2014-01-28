@@ -55,7 +55,7 @@
 					</classpath>
 
 					<batchtest fork="yes" todir="docroot/WEB-INF/classes/test-reports">
-						<formatter type="plain" />
+						<formatter type="xml" />
 						<fileset dir="docroot/WEB-INF/classes/test">
 							<include name="**/*Test.class" />
 						</fileset>
