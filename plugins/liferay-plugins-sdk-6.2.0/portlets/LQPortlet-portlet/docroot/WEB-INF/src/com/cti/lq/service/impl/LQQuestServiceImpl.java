@@ -39,12 +39,6 @@ public class LQQuestServiceImpl implements LQQuestService {
 	}
 
 	@Override
-	public List<QuestMasterBean> getMasterQuestList(int userId) throws SQLException {
-		LQQuestDAO questDAO = new LQQuestDAOImpl();
-		return questDAO.getQuestMasterList(userId);
-	}
-
-	@Override
 	public Boolean updateQuestTransaction(QuestTransactionBean transBean)
 			throws SQLException {
 		LQQuestDAO questDAO = new LQQuestDAOImpl();
@@ -68,6 +62,12 @@ public class LQQuestServiceImpl implements LQQuestService {
 	public Boolean deleteQuestMaster(int questId) throws SQLException{
 		LQQuestDAO questDAO = new LQQuestDAOImpl();
 		return questDAO.deleteQuestMaster(questId);
+	}
+
+	@Override
+	public int findQuestId(QuestMasterBean questmaster) throws SQLException {
+		LQQuestDAO questDAO = new LQQuestDAOImpl();
+		return questDAO.findQuestId(questmaster);
 	}
 
 }

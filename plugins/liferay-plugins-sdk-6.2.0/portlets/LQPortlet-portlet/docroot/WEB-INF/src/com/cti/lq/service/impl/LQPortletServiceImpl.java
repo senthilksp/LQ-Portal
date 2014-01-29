@@ -231,7 +231,7 @@ public class LQPortletServiceImpl implements LQPortletService {
 
 		try {
 			LQQuestService questService = new LQQuestServiceImpl();
-			questList = questService.getMasterQuestList(userId);
+			questList = questService.getQuestMasterList(userId);
 			questListAll = leaderService.getQuestMasterDetails(questListAll,
 					renderRequest,userId);
 

@@ -76,7 +76,7 @@ public class LQLeaderServiceImpl implements LQLeaderService  {
 
 
 	@Override
-	public Boolean resetPassword(PasswordResetBean resetBean) {
+	public Boolean resetPassword(PasswordResetBean resetBean) throws SQLException {
 		LQLeaderDAO leaderDAO = new LQLeaderDAOImpl();
 		return leaderDAO.resetPassword(resetBean);
 	}
@@ -94,7 +94,11 @@ public class LQLeaderServiceImpl implements LQLeaderService  {
 		    return questList;
 	}
 
+	@Override
+	public Boolean deleteLeader(LeaderBean lb) throws SQLException {
+		LQLeaderDAO leaderDAO = new LQLeaderDAOImpl();
+		return leaderDAO.deleteLeader(lb);
+	}
 
-	
 	
 }
