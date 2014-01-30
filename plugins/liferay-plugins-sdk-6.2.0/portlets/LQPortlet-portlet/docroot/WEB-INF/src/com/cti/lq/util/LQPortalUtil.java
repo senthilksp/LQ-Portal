@@ -305,11 +305,13 @@ public class LQPortalUtil {
 		OutputStream outStream = null;
 		try {
 
-			File afile = new File(fromLocation + "//" + fileName);
-			File bfile = new File(toLocation + "//" + fileName);
+			String systemPath = System.getenv("LQ_HOME");
 
-			inStream = new FileInputStream(afile);
-			outStream = new FileOutputStream(bfile);
+			File fromFile = new File(systemPath + "//" + fileName);
+			File toFile   = new File(systemPath + "//lqfiles//" + fileName);
+
+			inStream = new FileInputStream(fromFile);
+			outStream = new FileOutputStream(toFile);
 
 			byte[] buffer = new byte[1024];
 

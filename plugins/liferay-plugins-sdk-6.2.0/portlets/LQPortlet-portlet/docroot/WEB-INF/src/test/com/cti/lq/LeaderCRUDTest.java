@@ -81,19 +81,20 @@ public class LeaderCRUDTest {
 
 		LeaderBean leader = lqServiceLayer.getLeaderDetails(lb, null);
 		if (leader.getFirstname() != null) {
-			boolean savedel = lqServiceLayer.deleteLeader(lb);
-			saveSuccess = lqServiceLayer.addLeaderDetails(lb);
+			//boolean savedel = lqServiceLayer.deleteLeader(lb);
+			//saveSuccess = lqServiceLayer.addLeaderDetails(lb);
 		} else {
 			saveSuccess = lqServiceLayer.addLeaderDetails(lb);
+			assertTrue(saveSuccess);
+			
+			PasswordResetBean resetPassword = new PasswordResetBean();
+			resetPassword.setEmailAddress(lb.getEmailAddress());
+			resetPassword.setNewPassword(rb.getString("add_leader_password"));
+			boolean resetpass = lqServiceLayer.resetPassword(resetPassword);
+			assertTrue(resetpass);
 		}
 
-		assertTrue(saveSuccess);
-
-		PasswordResetBean resetPassword = new PasswordResetBean();
-		resetPassword.setEmailAddress(lb.getEmailAddress());
-		resetPassword.setNewPassword(rb.getString("add_leader_password"));
-		boolean resetpass = lqServiceLayer.resetPassword(resetPassword);
-		assertTrue(resetpass);
+		
 	}
 
 }
