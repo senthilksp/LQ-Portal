@@ -300,7 +300,7 @@ public class LQPortalUtil {
 		return PortalUtil.getCurrentURL(request);
 	}
 
-	public static void uploadFilesForTesting(String toLocation, String fromLocation,String fileName) {
+	public static void uploadFilesForTesting(String fileName) {
 		InputStream inStream = null;
 		OutputStream outStream = null;
 		try {

@@ -64,37 +64,28 @@ public class QuestServiceTest {
 		String videoFileName = rb.getString("add_quest_video_file_name");
 
 		if (!(imageFileName == null || "".equals(imageFileName))) {
-			LQPortalUtil.uploadFilesForTesting(
-					rb.getString("add_quest_to_location"),
-					rb.getString("add_quest_from_location"), imageFileName);
+			LQPortalUtil.uploadFilesForTesting(imageFileName);
 
 			transBean.setQuestType(LQPortalConstants.IMAGE_TYPE);
-			transBean.setQuestLocation(rb.getString("add_quest_to_location")
-					+ "\\" + imageFileName);
+			transBean.setQuestLocation(getLocation() + "\\" + imageFileName);
 			qTransList.add(transBean);
 
 		}
 		if (!(audioFileName == null || "".equals(audioFileName))) {
-			LQPortalUtil.uploadFilesForTesting(
-					rb.getString("add_quest_to_location"),
-					rb.getString("add_quest_from_location"), audioFileName);
+			LQPortalUtil.uploadFilesForTesting(audioFileName);
 
 			transBean = new QuestTransactionBean();
 			transBean.setQuestType(LQPortalConstants.AUDIO_TYPE);
-			transBean.setQuestLocation(rb.getString("add_quest_to_location")
-					+ "\\" + audioFileName);
+			transBean.setQuestLocation(getLocation() + "\\" + audioFileName);
 			qTransList.add(transBean);
 
 		}
 		if (!(videoFileName == null || "".equals(videoFileName))) {
-			LQPortalUtil.uploadFilesForTesting(
-					rb.getString("add_quest_to_location"),
-					rb.getString("add_quest_from_location"), videoFileName);
+			LQPortalUtil.uploadFilesForTesting(videoFileName);
 
 			transBean = new QuestTransactionBean();
 			transBean.setQuestType(LQPortalConstants.VIDEO_TYPE);
-			transBean.setQuestLocation(rb.getString("add_quest_to_location")
-					+ "\\" + videoFileName);
+			transBean.setQuestLocation(getLocation() + "\\" + videoFileName);
 			qTransList.add(transBean);
 		}
 
@@ -139,14 +130,11 @@ public class QuestServiceTest {
 	public void testUpdateQuestTransaction() {
 		String imageFileName = rb.getString("edit_quest_image_file_name");
 
-		LQPortalUtil.uploadFilesForTesting(
-				rb.getString("add_quest_to_location"),
-				rb.getString("add_quest_from_location"), imageFileName);
+		LQPortalUtil.uploadFilesForTesting(imageFileName);
 
 		QuestTransactionBean transBean = new QuestTransactionBean();
 		transBean.setId(Integer.valueOf(rb.getString("edit_quest_trans_id")));
-		transBean.setQuestLocation(rb.getString("add_quest_to_location") + "\\"
-				+ imageFileName);
+		transBean.setQuestLocation(getLocation() + "\\" + imageFileName);
 
 		try {
 			LQQuestService questService = new LQQuestServiceImpl();
@@ -210,6 +198,11 @@ public class QuestServiceTest {
 			e.printStackTrace();
 		}
 		return questId;
+	}
+	
+	private String getLocation() {
+		return System.getenv("LQ_HOME") + "//lqfiles//";
+		
 	}
 
 }
