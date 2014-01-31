@@ -7,6 +7,7 @@
 	<target name="all">
 		<antcall target="clean" />
 		<antcall target="deploy" />
+		<antcall target="deploy-test" />
 	</target>
 
 	<target name="build-service">
@@ -72,6 +73,10 @@
 		<ant dir="portlets" target="direct-deploy" inheritAll="false" />
 		<ant dir="themes" target="direct-deploy" inheritAll="false" />
 		<ant dir="webs" target="direct-deploy" inheritAll="false" />
+	</target>
+	
+	<target name="deploy-test">
+		<ant dir="portlets/LQPortlet-portlet" target="deploy-test" inheritAll="false" />
 	</target>
 
 	<target name="ear">
