@@ -6,11 +6,11 @@ package com.cti.lq.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
 
 import com.cti.lq.beans.LeaderBean;
 import com.cti.lq.beans.PasswordResetBean;
-import com.cti.lq.beans.QuestMasterBean;
 import com.cti.lq.beans.QuestViewBean;
 
 /**
@@ -30,7 +30,7 @@ public interface LQLeaderService {
 	List<QuestViewBean> getQuestDetails(List<QuestViewBean> questList,
 			RenderRequest renderRequest, int userId, int questId)throws SQLException;
 
-	Boolean addLeaderDetails(LeaderBean leaderDetails)throws SQLException;
+	Boolean addLeaderDetails(LeaderBean leaderDetails, ActionRequest actionRequest)throws SQLException;
 
 	List<QuestViewBean> getQuestMasterDetails(List<QuestViewBean> questList,
 			RenderRequest renderRequest, int userId)throws SQLException;

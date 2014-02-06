@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
 
 import org.apache.commons.logging.Log;
@@ -15,12 +15,12 @@ import org.apache.commons.logging.LogFactory;
 import com.cti.lq.Constants.LQPortalConstants;
 import com.cti.lq.Constants.QueryContants;
 import com.cti.lq.beans.LeaderBean;
-import com.cti.lq.beans.PasswordResetBean;
 import com.cti.lq.beans.QuestMasterBean;
 import com.cti.lq.beans.QuestViewBean;
 import com.cti.lq.dao.LQLeaderDAO;
 import com.cti.lq.persistence.DBConnectionFactory;
 import com.cti.lq.util.LQPortalUserServiceUtil;
+import com.cti.lq.util.LiferayAddUserUtil;
 
 import java.sql.PreparedStatement;
 
@@ -259,7 +259,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 
 	// Add Leader Details
 	@Override
-	public Boolean addLeaderDetails(LeaderBean leaderDetails)
+	public Boolean addLeaderDetails(LeaderBean leaderDetails,ActionRequest actionRequest)
 			throws SQLException {
 		Connection con = null;
 		PreparedStatement ps1 = null;
@@ -267,13 +267,13 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 		PreparedStatement ps3 = null;
 		ResultSet rs = null;
 		Boolean saveSuccess = false;
+		long userId = 0;
 
-		StringBuffer insertQuery1 = new StringBuffer(
-				QueryContants.insertLeader_LR);
+		
 		StringBuffer insertQuery2 = new StringBuffer(
 				QueryContants.insertLeader_LQ);
 		StringBuffer roleQry = new StringBuffer(QueryContants.selectRole);
-		StringBuffer userIdQuery = new StringBuffer(QueryContants.userIdQuery);
+		
 
 		try {
 			con = DBConnectionFactory.getPostgresDBConnection();
@@ -289,24 +289,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 			// if userId=0 then, this method is called by UserLayer. Otherwise
 			// it is called by unit test
 
-			if (leaderDetails.getUserid() == 0) {
-				ps1 = con.prepareStatement(userIdQuery.toString());
-				rs = ps1.executeQuery();
-				while (rs.next()) {
-					leaderDetails.setUserid(rs.getInt(1) + 1);
-				}
-				rs.close();
-			}
-
-			ps2 = con.prepareStatement(insertQuery1.toString());
-			ps2.setString(1, leaderDetails.getFirstname());
-			ps2.setString(2, leaderDetails.getLastname());
-			ps2.setDate(3, new java.sql.Date(new Date().getTime()));
-			ps2.setDate(4, new java.sql.Date(new Date().getTime()));
-			ps2.setString(5, leaderDetails.getFirstname());
-			ps2.setString(6, leaderDetails.getEmailAddress());
-			ps2.setInt(7, leaderDetails.getUserid());
-			int ins1 = ps2.executeUpdate();
+			userId = LiferayAddUserUtil.insertLiferayUser(actionRequest, leaderDetails);
 			LOG.info("Inserted into User table");
 
 			ps3 = con.prepareStatement(insertQuery2.toString());
@@ -326,7 +309,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 
 			con.commit();
 			LOG.info("Insertion done");
-			saveSuccess = (ins1 > 0 && ins2 > 0) ? true : false;
+			saveSuccess = (ins2 > 0) ? true : false;
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

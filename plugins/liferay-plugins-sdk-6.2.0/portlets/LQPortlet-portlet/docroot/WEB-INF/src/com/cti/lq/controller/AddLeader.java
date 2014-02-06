@@ -3,7 +3,6 @@
  */
 package com.cti.lq.controller;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.portlet.ActionRequest;
@@ -112,7 +111,7 @@ public class AddLeader extends MVCPortlet {
 
 				LQLeaderService lqServiceLayer = new LQLeaderServiceImpl();
 				Boolean isAdded = lqServiceLayer
-						.addLeaderDetails(leaderDetails);
+						.addLeaderDetails(leaderDetails,actionRequest);
 
 				LOG.info("insertion done");
 

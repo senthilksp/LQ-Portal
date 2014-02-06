@@ -3,11 +3,10 @@ package com.cti.lq.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
 
 import com.cti.lq.beans.LeaderBean;
-import com.cti.lq.beans.PasswordResetBean;
-import com.cti.lq.beans.QuestMasterBean;
 import com.cti.lq.beans.QuestViewBean;
 
 public interface LQLeaderDAO {
@@ -22,7 +21,7 @@ public interface LQLeaderDAO {
 	public List<QuestViewBean> getQuestDetails(RenderRequest renderRequest,
 			List<QuestViewBean> questList, int userid, int questId) throws SQLException;
 
-	public Boolean addLeaderDetails(LeaderBean leaderDetails) throws SQLException;
+	public Boolean addLeaderDetails(LeaderBean leaderDetails, ActionRequest actionRequest) throws SQLException;
 
 	public List<QuestViewBean> getQuestMasterDetails(
 			RenderRequest renderRequest, List<QuestViewBean> questList, int userId) throws SQLException;

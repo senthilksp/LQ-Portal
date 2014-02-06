@@ -6,6 +6,7 @@ package com.cti.lq.service.impl;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
 
 import org.apache.commons.logging.Log;
@@ -69,9 +70,9 @@ public class LQLeaderServiceImpl implements LQLeaderService  {
 	}
 
 	@Override
-	public Boolean addLeaderDetails(LeaderBean leaderDetails) throws SQLException{
+	public Boolean addLeaderDetails(LeaderBean leaderDetails,ActionRequest actionRequest) throws SQLException{
 		LQLeaderDAO leaderDAO = new LQLeaderDAOImpl();
-		return leaderDAO.addLeaderDetails(leaderDetails);
+		return leaderDAO.addLeaderDetails(leaderDetails,actionRequest);
 		
 	}
 

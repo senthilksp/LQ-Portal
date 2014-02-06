@@ -40,6 +40,6 @@ public class LQPortalConstants {
 	public static final String VIDEO_TYPE = "VIDEO";
 	
 	public static final String LQ_FILE_LOCATION = "/LQPortlet-portlet/lqfiles";
-	
+	public static final String ADD_LR_USER_PASSWD="test123";
 
 }
