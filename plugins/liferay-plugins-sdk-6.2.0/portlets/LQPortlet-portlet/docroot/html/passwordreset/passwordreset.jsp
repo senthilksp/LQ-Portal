@@ -2,6 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="/WEB-INF/tld/liferay-ui.tld" prefix="liferay-ui"%>
 <%@ taglib uri="http://alloy.liferay.com/tld/aui" prefix="aui"%>
+<%@ page import="com.cti.lq.util.LQPortalUtil" %>
+
+<%java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);
+%>
 
 <script type="text/javascript">
 
@@ -52,6 +56,14 @@ function doSubmit() {
 	}   
 }
 
+function doCancel() {
+	jQuery("#newpass").val("");
+	jQuery("#cnewpass").val("");
+	jQuery("#password-error1").hide();
+	jQuery("#password-error2").hide();
+	jQuery("#password-error3").hide();
+	JQuery("#password-error4").hide();
+}
 
 function findPasswordScore(password) {
 	
@@ -81,22 +93,20 @@ function findPasswordScore(password) {
 		id="<portlet:namespace />passwordresetForm"
 		action="<%=submitPasswordResetURL.toString()%>"
 		enctype="multipart/form-data">
-		<span style="color: red; font: 16px/18px Arial" id="password-error1">Password
-			Fields Should be Blank</span> <span
-			style="color: red; font: 16px/18px Arial" id="password-error2">Password
-			Fields Should have more than 6 Characters</span> <span
-			style="color: red; font: 16px/18px Arial" id="password-error3">Both
-			Password should be equal</span> <span
-			style="color: red; font: 16px/18px Arial" id="password-error4">Password
-			must contain one letter and one digit.</span>
+		
+		<span style="color: red; font: 14px/14px Arial" id="password-error1"><%=rb.getString("password-reset-empltyfields-errmsg")%></span><br> 
+		<span style="color: red; font: 14px/14px Arial" id="password-error2"><%=rb.getString("password-reset-charlength-errmsg")%></span><br>
+		<span style="color: red; font: 14px/14px Arial" id="password-error3"><%=rb.getString("password-reset-matching-errmsg")%></span><br>
+		<span style="color: red; font: 14px/14px Arial" id="password-error4"><%=rb.getString("password-reset-rule-errmsg")%></span><br>
+		
 		<table>
 			<tr>
-				<td>Password</td>
+				<td><%=rb.getString("password-reset-newpassword")%></td>
 				<td><input name="newpass" id="newpass" type="password"
 					maxlength="30" /></td>
 			</tr>
 			<tr>
-				<td>Confirm Password</td>
+				<td><%=rb.getString("password-reset-cnewpassword")%></td>
 				<td><input name="cnewpass" id="cnewpass" type="password"
 					maxlength="30" /></td>
 				<td><input type="hidden" id="email" name="email"
@@ -104,10 +114,9 @@ function findPasswordScore(password) {
 			</tr>
 		</table>
 
-		<aui:button-row>
-			<aui:button id="btnSubmit" value="Save" onclick="doSubmit();" />
-			<aui:button id="btnCancel" value="Cancel" onclick="doCancel();" />
-		</aui:button-row>
+		<input type = "button" id="btnSubmit" value="Save" onclick="doSubmit();" />
+		<input type = "button" id="btnCancel" value="Cancel" onclick="doCancel();" />
+	
 	</form>
 
 </div>
