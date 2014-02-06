@@ -27,8 +27,6 @@ public interface LQLeaderDAO {
 	public List<QuestViewBean> getQuestMasterDetails(
 			RenderRequest renderRequest, List<QuestViewBean> questList, int userId) throws SQLException;
 
-	public Boolean resetPassword(PasswordResetBean resetBean) throws SQLException;
-
 	public Boolean deleteLeader(LeaderBean lb) throws SQLException;
 
 

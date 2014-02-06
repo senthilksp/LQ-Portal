@@ -9,18 +9,12 @@ package com.cti.lq.beans;
  */
 public class PasswordResetBean {
 
-	int userId;
+	long userId;
+	
 	String emailAddress;
 	String newPassword;
 	String cNewPassword;
 	
-	
-	public int getUserId() {
-		return userId;
-	}
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
 	public String getEmailAddress() {
 		return emailAddress;
 	}
@@ -38,6 +32,13 @@ public class PasswordResetBean {
 	}
 	public void setcNewPassword(String cNewPassword) {
 		this.cNewPassword = cNewPassword;
+	}
+	
+	public long getUserId() {
+		return userId;
+	}
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 	
 }

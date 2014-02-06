@@ -13,11 +13,12 @@ import org.apache.commons.logging.LogFactory;
 
 import com.cti.lq.beans.LeaderBean;
 import com.cti.lq.beans.PasswordResetBean;
-import com.cti.lq.beans.QuestMasterBean;
 import com.cti.lq.beans.QuestViewBean;
 import com.cti.lq.service.LQLeaderService;
 import com.cti.lq.dao.LQLeaderDAO;
 import com.cti.lq.dao.impl.LQLeaderDAOImpl;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 /**
  * @author senthil
@@ -77,8 +78,21 @@ public class LQLeaderServiceImpl implements LQLeaderService  {
 
 	@Override
 	public Boolean resetPassword(PasswordResetBean resetBean) throws SQLException {
-		LQLeaderDAO leaderDAO = new LQLeaderDAOImpl();
-		return leaderDAO.resetPassword(resetBean);
+		User u = null;
+		
+		try {
+			u = UserLocalServiceUtil.updatePassword(resetBean.getUserId(),
+					resetBean.getNewPassword(), resetBean.getcNewPassword(),
+					false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (u != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

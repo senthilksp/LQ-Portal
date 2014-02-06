@@ -87,11 +87,13 @@ public class LeaderCRUDTest {
 			saveSuccess = lqServiceLayer.addLeaderDetails(lb);
 			assertTrue(saveSuccess);
 			
-			PasswordResetBean resetPassword = new PasswordResetBean();
+			/*PasswordResetBean resetPassword = new PasswordResetBean();
 			resetPassword.setEmailAddress(lb.getEmailAddress());
 			resetPassword.setNewPassword(rb.getString("add_leader_password"));
 			boolean resetpass = lqServiceLayer.resetPassword(resetPassword);
-			assertTrue(resetpass);
+			assertTrue(resetpass);*/
+			
+			//Commented because instead of sending mail, liferay asks password reset when the leader logs in again
 		}
 
 		

@@ -439,42 +439,6 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 
 	}
 
-	@Override
-	public Boolean resetPassword(PasswordResetBean resetBean)
-			throws SQLException {
-		LOG.info("Password Reset DAO");
-
-		Connection con = null;
-		PreparedStatement ps = null;
-		int save1 = 0;
-
-		StringBuffer query = new StringBuffer(QueryContants.resetPassword);
-
-		try {
-			con = DBConnectionFactory.getPostgresDBConnection();
-			ps = con.prepareStatement(query.toString());
-			ps.setString(1, resetBean.getNewPassword());
-			ps.setString(2, resetBean.getEmailAddress());
-
-			System.out.println("emailAddress" + resetBean.getEmailAddress());
-			System.out.println("password" + resetBean.getcNewPassword());
-
-			save1 = ps.executeUpdate();
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			closeDBOperations(con, ps, null);
-		}
-
-		System.out.println("password save1" + save1);
-		if (save1 > 0) {
-			return true;
-		} else {
-			return false;
-		}
-
-	}
 
 	@Override
 	public Boolean deleteLeader(LeaderBean lb) throws SQLException {

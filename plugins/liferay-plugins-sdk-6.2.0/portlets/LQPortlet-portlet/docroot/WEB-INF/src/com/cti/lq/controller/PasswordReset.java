@@ -72,18 +72,17 @@ public class PasswordReset extends MVCPortlet {
 		
 		try {
 			UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(actionRequest);
-			int userId = LQPortalUserServiceUtil.getUserId(actionRequest);
 			PasswordResetBean resetBean = new PasswordResetBean();
 			
 			resetBean.setNewPassword(uploadRequest.getParameter("newpass"));
 			resetBean.setcNewPassword(uploadRequest.getParameter("cnewpass"));
 			resetBean.setEmailAddress(uploadRequest.getParameter("email"));
-			resetBean.setUserId(userId);
 			
 			LQLeaderService leaderService = new LQLeaderServiceImpl();
 			Boolean isReset = leaderService.resetPassword(resetBean);
 			
 			User u = LQPortalUserServiceUtil.getUser(uploadRequest.getParameter("email"),themeDisplay.getCompanyId());
+			resetBean.setUserId(u.getUserId());
 			
 			if(isReset) {
 				LQPortalUtil.sendPasswordResetSuccessEmail(actionRequest, uploadRequest.getParameter("email"),u.getFirstName());
