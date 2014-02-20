@@ -9,8 +9,11 @@ package com.cti.lq.Constants;
  */
 public class QueryContants {
 
+	//The userids added in the query is to filter the leader and leader admin users that are created for unit testing purpose.  
+	//These were shown in the home page which is not necessary.  
+	//Hence it is given in the query to filter them out.
 	public static final String getAllLeaders = "select a.userid,b.firstname,b.lastname,b.emailaddress,a.business_name,a.city,a.country,a.photo,"
-			+ "a.bio_statement,a.primary_phone,a.website,a.faculty_role from user_lq a, user_ b where a.userid = b.userid;";
+			+ "a.bio_statement,a.primary_phone,a.website,a.faculty_role from user_lq a, user_ b where a.userid = b.userid and b.userid not in (13103, 13113);";
 
 	public static final String getLeaderInfo = "select a.userid,b.firstname,b.lastname,b.emailaddress,a.business_name,a.city,a.country,a.photo,"
 			+ "a.bio_statement,a.primary_phone,a.website,a.faculty_role from user_lq a, user_ b where a.userid = b.userid and a.userid = ?;";
