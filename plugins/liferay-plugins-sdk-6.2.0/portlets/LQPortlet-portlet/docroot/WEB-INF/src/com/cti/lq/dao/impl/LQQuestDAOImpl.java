@@ -301,7 +301,7 @@ public class LQQuestDAOImpl implements LQQuestDAO {
 			closeDBOperations(con, ps, rs);
 		}
 
-		if (save1 > 0 && save2 > 0) {
+		if (save2 > 0) {
 			LOG.info("Deletion Done");
 			return true;
 		} else {

@@ -30,6 +30,16 @@ public class LeaderBean {
 	public void setQuestList(List<QuestMasterBean> questList) {
 		this.questList = questList;
 	}
+	public String getQuestName(int questId) {
+		String questName = "";
+		for (QuestMasterBean quest:questList) {
+			if (quest.getQuestId() == questId) {
+				questName = quest.getQuestTitle();
+				break;
+			}
+		}
+		return questName;
+	}
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}

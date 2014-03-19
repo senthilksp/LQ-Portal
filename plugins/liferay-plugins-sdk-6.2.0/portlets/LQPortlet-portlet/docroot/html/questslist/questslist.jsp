@@ -17,27 +17,57 @@
 
 
 <portlet:defineObjects />
-	<div class="contentWrapper_lq" style="overflow: hidden" >
-			<br>
-				<div class="contentWrapper_lq" style="width: 50%; float: left; ">
-				<h2> Quest Details</h2>
-					<table>
-						<tr>
-							<td><img src="${leaderBean.photoURL}" alt="" ></img>
-							<td>
-							<ul>
-							<c:forEach items="${leaderBean.questList}" var="quest">
-						    	 <li><a href='<%=LQ_QUEST_DETAIL_EDIT_FOR_UPLOAD%>?userId=${userId}&questId=${quest.questId}'>${quest.questTitle}</a></li> 
-							</c:forEach>
-							</ul>
-						</tr>
-						<tr>
-						    <td> 
-						    	<a href='<%=LQ_LEADER_DETAIL_VIEW_PAGE%>?userId=${leaderBean.userid}'>${leaderBean.firstname} ${leaderBean.lastname}</a> 
-						    </td>
-					</table>
-					 <a href='/web/guest/addQuestPage'> <%=rb.getString("quest-addquest-link-caption")%></a>  <br>
-				</div>
-			<br>
-	</div>
 
+<div class="Table">
+	<div class="Row">
+		<div class="Cell-a">
+			<h2>Quest Details</h2>
+		</div>
+		<div class="Cell-a">
+		</div>
+	</div>
+	<div class="Row">
+		<div class="Cell-b3">
+			<p>
+				<img src="${leaderBean.photoURL}" alt="" ></img>
+				<br>
+				<a href='<%=LQ_LEADER_DETAIL_VIEW_PAGE%>?userId=${leaderBean.userid}'>${leaderBean.firstname} ${leaderBean.lastname}</a>
+			</p>
+		</div>
+		<div class="Cell-b4">
+			<div class="Table">
+				<ul>
+					<c:forEach items="${leaderBean.questList}" var="quest">
+						<div class="Row">
+							<div class="Cell-b4">
+						    	 <li>
+						    	 	<a href='<%=LQ_QUEST_DETAIL_EDIT_FOR_UPLOAD%>?userId=${userId}&questId=${quest.questId}'>
+						    	 		${quest.questTitle}
+						    	 	</a>
+						    	 </li> 
+							</div>
+						</div>
+					</c:forEach>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="Row">
+		<div class="Cell-b3">
+			<br>
+		</div>
+		<div class="Cell-b4">
+		</div>
+	</div>
+	<div class="Row">
+		<div class="Cell-b3">
+			<a href='/web/guest/addQuestPage'>
+				<%=rb.getString("quest-addquest-link-caption")%>
+			</a>
+			<br>
+			<br>
+		</div>
+		<div class="Cell-b4">
+		</div>
+	</div>
+</div>

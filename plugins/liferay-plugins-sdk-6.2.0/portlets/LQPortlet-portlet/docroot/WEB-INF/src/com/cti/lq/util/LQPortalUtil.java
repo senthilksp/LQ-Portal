@@ -65,23 +65,23 @@ public class LQPortalUtil {
 	}
 
 	public static void sendPasswordResetEmail(ActionRequest request,
-			String emailAddress, String firstName) throws LQPortalException {
+			String toEmailAddress, String firstName) throws LQPortalException {
 		try {
-			LOG.info("Sending password reset email to: " + emailAddress);
+			LOG.info("Sending password reset email to: " + toEmailAddress);
 			HttpServletRequest httpRequest = PortalUtil
 					.getHttpServletRequest(request);
 
 			ResourceBundle rb = LQPortalUtil.getResourceBundle(httpRequest);
 			String subject = rb.getString("forget-password-email-subject");
-
+			String fromEmailAddress = rb.getString("from-email-address");
 			StringBuffer passwordResetURL = constructPasswordResetURL(
-					httpRequest, emailAddress);
+					httpRequest, toEmailAddress);
 			LOG.info("PasswordReset URL: " + passwordResetURL);
 
 			String msgBody = constructEmailMessage(rb, firstName,
 					passwordResetURL.toString());
 
-			sendEmail(subject, msgBody, emailAddress, null);
+			sendEmail(subject, msgBody, fromEmailAddress, toEmailAddress);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -169,17 +169,18 @@ public class LQPortalUtil {
 	}
 
 	public static void sendEmail(String msgSubject, String msgBody,
-			String emailAddress, String senderEmailAddress) {
+			String fromEmailAddress, String toEmailAddress) {
 		LOG.debug("Entering sendEmail()");
 
 		InternetAddress from;
 		InternetAddress to;
 		try {
-			from = new InternetAddress(emailAddress);
-			to = new InternetAddress(emailAddress);
+			from = new InternetAddress(fromEmailAddress);
+			to = new InternetAddress(toEmailAddress);
 
 			MailMessage message = new MailMessage(from, to, msgSubject,
 					msgBody, true);
+			message.setReplyTo(null);
 			MailServiceUtil.sendEmail(message);
 		} catch (AddressException e) {
 			LOG.error("Invalid email address");
@@ -280,9 +281,9 @@ public class LQPortalUtil {
 	}
 
 	public static void sendPasswordResetSuccessEmail(
-			ActionRequest actionRequest, String emailAddress, String firstName) {
+			ActionRequest actionRequest, String toEmailAddress, String firstName) {
 
-		LOG.info("Sending password reset email to: " + emailAddress);
+		LOG.info("Sending password reset email to: " + toEmailAddress);
 		HttpServletRequest httpRequest = PortalUtil
 				.getHttpServletRequest(actionRequest);
 
@@ -291,8 +292,8 @@ public class LQPortalUtil {
 
 		String URL = LQPortalConstants.LQ_PORTAL_LOGIN_URL;
 		String msgBody = constructPasswordSuccessMail(rb, firstName, URL);
-
-		sendEmail(subject, msgBody, emailAddress, null);
+		String fromEmailAddress = rb.getString("from-email-address");
+		sendEmail(subject, msgBody, fromEmailAddress, toEmailAddress);
 
 	}
 

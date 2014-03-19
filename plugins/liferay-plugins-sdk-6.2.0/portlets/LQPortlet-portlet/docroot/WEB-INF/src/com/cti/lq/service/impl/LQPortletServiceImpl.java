@@ -131,6 +131,7 @@ public class LQPortletServiceImpl implements LQPortletService {
 				: Integer.valueOf(httpRequest.getParameter("userId")));
 
 		Boolean editRights = false;
+		Boolean deleteRights = false;
 		int loginUserId = LQPortalUserServiceUtil.getUserId(renderRequest);
 
 		try {
@@ -143,10 +144,15 @@ public class LQPortletServiceImpl implements LQPortletService {
 				}
 			}
 
-			if (LQPortalConstants.LQ_LEADER_ADMIN.equalsIgnoreCase(role))
+			if (LQPortalConstants.LQ_LEADER_ADMIN.equalsIgnoreCase(role)) {
 				editRights = true;
+				if (Integer.valueOf(httpRequest.getParameter("userId")) != loginUserId) {
+					deleteRights = true;
+				}
+			}
 
 			renderRequest.setAttribute("canEdit", editRights);
+			renderRequest.setAttribute("canDelete", deleteRights);
 
 			leaderBean = leaderService.getLeaderDetails(leaderBean,
 					renderRequest);
@@ -236,7 +242,7 @@ public class LQPortletServiceImpl implements LQPortletService {
 					renderRequest,userId);
 
 			QuestViewBean questBean = new QuestViewBean();
-			if (questList.size() > 0) {
+			if (questList.size() > 0 && questListAll.size() > 0) {
 				questBean.setFirstName(questListAll.get(0).getFirstName());
 				questBean.setPhotoURL(questListAll.get(0).getPhotoURL());
 				renderRequest.setAttribute("questBean", questBean);

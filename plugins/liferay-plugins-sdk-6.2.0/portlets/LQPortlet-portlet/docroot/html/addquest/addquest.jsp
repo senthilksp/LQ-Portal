@@ -36,47 +36,95 @@ function doSubmit() {
 }
 
 </script>
-
-	<div class="content_wrap">
-		<h2 style="width:50%"><%=rb.getString("quest-addquest-title")%></h2>
-		<portlet:actionURL name="submitQuestDetails" var="submitQuestDetailsURL" />
-		
-		<liferay-ui:success key="quest-added-successfully" message='<%=rb.getString("quest-addquest-success-msg")%>'/>
-		<liferay-ui:error   key="quest-add-failed" message='<%=rb.getString("quest-addquest-failure-msg")%>'/>
-		
-		<form id="<portlet:namespace />questForm" name="<portlet:namespace />questForm" 
-			action="<%=submitQuestDetailsURL.toString()%>" method="post" enctype="multipart/form-data" >
-			<table style="margin: 0px 10px 0px 10px; padding-left:20px;">
-				<col width="20%">
-				<col width="80%">
-				<tr><td>
-				<%=rb.getString("quest-addquest-name")%></td> 
-				<td><input type="text" name="questName"  id="questName" ></td></tr> 
-				<tr><td><%=rb.getString("quest-addquest-definition")%></td>
-				<td><input type="text" name="<portlet:namespace />questDefinition" required="required" id="questDefinition" ></td></tr>
-				
-				<span style="color: red; font: 12px/14px Arial" id="questname-error1">Quest Name or Definition Should not be Blank</span> <br> 
-				
-				<tr><td><%=rb.getString("quest-addquest-accessmode")%></td>
-				<td><table><col width="50%"><col width="50%"><tr><td><input type="radio"name= "<portlet:namespace />accessMode" value="PUBLIC" checked="checked" /> Public 
-				<input type="radio"name= "<portlet:namespace />accessMode" value="PRIVATE"  /> Private </td></tr></table></td>
-				
-				<span style="color: red; font: 12px/14px Arial" id="questname-error2">Either Audio or Video Or Image Should be Selected</span> <br> 
-				<tr><td><br/></td><td></td></tr>
-				<tr><td><%=rb.getString("quest-addquest-image-type")%></td>
-				<td><input type="file" name="<portlet:namespace />image_fileName" id="image_fileName"/> </td></tr>
-				<tr><td><br/></td><td></td></tr>
-				<tr><td><%=rb.getString("quest-addquest-audio-type")%></td>
-				<td><input type="file" name="<portlet:namespace />audio_fileName" id="audio_fileName"/></td></tr>
-				<tr><td><br/></td><td></td></tr>
-				<tr><td><%=rb.getString("quest-addquest-video-type")%></td>
-				<td><input type="file" name="<portlet:namespace />video_fileName" id="video_fileName" /></td></tr>
-				<tr><td><br/></td><td></td></tr>
-				<tr><td><br/></td><td></td></tr>
-				<tr><td><input type="button" id="btnSubmit" name="btnSubmit" value='<%=rb.getString("quest-addquest-btn-save")%>' onclick="doSubmit();" /></td><td></td></tr>
-				
-			</table>
-		</form>
-	</div>	
-		
-		
+<portlet:actionURL name="submitQuestDetails" var="submitQuestDetailsURL" />
+<div class="Table">
+	<div class="Row">
+		<div class="Cell-a"><h2><%=rb.getString("quest-addquest-title")%></h2>
+		</div>
+		<div class="Cell-a">
+		</div>
+	</div>
+</div>
+<div class="Table">
+	<div class="Row">
+		<div class="Cell-a1">
+			<liferay-ui:success key="quest-added-successfully" message='<%=rb.getString("quest-addquest-success-msg")%>'/>
+			<liferay-ui:error   key="quest-add-failed" message='<%=rb.getString("quest-addquest-failure-msg")%>'/>
+		</div>
+	</div>
+</div>
+<form id="<portlet:namespace />questForm" name="<portlet:namespace />questForm" 
+	action="<%=submitQuestDetailsURL.toString()%>" method="post" enctype="multipart/form-data" >
+	<div class="Table">
+		<div class="Row">
+			<div class="Cell-b3"><%=rb.getString("quest-addquest-name")%>
+			</div>
+			<div class="Cell-b4"><input type="text" name="questName"  id="questName" >
+			</div>
+		</div>
+		<div class="Row">
+			<div class="Cell-b3"><%=rb.getString("quest-addquest-definition")%>
+			</div>
+			<div class="Cell-b4">
+				<input type="text" name="<portlet:namespace />questDefinition" required="required" id="questDefinition" >
+			</div>
+		</div>
+	</div>
+	<div class="Table">
+		<div class="Row">
+			<div class="Cell-a1">
+				<span style="color: red; font: 12px/14px Arial" id="questname-error1">Quest Name or Definition Should not be Blank</span>
+			</div>
+		</div>
+	</div>
+	<div class="Table">
+		<div class="Row">
+			<div class="Cell-b3"><%=rb.getString("quest-addquest-accessmode")%>
+			</div>
+			<div class="Cell-b4">
+				<div class="Table">
+					<div class="Row">
+						<div class="Cell-b3" style="padding-left:0px; width:75px"><input type="radio" name= "<portlet:namespace />accessMode" value="PUBLIC" checked="checked" />&nbsp;&nbsp;Public
+						</div>
+						<div class="Cell-b3" style="padding-left:0px; width:75px"><input type="radio" name= "<portlet:namespace />accessMode" value="PRIVATE" />&nbsp;&nbsp;Private<br><br>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="Table">
+		<div class="Row">
+			<div class="Cell-a1">
+				<span style="color: red; font: 12px/14px Arial" id="questname-error2">Either Audio or Video Or Image Should be Selected</span>
+			</div>
+		</div>
+	</div>
+	<div class="Table">
+		<div class="Row">
+			<div class="Cell-b3"><%=rb.getString("quest-addquest-image-type")%>
+			</div>
+			<div class="Cell-b4"><input type="file" name="<portlet:namespace />image_fileName" id="image_fileName"/><br><br>
+			</div>
+		</div>
+		<div class="Row">
+			<div class="Cell-b3"><%=rb.getString("quest-addquest-audio-type")%>
+			</div>
+			<div class="Cell-b4"><input type="file" name="<portlet:namespace />audio_fileName" id="audio_fileName"/><br><br>
+			</div>
+		</div>
+		<div class="Row">
+			<div class="Cell-b3"><%=rb.getString("quest-addquest-video-type")%>
+			</div>
+			<div class="Cell-b4"><input type="file" name="<portlet:namespace />video_fileName" id="video_fileName" /><br><br>
+			</div>
+		</div>
+		<div class="Row">
+			<div class="Cell-b3">
+				<input type="button" id="btnSubmit" name="btnSubmit" value='<%=rb.getString("quest-addquest-btn-save")%>' onclick="doSubmit();" />
+			</div>
+			<div class="Cell-b4">
+			</div>
+		</div>
+	</div>
+</form>

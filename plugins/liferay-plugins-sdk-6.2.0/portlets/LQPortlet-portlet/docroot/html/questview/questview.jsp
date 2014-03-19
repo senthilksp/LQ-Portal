@@ -9,7 +9,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-			$(".quest").hide();	
+		$(".quest").hide();	
 	});
 
 	function doDisplay(divId) {
@@ -30,107 +30,155 @@
 <jsp:useBean id="questBean" class="com.cti.lq.beans.QuestViewBean"
 	scope="request" />
 
-<div class="content_wrap">
-	<div class="content_wrap">
-		<div class="left_column">
+<div class="Table">
+	<div class="Row">
+		<div class="Cell-a">
 			<h2><%=rb.getString("quest-view-portlet-heading")%></h2>
 		</div>
-		<div class="right_column"></div>
-		<div style="clear: both;"></div>
+		<div class="Cell-a">
+		</div>
 	</div>
-	<div class="content_wrap">
-		<div class="left_column">
-			<img src="${questBean.photoURL}" alt=""></img>
-			<p>${questBean.firstName}</p>
+	<div class="Row">
+		<div class="Cell-a" style="padding-left:20px;">
+			<p>
+				<img src="${questBean.photoURL}" alt=""></img><br/>
+				${questBean.firstName}
+			</p>
 		</div>
-		<div class="right_column">
-			<h5>Quest Details</h5>
-			<table>
-				<col width="30%">
-				<col width="70%">
-				<tr>
-					<td>Quest Title:</td>
-					<td>${questBean.quest_title}</td>
-				</tr>
-				<tr>
-					<td>Quest Definition:</td>
-					<td>${questBean.definition}</td>
-				</tr>
-			</table>
-			<c:if test="${not empty questList }">
-				<%
+		<div class="Cell-a">
+			<div class="Table">
+				<div class="Row">
+					<div class="Cell-b">
+						<h5>Quest Details</h5>
+					</div>
+					<div class="Cell-b"></div>
+				</div>
+				<div class="Row">
+					<div class="Cell-b">
+						<h5>Quest Title:</h5>
+					</div>
+					<div class="Cell-b">
+						<p style="margin-top:10px;">${questBean.quest_title}</p>
+					</div>
+				</div>
+				<div class="Row">
+					<div class="Cell-b">
+						<h5>Quest Definition:</h5>
+					</div>
+					<div class="Cell-b">
+						<p style="margin-top:10px;">${questBean.definition}</p>
+					</div>
+				</div>
+			</div>
+			<div class="Table">
+				<c:if test="${not empty questList }">
+					<div class="Row">
+						<div class="Cell-a">
+							<h5>List of Quests :</h5>
+						</div>
+					</div>
+					
+<!-- List of Pictures -->
+					<%
 					String displayTitle = "yes";
-				%>
-				<h5>List of Quests :</h5>
+					%>
+					<c:forEach items="${questList}" var="quest">
+						<c:if test="${quest.questType eq 'IMAGE'}">
+							<%
+							if (displayTitle.equalsIgnoreCase("yes")) {
+							%>
+							<div class="Row">
+								<div class="Cell-a">
+									<h5>Pictures</h5>
+								</div>
+							</div>
+							<%
+								displayTitle = "";
+							}
+							%>
+							<div class="Row">
+								<div class="Cell-a">
+									<img src="${quest.questLocation}" alt=""></img>
+								</div>
+							</div>
+						</c:if>
+					</c:forEach>
 
-				<c:forEach items="${questList}" var="quest">
-					<c:if test="${quest.questType eq 'IMAGE'}">
-						<%
-						if (displayTitle.equalsIgnoreCase("yes")) {
-%>
-						<h5>Pictures</h5>
-						<%
-							displayTitle = "";
-						}
-%>
-						<img src="${quest.questLocation}" alt=""></img>
-					</c:if>
-				</c:forEach>
-				<%
+<!-- List of Audios -->
+					<%
 					displayTitle = "yes";
-				%>
-				<c:forEach items="${questList}" var="quest">
-					<c:if test="${quest.questType eq 'AUDIO'}">
-						<%
-						if (displayTitle.equalsIgnoreCase("yes")) {
-%>
-						<h5>Audio</h5>
-						<%
-							displayTitle = "";
-						}
-%>
-						<a href='#!' onclick="doDisplay('${quest.id}')">${quest.qlocationForDisplay}</a>
-						<br>
-						<div id="${quest.id}" class="quest">
-						<video id="lq_video" class="video-js vjs-default-skin" controls
-							preload="none" width="300" height="75" poster=""
-							data-setup="{{}}">
-							<source src="${quest.questLocation}" type='video/mp4' />
-						</video>
-						</div>
-					</c:if>
-				</c:forEach>
-				<%
-					displayTitle = "yes";
-				%>
-				<c:forEach items="${questList}" var="quest">
-					<c:if test="${quest.questType eq 'VIDEO'}">
-						<%
-						if (displayTitle.equalsIgnoreCase("yes")) {
-%>
-						<h5>Video</h5>
-						<%
-							displayTitle = "";
-						}
-%>
-						<a href='#!' onclick="doDisplay('${quest.id}')">${quest.qlocationForDisplay}</a>
-						<br>
-						<div id="${quest.id}" class="quest">
-							<video id="lq_video" class="video-js vjs-default-skin" controls
-								preload="none" width="300" height="250" poster=""
-								data-setup="{{}}">
-								<source src="${quest.questLocation}" type='video/mp4' />
-							</video>
-						</div>
+					%>
+					<c:forEach items="${questList}" var="quest">
+						<c:if test="${quest.questType eq 'AUDIO'}">
+							<%
+							if (displayTitle.equalsIgnoreCase("yes")) {
+							%>
+							<div class="Row">
+								<div class="Cell-a">
+									<h5>Audio</h5>
+								</div>
+							</div>
+							<%
+								displayTitle = "";
+							}
+							%>
+							<div class="Row">
+								<div class="Cell-a">
+									<a href='#!' onclick="doDisplay('${quest.id}')">${quest.qlocationForDisplay}</a>
+									<br>
+									<div id="${quest.id}" class="quest">
+										<video id="lq_video" class="video-js vjs-default-skin" controls
+											preload="none" width="300" height="75" poster=""
+											data-setup="{{}}">
+											<source src="${quest.questLocation}" type='video/mp4' />
+										</video>
+									</div>
+								</div>
+							</div>
+						</c:if>
+					</c:forEach>
 
-					</c:if>
-				</c:forEach>
-			</c:if>
+<!-- List of Videos -->
+					<%
+					displayTitle = "yes";
+					%>
+					<c:forEach items="${questList}" var="quest">
+						<c:if test="${quest.questType eq 'VIDEO'}">
+							<%
+							if (displayTitle.equalsIgnoreCase("yes")) {
+							%>
+							<div class="Row">
+								<div class="Cell-a">
+									<h5>Video</h5>
+								</div>
+							</div>
+							<%
+								displayTitle = "";
+							}
+							%>
+							<div class="Row">
+								<div class="Cell-a">
+									<a href='#!' onclick="doDisplay('${quest.id}')">${quest.qlocationForDisplay}</a>
+									<br>
+									<div id="${quest.id}" class="quest">
+										<video id="lq_video" class="video-js vjs-default-skin" controls
+											preload="none" width="300" height="250" poster=""
+											data-setup="{{}}">
+											<source src="${quest.questLocation}" type='video/mp4' />
+										</video>
+									</div>
+								</div>
+							</div>
+						</c:if>
+					</c:forEach>
+				</c:if>
+			</div>
+		</div>		
+	</div>
+	<div class="Row">
+		<div class="Cell-a"><br><br>
 		</div>
-		<div style="clear: both;"></div>
-		<br />
-		<br />
-		<br />
-		<br />
+		<div class="Cell-a"><br><br>
+		</div>
 	</div>
 </div>

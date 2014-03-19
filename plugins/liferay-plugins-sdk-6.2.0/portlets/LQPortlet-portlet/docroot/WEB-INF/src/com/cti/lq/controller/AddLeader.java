@@ -48,8 +48,7 @@ public class AddLeader extends MVCPortlet {
 			RenderResponse renderResponse) throws IOException, PortletException {
 
 		LOG.info("Entering doView()");
-		PortletRequestDispatcher portletRequestDispatcher = getPortletContext()
-				.getRequestDispatcher(viewJSP);
+		PortletRequestDispatcher portletRequestDispatcher = getPortletContext().getRequestDispatcher(viewJSP);
 
 		if (portletRequestDispatcher == null) {
 		} else {
@@ -64,9 +63,7 @@ public class AddLeader extends MVCPortlet {
 		LOG.info(" Entering submitLeaderDetails()");
 
 		LeaderBean leaderDetails = new LeaderBean();
-
-		HttpServletRequest httpRequest = PortalUtil
-				.getHttpServletRequest(actionRequest);
+		HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(actionRequest);
 		HttpSession session = httpRequest.getSession();
 		ThemeDisplay themeDisplay = (ThemeDisplay) httpRequest
 				.getAttribute(WebKeys.THEME_DISPLAY);

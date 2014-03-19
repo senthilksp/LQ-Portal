@@ -294,7 +294,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 
 			ps3 = con.prepareStatement(insertQuery2.toString());
 
-			ps3.setInt(1, leaderDetails.getUserid());
+			ps3.setLong(1, userId);
 			ps3.setInt(2, leaderDetails.getRoleid());
 			ps3.setString(3, leaderDetails.getFacultyRole());
 			ps3.setString(4, leaderDetails.getPrimaryPhone());
@@ -431,11 +431,11 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 		int save2 = 0;
 
 		StringBuffer query1 = new StringBuffer(QueryContants.deleteLeader1);
-		StringBuffer query2 = new StringBuffer(QueryContants.deleteLeader2);
+//		StringBuffer query2 = new StringBuffer(QueryContants.deleteLeader2);
 
 		try {
 			con = DBConnectionFactory.getPostgresDBConnection();
-			con.setAutoCommit(false);
+//			con.setAutoCommit(false);
 
 			ps = con.prepareStatement(query1.toString());
 			ps.setInt(1, lb.getUserid());
@@ -443,12 +443,12 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 			save1 = ps.executeUpdate();
 			ps.close();
 
-			ps = con.prepareStatement(query2.toString());
-			ps.setInt(1, lb.getUserid());
+//			ps = con.prepareStatement(query2.toString());
+//			ps.setInt(1, lb.getUserid());
 
-			save2 = ps.executeUpdate();
+//			save2 = ps.executeUpdate();
 
-			con.commit();
+//			con.commit();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -456,11 +456,12 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 			closeDBOperations(con, ps, null);
 		}
 
-		if (save1 > 0 && save2 > 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return save1 > 0 ? true : false;
+//		if (save1 > 0 && save2 > 0) {
+//			return true;
+//		} else {
+//			return false;
+//		}
 	}
 
 	private void closeDBOperations(Connection con, PreparedStatement ps,

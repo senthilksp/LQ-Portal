@@ -34,7 +34,7 @@ public class LiferayAddUserUtil {
 			boolean autoScreenName = false;
 			Locale locale = Locale.US;
 			String password = LQPortalConstants.ADD_LR_USER_PASSWD;
-			String userScreenName = firstName;
+			String userScreenName = firstName + "-" + lastName;
 
 			long facebookId = 99;
 			long[] ids;

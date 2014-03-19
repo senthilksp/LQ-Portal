@@ -27,80 +27,132 @@ function doDisplay(divId) {
 <%java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);
 PortalUtil.setPageTitle("Quests", request);
 %>
-<div class="content_wrap">
-	<div class="content_wrap">
-		<h2>Quest Details</h2>
-		<br>
+<portlet:actionURL name="submitQuestLoginDetails" var="submitQuestLoginDetailsURL" />
+
+<form id="<portlet:namespace />questLoginForm" name="<portlet:namespace />questLoginForm" 
+	action="<%=submitQuestLoginDetailsURL.toString()%>" method="post" enctype="multipart/form-data" >
+
+	<input type="hidden" name="<portlet:namespace />quest_id" id="<portlet:namespace />quest_id" value ="${questId}" />
+	<div class="Table">
+		<div class="Row">
+			<div class="Cell-a">
+				<h2>Quest Details</h2>
+			</div>
+			<div class="Cell-a">
+			</div>
+		</div>
+	</div>
+	<div class="Table">
+		<div class="Row">
+			<div class="Cell-a1">
+				<liferay-ui:success key="quest-added-successfully" message='<%=rb.getString("quest-editquest-success-msg")%>' />
+			</div>
+		</div>
 	</div>
 
-	<div class="content_wrap">
-		<liferay-ui:success key="quest-added-successfully"
-		message='<%=rb.getString("quest-editquest-success-msg")%>' />
-		
-		<portlet:actionURL name="submitQuestLoginDetails" var="submitQuestLoginDetailsURL" />
-		<div class="left_column">
-			<img src="${questBean.photoURL}" alt="" style="margin-left:20px"></img>
-			<br/> 
-			<p style="margin-left:20px">${questBean.firstName} </p>
-		</div>
-		<div class="right_column">
-			<form id="<portlet:namespace />questLoginForm" name="<portlet:namespace />questLoginForm" 
-				action="<%=submitQuestLoginDetailsURL.toString()%>" method="post" enctype="multipart/form-data" >
-				
-				<h5>Pictures</h5>
-				<c:forEach items="${questList}" var="quest">
-					<c:if test="${quest.questType eq 'IMAGE'}">
-					<img src="${quest.questLocation}" alt=""></img>
-					</c:if>
-				</c:forEach>
-				<br/><br/>
-				<input type="file" name="<portlet:namespace />image_fileName" />
-				<input type="submit" id="btnSubmit1" name="btnSubmit1" value='Upload' />
-				<br/>
-				<h5>Audios</h5>
-				<c:forEach items="${questList}" var="quest">
-					<div id="audiodiv" >
-						<c:if test="${quest.questType eq 'AUDIO'}">
-							<br><br>
-							<a href='#!' onclick="doDisplay('${quest.id}')">${quest.qlocationForDisplay}</a><br>
-							<div id="${quest.id}" class="quest">
-								<video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="50" poster="" data-setup="{{}}">
-									<source src="${quest.questLocation}" type='video/mp4' />
-								</video>
+	<div class="Table">
+		<div class="Row">
+			<div class="Cell-a" style="padding-left:25px;">
+				<p>
+					<img src="${questBean.photoURL}" alt=""></img>
+					<br/> 
+					${questBean.firstName}
+				</p>
+			</div>
+			<div class="Cell-a">
+				<div class="Table">
+					<div class="Row">
+						<div class="Cell-a"><h5>Pictures</h5>
+						</div>
+					</div>
+					<c:forEach items="${questList}" var="quest">
+						<c:if test="${quest.questType eq 'IMAGE'}">
+							<div class="Row">
+								<div class="Cell-a">
+									<img src="${quest.questLocation}" alt=""></img>
+								</div>
 							</div>
 						</c:if>
+					</c:forEach>
+					<div class="Row">
+						<div class="Cell-a">
+							<input type="file" name="<portlet:namespace />image_fileName" />
+							<input type="submit" id="btnSubmit1" name="btnSubmit1" value='Upload' />
+						</div>
 					</div>
-				
-				</c:forEach>
-				<br/>
-				<input type="file" name="<portlet:namespace />audio_fileName" />
-				<input type="hidden" name="<portlet:namespace />quest_id" id="<portlet:namespace />quest_id" value ="${questId}" />
-				<input type="submit" id="btnSubmit2" name="btnSubmit2" value='Upload' />	
-				<br><br>
-				<h5>Videos</h5>
-				<c:forEach items="${questList}" var="quest">
-					<div id="videodiv" >
-					<c:if test="${quest.questType eq 'VIDEO'}">
-						<br><br>
-						<a href='#!' onclick="doDisplay('${quest.id}')">${quest.qlocationForDisplay}</a><br>
-						<div id="${quest.id}" class="quest">
-							<video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="264" poster="" data-setup="{{}}">
-						    	<source src="${quest.questLocation}" type='video/mp4' />
-							</video>
-						</div>	
-					</c:if>
+					<div class="Row">
+						<div class="Cell-a"><h5>Audios</h5>
+						</div>
+					</div>
+					<c:forEach items="${questList}" var="quest">
+						<div class="Row">
+							<div class="Cell-a">
+								<c:if test="${quest.questType eq 'AUDIO'}">
+									<div id="audiodiv" >
+										<a href='#!' onclick="doDisplay('${quest.id}')">${quest.qlocationForDisplay}</a><br>
+										<div id="${quest.id}" class="quest">
+											<video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="50" poster="" data-setup="{{}}">
+												<source src="${quest.questLocation}" type='video/mp4' />
+											</video>
+										</div>
+									</div>
+								</c:if>
+							</div>
+						</div>
+					</c:forEach>
+					<div class="Row">
+						<div class="Cell-a">
+							<input type="file" name="<portlet:namespace />audio_fileName" />
+							<input type="submit" id="btnSubmit2" name="btnSubmit2" value='Upload' />
+						</div>
+					</div>
+					<div class="Row">
+						<div class="Cell-a"><h5>Videos</h5>
+						</div>
 					</div>
 					
-				</c:forEach>
-				<br/>
-				<input type="file" name="<portlet:namespace />video_fileName" />
-				<input type="submit" id="btnSubmit3" name="btnSubmit3" value='upload' />
-				<br><br>
-				<a href='/web/guest/editQuestPage?userId=${userId}&questId=${questId}'>Edit Quest</a>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href='/web/guest/addQuestPage'><%=rb.getString("quest-addquest-link-caption")%></a>
-				<br><br>
-			</form>
+					<c:forEach items="${questList}" var="quest">
+						<c:if test="${quest.questType eq 'VIDEO'}">
+							<div class="Row">
+								<div class="Cell-a">
+									<div id="videodiv" >
+										<a href='#!' onclick="doDisplay('${quest.id}')">${quest.qlocationForDisplay}</a><br>
+										<div id="${quest.id}" class="quest">
+											<video id="lq_video" class="video-js vjs-default-skin" controls preload="none" width="300" height="264" poster="" data-setup="{{}}">
+										    	<source src="${quest.questLocation}" type='video/mp4' />
+											</video>
+										</div>	
+									</div>
+								</div>
+							</div>
+						</c:if>
+						
+					</c:forEach>
+					<div class="Row">
+						<div class="Cell-a">
+							<input type="file" name="<portlet:namespace />video_fileName" />
+							<input type="submit" id="btnSubmit3" name="btnSubmit3" value='upload' />
+						</div>
+					</div>
+					<div class="Row">
+						<div class="Cell-a"><br></div>
+					</div>
+					<div class="Row">
+						<div class="Cell-a">
+							<div class="Table">
+								<div class="Row">
+									<div class="Cell-b3" style="padding-left:0px;">
+										<a href='/web/guest/editQuestPage?userId=${userId}&questId=${questId}'>Edit Quest</a>
+									</div>
+									<div class="Cell-b3">
+										<a href='/web/guest/addQuestPage'><%=rb.getString("quest-addquest-link-caption")%></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
+</form>
