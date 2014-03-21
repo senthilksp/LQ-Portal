@@ -3,7 +3,6 @@
  */
 package com.cti.lq.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,96 +47,79 @@ public class AddQuest extends MVCPortlet {
 		viewJSP = getInitParameter("view-template");
 	}
 
-	public void doView(RenderRequest renderRequest,
-			RenderResponse renderResponse) throws IOException, PortletException {
+	public void doView(RenderRequest renderRequest,	RenderResponse renderResponse) throws IOException, PortletException {
 
 		LOG.info("Entering doView()");
-		PortletRequestDispatcher portletRequestDispatcher = getPortletContext()
-				.getRequestDispatcher(viewJSP);
+		PortletRequestDispatcher portletRequestDispatcher = getPortletContext().getRequestDispatcher(viewJSP);
 
 		LeaderBean leaderBean = new LeaderBean();
 		LQPortletService lqServiceLayer = new LQPortletServiceImpl();
 		String role = LQPortalUserServiceUtil.getRoleName(renderRequest);
 
 		try {
-			lqServiceLayer
-					.populateLeaderLoginPortlet(leaderBean, renderRequest);
+			lqServiceLayer.populateLeaderLoginPortlet(leaderBean, renderRequest);
 			renderRequest.setAttribute("roleName", role);
 
 		} catch (LQPortalException le) {
 			le.printStackTrace();
-			//LQPortalUtil.processException(le, renderRequest);
 		}
 
-		if (portletRequestDispatcher == null) {
-		} else {
+		if (portletRequestDispatcher != null) {
 			portletRequestDispatcher.include(renderRequest, renderResponse);
 		}
 
 		LOG.info("Leaving doView()");
 	}
 
-	public void submitQuestDetails(ActionRequest actionRequest,
-			ActionResponse actionResponse) throws IOException, PortletException {
+	public void submitQuestDetails(ActionRequest actionRequest, ActionResponse actionResponse) throws IOException, PortletException {
 		
 		LOG.info(" Entering submitQuestDetails()");
 		
 		QuestMasterBean questmaster = new QuestMasterBean();
 		List<QuestTransactionBean> qTransList = new ArrayList<QuestTransactionBean>();
-		String fileLocation = LQPortalConstants.LQ_FILE_LOCATION;
+		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(actionRequest);
+		String path = "http://" + uploadRequest.getServerName() + ":" + uploadRequest.getServerPort() + "/lqfiles/";
 		
-
 		try {
-			UploadPortletRequest uploadRequest = PortalUtil
-					.getUploadPortletRequest(actionRequest);
-			String path = getPortletContext().getRealPath("/");
 			String imageFileName = uploadRequest.getFileName("image_fileName");
 			String audioFileName = uploadRequest.getFileName("audio_fileName");
 			String videoFileName = uploadRequest.getFileName("video_fileName");
 
 			if (! (imageFileName == null || "".equals(imageFileName))) {
-				LQPortalUtil.uploadFile(path,
-						uploadRequest, "image_fileName");
+				LQPortalUtil.uploadFile(uploadRequest, "image_fileName");
 				QuestTransactionBean transBean = new QuestTransactionBean();
 				transBean.setQuestType(LQPortalConstants.IMAGE_TYPE);
-				transBean.setQuestLocation(fileLocation + "/" + imageFileName);
+				transBean.setQuestLocation(path + "/" + imageFileName);
 				qTransList.add(transBean);
 				
 			}
 			if (! (audioFileName == null || "".equals(audioFileName))) {
-				 LQPortalUtil.uploadFile(path,
-						uploadRequest, "audio_fileName");
+				LQPortalUtil.uploadFile(uploadRequest, "audio_fileName");
 				QuestTransactionBean transBean = new QuestTransactionBean();
 				transBean.setQuestType(LQPortalConstants.AUDIO_TYPE);
-				transBean.setQuestLocation(fileLocation + "/" +  audioFileName);
+				transBean.setQuestLocation(path + "/" +  audioFileName);
 				qTransList.add(transBean);
 				
 			}
 			if (! (videoFileName == null || "".equals(videoFileName))) {
-				 LQPortalUtil.uploadFile(path,
-						uploadRequest, "video_fileName");
+				LQPortalUtil.uploadFile(uploadRequest, "video_fileName");
 				QuestTransactionBean transBean = new QuestTransactionBean();
 				transBean.setQuestType(LQPortalConstants.VIDEO_TYPE);
-				transBean.setQuestLocation(fileLocation + "/"+ videoFileName);
+				transBean.setQuestLocation(path + "/"+ videoFileName);
 				qTransList.add(transBean);
 			}
 
+			questmaster.setUserId(LQPortalUserServiceUtil.getUserId(actionRequest));
+			if (uploadRequest.getParameter("accessMode") != null) {
+				if (uploadRequest.getParameter("accessMode").toUpperCase().equals("PUBLIC")) {
+					questmaster.setAccessMode(true);					
+				} else if (uploadRequest.getParameter("accessMode").toUpperCase().equals("PRIVATE")) {
+					questmaster.setAccessMode(false);
+				}
+			}
 
-			questmaster.setUserId(LQPortalUserServiceUtil
-					.getUserId(actionRequest));
-			if (uploadRequest.getParameter("accessMode") != null
-					&& uploadRequest.getParameter("accessMode").toUpperCase()
-							.equals("PUBLIC")) {
-				questmaster.setAccessMode(true);
-			}
-			if (uploadRequest.getParameter("accessMode") != null
-					&& uploadRequest.getParameter("accessMode").toUpperCase()
-							.equals("PRIVATE")) {
-				questmaster.setAccessMode(false);
-			}
 			if (uploadRequest.getParameter("questDefinition") != null) {
-				questmaster.setQuestDefinition(uploadRequest
-						.getParameter("questDefinition"));
+				questmaster.setQuestDefinition(uploadRequest.getParameter("questDefinition"));
 			}
 			
 			if (uploadRequest.getParameter("questName") != null) {
@@ -156,7 +138,5 @@ public class AddQuest extends MVCPortlet {
 			e.printStackTrace();
 
 		}
-
 	}
-
 }

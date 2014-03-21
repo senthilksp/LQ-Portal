@@ -1,6 +1,7 @@
 package com.cti.lq.dao.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,21 +22,17 @@ import com.cti.lq.dao.LQLeaderDAO;
 import com.cti.lq.persistence.DBConnectionFactory;
 import com.cti.lq.util.LQPortalUserServiceUtil;
 import com.cti.lq.util.LiferayAddUserUtil;
-
-import java.sql.PreparedStatement;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 
 public class LQLeaderDAOImpl implements LQLeaderDAO {
 	final Log LOG = LogFactory.getLog(LQLeaderDAO.class);
 
 	@Override
-	public List<LeaderBean> getLeaderList(List<LeaderBean> leaderlist,
-			RenderRequest renderRequest) throws SQLException {
+	public List<LeaderBean> getLeaderList(List<LeaderBean> leaderlist, RenderRequest renderRequest) throws SQLException {
 
 		LOG.info("Entering into LeaderDAO");
-		int signinUserId = renderRequest != null ? LQPortalUserServiceUtil
-				.getUserId(renderRequest) : 0;
-		// checking renderRequest for Unit testing. When Unit testing
-		// rendorRequest=null
+		int signinUserId = renderRequest != null ? LQPortalUserServiceUtil.getUserId(renderRequest) : 0;
 
 		Connection con = null;
 		PreparedStatement ps1 = null;
@@ -57,15 +54,12 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 				LeaderBean lb = new LeaderBean();
 				lb = settingLeaderBean(rs1, lb);
 
-				StringBuffer questQuery = new StringBuffer(
-						QueryContants.getQuestInfoByleader);
+				StringBuffer questQuery = new StringBuffer(QueryContants.getQuestInfoByleader);
 				List<QuestMasterBean> questList = new ArrayList<QuestMasterBean>();
 				ps2 = con.prepareStatement(questQuery.toString());
 				ps2.setInt(1, lb.getUserid());
 				rs2 = ps2.executeQuery();
-				String role = renderRequest == null ? null
-						: LQPortalUserServiceUtil.getRoleName(renderRequest);
-				// renderRequest = null in the case of Unit testing.
+				String role = renderRequest == null ? null : LQPortalUserServiceUtil.getRoleName(renderRequest);
 
 				while (rs2.next()) {
 					QuestMasterBean qb = new QuestMasterBean();
@@ -75,13 +69,11 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 					qb.setAccessMode(rs2.getBoolean("access_mode"));
 					qb.setQuestId(rs2.getInt("quest_id"));
 
-					if (qb.getAccessMode()
-							|| (qb.getAccessMode() == false && qb.getUserId() == signinUserId)) {
+					if (qb.getAccessMode() || (qb.getAccessMode() == false && qb.getUserId() == signinUserId)) {
 						accessMode = true;
 					}
 
-					if (role != null
-							&& role.equalsIgnoreCase(LQPortalConstants.LQ_LEADER_ADMIN)) {
+					if (role != null && role.equalsIgnoreCase(LQPortalConstants.LQ_LEADER_ADMIN)) {
 						accessMode = true;
 					}
 
@@ -110,9 +102,9 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 		return leaderlist;
 	}
 
+	@SuppressWarnings("resource")
 	@Override
-	public LeaderBean getLeaderDetails(RenderRequest renderRequest,
-			LeaderBean leaderBean) throws SQLException {
+	public LeaderBean getLeaderDetails(RenderRequest renderRequest, LeaderBean leaderBean) throws SQLException {
 
 		LOG.info("Entering into getleaderDetails");
 		Connection con = null;
@@ -127,8 +119,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 			con = DBConnectionFactory.getPostgresDBConnection();
 			ps = con.prepareStatement(query.toString());
 			if (renderRequest != null && leaderBean.getUserid() == 0) {
-				leaderBean.setUserid(LQPortalUserServiceUtil
-						.getUserId(renderRequest));
+				leaderBean.setUserid(LQPortalUserServiceUtil.getUserId(renderRequest));
 			}
 			ps.setInt(1, leaderBean.getUserid());
 
@@ -188,8 +179,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 
 	// Update Leader details.
 	@Override
-	public Boolean saveLeaderDetails(LeaderBean leaderDetails)
-			throws SQLException {
+	public Boolean saveLeaderDetails(LeaderBean leaderDetails) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps1 = null;
 		PreparedStatement ps2 = null;
@@ -201,8 +191,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 
 		StringBuffer updQuery1 = new StringBuffer(QueryContants.updateLeader_LQ);
 		StringBuffer updQuery2 = new StringBuffer(QueryContants.updateLeader_lr);
-		StringBuffer updQuery3 = new StringBuffer(
-				QueryContants.updateAccessMode);
+		StringBuffer updQuery3 = new StringBuffer(QueryContants.updateAccessMode);
 
 		try {
 			con = DBConnectionFactory.getPostgresDBConnection();
@@ -259,8 +248,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 
 	// Add Leader Details
 	@Override
-	public Boolean addLeaderDetails(LeaderBean leaderDetails,ActionRequest actionRequest)
-			throws SQLException {
+	public Boolean addLeaderDetails(LeaderBean leaderDetails,ActionRequest actionRequest) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps1 = null;
 		PreparedStatement ps2 = null;
@@ -268,12 +256,10 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 		ResultSet rs = null;
 		Boolean saveSuccess = false;
 		long userId = 0;
-
+		int ins2 = 0;
 		
-		StringBuffer insertQuery2 = new StringBuffer(
-				QueryContants.insertLeader_LQ);
+		StringBuffer insertQuery2 = new StringBuffer(QueryContants.insertLeader_LQ);
 		StringBuffer roleQry = new StringBuffer(QueryContants.selectRole);
-		
 
 		try {
 			con = DBConnectionFactory.getPostgresDBConnection();
@@ -290,29 +276,36 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 			// it is called by unit test
 
 			userId = LiferayAddUserUtil.insertLiferayUser(actionRequest, leaderDetails);
-			LOG.info("Inserted into User table");
-
-			ps3 = con.prepareStatement(insertQuery2.toString());
-
-			ps3.setLong(1, userId);
-			ps3.setInt(2, leaderDetails.getRoleid());
-			ps3.setString(3, leaderDetails.getFacultyRole());
-			ps3.setString(4, leaderDetails.getPrimaryPhone());
-			ps3.setString(5, leaderDetails.getWebsite());
-			ps3.setString(6, leaderDetails.getBusinessName());
-			ps3.setString(7, leaderDetails.getCity());
-			ps3.setString(8, leaderDetails.getCountry());
-			ps3.setString(9, leaderDetails.getPhotoURL());
-			ps3.setString(10, leaderDetails.getBioStatement());
-			int ins2 = ps3.executeUpdate();
-			LOG.info("Inserted into LQ table");
-
-			con.commit();
-			LOG.info("Insertion done");
-			saveSuccess = (ins2 > 0) ? true : false;
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
+			
+			if (userId != 0) { 
+				LOG.info("Inserted into Liferay User table");
+	
+				ps3 = con.prepareStatement(insertQuery2.toString());
+	
+				ps3.setLong(1, userId);
+				ps3.setInt(2, leaderDetails.getRoleid());
+				ps3.setString(3, leaderDetails.getFacultyRole());
+				ps3.setString(4, leaderDetails.getPrimaryPhone());
+				ps3.setString(5, leaderDetails.getWebsite());
+				ps3.setString(6, leaderDetails.getBusinessName());
+				ps3.setString(7, leaderDetails.getCity());
+				ps3.setString(8, leaderDetails.getCountry());
+				ps3.setString(9, leaderDetails.getPhotoURL());
+				ps3.setString(10, leaderDetails.getBioStatement());
+				ins2 = ps3.executeUpdate();
+	
+				con.commit();
+				
+				if (ins2 > 0) {
+					saveSuccess = true;
+					LOG.info("Inserted into LQ table");
+				}
+			} else {
+				saveSuccess = false;
+				LOG.info("Not able insert into Liferay User table");
+			}
+		} catch (PortalException | SystemException e) {
+			e.printStackTrace();
 		} finally {
 			closeDBOperations(con, ps1, rs);
 			closeDBOperations(con, ps2, null);
@@ -323,9 +316,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 	}
 
 	@Override
-	public List<QuestViewBean> getQuestDetails(RenderRequest renderRequest,
-			List<QuestViewBean> questList, int userId, int questId)
-			throws SQLException {
+	public List<QuestViewBean> getQuestDetails(RenderRequest renderRequest, List<QuestViewBean> questList, int userId, int questId)	throws SQLException {
 		LOG.info("Entering into getleaderDetails");
 
 		Connection con = null;
@@ -362,9 +353,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 				qb.setQuestType(rs.getString("quest_type"));
 				qb.setQuestLocation(rs.getString("quest_location"));
 
-				String showLocation = qb.getQuestLocation().substring(
-						qb.getQuestLocation().lastIndexOf("/") + 1,
-						qb.getQuestLocation().length());
+				String showLocation = qb.getQuestLocation().substring(qb.getQuestLocation().lastIndexOf("/") + 1, qb.getQuestLocation().length());
 				qb.setQlocationForDisplay(showLocation);
 
 				qb.setFirstName(rs.getString("firstname"));
@@ -382,9 +371,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 	}
 
 	@Override
-	public List<QuestViewBean> getQuestMasterDetails(
-			RenderRequest renderRequest, List<QuestViewBean> questList,
-			int userId) throws SQLException {
+	public List<QuestViewBean> getQuestMasterDetails(RenderRequest renderRequest, List<QuestViewBean> questList, int userId) throws SQLException {
 
 		LOG.info("Entering into getleaderDetails");
 
@@ -394,10 +381,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 		questList = new ArrayList<QuestViewBean>();
 		List<QuestViewBean> questList_temp = new ArrayList<QuestViewBean>();
 
-		// int userId = LQPortalUserServiceUtil.getUserId(renderRequest);
-
-		StringBuffer query = new StringBuffer(
-				QueryContants.getQuestInfoByleader);
+		StringBuffer query = new StringBuffer(QueryContants.getQuestInfoByleader);
 
 		try {
 			con = DBConnectionFactory.getPostgresDBConnection();
@@ -407,8 +391,7 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				questList_temp = new ArrayList<QuestViewBean>();
-				questList_temp = getQuestDetails(renderRequest, questList,
-						userId, rs.getInt("quest_id"));
+				questList_temp = getQuestDetails(renderRequest, questList, userId, rs.getInt("quest_id"));
 				questList.addAll(questList_temp);
 			}
 
@@ -422,33 +405,24 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 
 	}
 
-
 	@Override
 	public Boolean deleteLeader(LeaderBean lb) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int save1 = 0;
-		int save2 = 0;
 
 		StringBuffer query1 = new StringBuffer(QueryContants.deleteLeader1);
-//		StringBuffer query2 = new StringBuffer(QueryContants.deleteLeader2);
 
 		try {
 			con = DBConnectionFactory.getPostgresDBConnection();
-//			con.setAutoCommit(false);
+			con.setAutoCommit(false);
 
 			ps = con.prepareStatement(query1.toString());
 			ps.setInt(1, lb.getUserid());
 
 			save1 = ps.executeUpdate();
-			ps.close();
 
-//			ps = con.prepareStatement(query2.toString());
-//			ps.setInt(1, lb.getUserid());
-
-//			save2 = ps.executeUpdate();
-
-//			con.commit();
+			con.commit();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -457,22 +431,14 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 		}
 
 		return save1 > 0 ? true : false;
-//		if (save1 > 0 && save2 > 0) {
-//			return true;
-//		} else {
-//			return false;
-//		}
 	}
 
-	private void closeDBOperations(Connection con, PreparedStatement ps,
-			ResultSet rs) throws SQLException {
+	private void closeDBOperations(Connection con, PreparedStatement ps, ResultSet rs) throws SQLException {
 		if (con != null)
 			con.close();
 		if (ps != null)
 			ps.close();
 		if (rs != null)
 			rs.close();
-
 	}
-
 }

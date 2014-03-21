@@ -64,47 +64,39 @@ public class LQPortalUtil {
 		return ResourceBundle.getBundle("content/Language");
 	}
 
-	public static void sendPasswordResetEmail(ActionRequest request,
-			String toEmailAddress, String firstName) throws LQPortalException {
+	public static void sendPasswordResetEmail(ActionRequest request, String toEmailAddress, String firstName) throws LQPortalException {
 		try {
 			LOG.info("Sending password reset email to: " + toEmailAddress);
-			HttpServletRequest httpRequest = PortalUtil
-					.getHttpServletRequest(request);
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 
 			ResourceBundle rb = LQPortalUtil.getResourceBundle(httpRequest);
 			String subject = rb.getString("forget-password-email-subject");
 			String fromEmailAddress = rb.getString("from-email-address");
-			StringBuffer passwordResetURL = constructPasswordResetURL(
-					httpRequest, toEmailAddress);
+			StringBuffer passwordResetURL = constructPasswordResetURL(httpRequest, toEmailAddress);
 			LOG.info("PasswordReset URL: " + passwordResetURL);
 
-			String msgBody = constructEmailMessage(rb, firstName,
-					passwordResetURL.toString());
+			String msgBody = constructEmailMessage(rb, firstName, passwordResetURL.toString());
 
 			sendEmail(subject, msgBody, fromEmailAddress, toEmailAddress);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			// throw new LQPortalException(e.getLocalizedMessage());
 		}
 
 	}
 
-	private static StringBuffer constructPasswordResetURL(
-			HttpServletRequest httpRequest, String emailAddress) {
+	private static StringBuffer constructPasswordResetURL(HttpServletRequest httpRequest, String emailAddress) {
 		String mailSenttime = String.valueOf(new Date().getTime());
 		StringBuffer passwordResetURL = null;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) httpRequest
-				.getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay) httpRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		String completeURL;
 		try {
 			completeURL = PortalUtil.getLayoutFullURL(themeDisplay);
 			String[] elements = completeURL.split("/");
 			completeURL = elements[0] + "//" + elements[1] + elements[2];
 
-			passwordResetURL = new StringBuffer(completeURL
-					+ "/password-reset?p1=");
+			passwordResetURL = new StringBuffer(completeURL	+ "/password-reset?p1=");
 			passwordResetURL = passwordResetURL.append(emailAddress);
 			passwordResetURL.append("&p2=");
 			passwordResetURL.append(mailSenttime);
@@ -116,14 +108,12 @@ public class LQPortalUtil {
 		return passwordResetURL;
 	}
 
-	private static String constructEmailMessage(ResourceBundle rb,
-			String firstName, String URL) {
+	private static String constructEmailMessage(ResourceBundle rb, String firstName, String URL) {
 		StringBuffer msgbody = null;
 		try {
 
 			String[] textParagraphs = new String[5];
-			textParagraphs[0] = rb.getString("forget-password-email-hi")
-					.concat(" ").concat(firstName);
+			textParagraphs[0] = rb.getString("forget-password-email-hi").concat(" ").concat(firstName);
 			textParagraphs[1] = rb.getString("forget-password-email-body-msg1");
 			textParagraphs[2] = rb.getString("forget-password-email-body-msg2");
 			textParagraphs[3] = rb.getString("forget-password-email-body-msg3");
@@ -137,21 +127,18 @@ public class LQPortalUtil {
 			msgbody.append(URL);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return msgbody.toString();
 	}
 
-	private static String constructPasswordSuccessMail(ResourceBundle rb,
-			String firstName, String URL) {
+	private static String constructPasswordSuccessMail(ResourceBundle rb, String firstName, String URL) {
 
 		StringBuffer msgbody = null;
 		try {
 
 			String[] textParagraphs = new String[5];
-			textParagraphs[0] = rb.getString("password-reset-email-hi")
-					.concat(" ").concat(firstName);
+			textParagraphs[0] = rb.getString("password-reset-email-hi").concat(" ").concat(firstName);
 			textParagraphs[1] = rb.getString("password-reset-email-msg1");
 			textParagraphs[2] = rb.getString("password-reset-email-msg2");
 			textParagraphs[3] = rb.getString("password-reset-email-msg3");
@@ -162,14 +149,12 @@ public class LQPortalUtil {
 			msgbody.append(textParagraphs[3] + "<br>" + "<br>");
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return msgbody.toString();
 	}
 
-	public static void sendEmail(String msgSubject, String msgBody,
-			String fromEmailAddress, String toEmailAddress) {
+	public static void sendEmail(String msgSubject, String msgBody, String fromEmailAddress, String toEmailAddress) {
 		LOG.debug("Entering sendEmail()");
 
 		InternetAddress from;
@@ -178,8 +163,7 @@ public class LQPortalUtil {
 			from = new InternetAddress(fromEmailAddress);
 			to = new InternetAddress(toEmailAddress);
 
-			MailMessage message = new MailMessage(from, to, msgSubject,
-					msgBody, true);
+			MailMessage message = new MailMessage(from, to, msgSubject,	msgBody, true);
 			message.setReplyTo(null);
 			MailServiceUtil.sendEmail(message);
 		} catch (AddressException e) {
@@ -190,31 +174,28 @@ public class LQPortalUtil {
 		LOG.debug("Leaving sendEmail()");
 	}
 
-	public static Boolean uploadFile(String path,
-			UploadPortletRequest uploadRequest, String fileName) {
+	public static Boolean uploadFile(UploadPortletRequest uploadRequest, String fileName) {
 		Boolean isFileUploaded = false;
 		LOG.info("Entering into uploadFile()");
 
 		try {
-			path = path + LQPortalConstants.fileLocation;
+			String path = System.getProperty("catalina.home") + File.separator + "webapps" + File.separator + "lqfiles"; 
 			LOG.info("path================" + path);
 			LOG.info("Size: " + uploadRequest.getSize(fileName));
-
+			
 			if (uploadRequest.getSize(fileName) == 0) {
 				return isFileUploaded;
 			} else {
 				String sourceFileName = uploadRequest.getFileName(fileName);
 				File file = uploadRequest.getFile(fileName);
 
-				LOG.info("Name of the file:"
-						+ uploadRequest.getFileName(fileName));
+				LOG.info("Name of the file:" + uploadRequest.getFileName(fileName));
 				File newFile = null;
 				newFile = new File(path + "/" + sourceFileName);
 				LOG.info("New file name: " + newFile.getName());
 				LOG.info("New file path: " + newFile.getPath());
 
-				InputStream in = new BufferedInputStream(
-						uploadRequest.getFileAsStream(fileName));
+				InputStream in = new BufferedInputStream(uploadRequest.getFileAsStream(fileName));
 				FileInputStream fis = new FileInputStream(file);
 				FileOutputStream fos = new FileOutputStream(newFile);
 
@@ -246,25 +227,22 @@ public class LQPortalUtil {
 		LOG.info("Authentication success.");
 		Boolean isLeader = false;
 		URL url;
-		email = "ping@me.com";
+//		email = "ping@me.com";
 
 		try {
 			// get URL content //1 Leader 0-noleader
-			// url = new
 			// URL("http://crm.thecoaches.com/fmi-test/webcomp2_newFM/abletogetrecord.php?postkey=fjgh15t&em=ping@me.com");
-			url = new URL(
-					"http://crm.thecoaches.com/fmi-test/webcomp2_newFM/authenticate_leader.php?postkey=fjgh15t&em=ping@me.com");
+			url = new URL("http://crm.thecoaches.com/fmi-test/webcomp2_newFM/authenticate_leader.php?postkey=fjgh15t&em=" + email);
 			URLConnection conn = url.openConnection();
 
 			// open the stream and put it into BufferedReader
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					conn.getInputStream()));
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
 			String inputLine;
 
 			while ((inputLine = br.readLine()) != null) {
 				LOG.info("inputLine=====" + inputLine);
-				if (inputLine.equalsIgnoreCase("ok")) {
+				if (inputLine.equalsIgnoreCase("1")) {
 					isLeader = true;
 					LOG.info("Authentication success.");
 					break;
@@ -280,12 +258,10 @@ public class LQPortalUtil {
 		return isLeader;
 	}
 
-	public static void sendPasswordResetSuccessEmail(
-			ActionRequest actionRequest, String toEmailAddress, String firstName) {
+	public static void sendPasswordResetSuccessEmail(ActionRequest actionRequest, String toEmailAddress, String firstName) {
 
 		LOG.info("Sending password reset email to: " + toEmailAddress);
-		HttpServletRequest httpRequest = PortalUtil
-				.getHttpServletRequest(actionRequest);
+		HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(actionRequest);
 
 		ResourceBundle rb = LQPortalUtil.getResourceBundle(httpRequest);
 		String subject = rb.getString("password-reset-email-subject");
@@ -330,5 +306,4 @@ public class LQPortalUtil {
 			e.printStackTrace();
 		}
 	}
-
 }

@@ -36,8 +36,7 @@ public class LQPortletServiceImpl implements LQPortletService {
 	final Log LOG = LogFactory.getLog(Header.class);
 
 	@Override
-	public LoggedUserBean populateHeaderPortlet(LoggedUserBean lbean,
-			RenderRequest renderRequest) throws LQPortalException {
+	public LoggedUserBean populateHeaderPortlet(LoggedUserBean lbean, RenderRequest renderRequest) throws LQPortalException {
 
 		LOG.info("Entering into populateHeaderPortlet");
 		int userId = LQPortalUserServiceUtil.getUserId(renderRequest);
@@ -54,28 +53,22 @@ public class LQPortletServiceImpl implements LQPortletService {
 	}
 
 	@Override
-	public void populateLeaderLoginPortlet(LeaderBean leaderBean,
-			RenderRequest renderRequest) throws LQPortalException {
+	public void populateLeaderLoginPortlet(LeaderBean leaderBean, RenderRequest renderRequest) throws LQPortalException {
 		LOG.info("populateLeaderLoginPortlet");
 
-		HttpServletRequest httpRequest = PortalUtil
-				.getOriginalServletRequest(PortalUtil
-						.getHttpServletRequest(renderRequest));
+		HttpServletRequest httpRequest = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
 		LQLeaderService leaderService = new LQLeaderServiceImpl();
 
-		leaderBean.setUserid(httpRequest.getParameter("userId") == null ? 0
-				: Integer.valueOf(httpRequest.getParameter("userId")));
+		leaderBean.setUserid(httpRequest.getParameter("userId") == null ? 0	: Integer.valueOf(httpRequest.getParameter("userId")));
 
 		try {
 			int userId = LQPortalUserServiceUtil.getUserId(renderRequest);
 			User user = UserLocalServiceUtil.getUser(userId);
 
-			Boolean isLeader = LQPortalUtil.fileMakerLeaderCheck(user
-					.getEmailAddress());
+			Boolean isLeader = LQPortalUtil.fileMakerLeaderCheck(user.getEmailAddress());
 			LOG.info("isLeader====" + isLeader);
 
-			leaderBean = leaderService.getLeaderDetails(leaderBean,
-					renderRequest);
+			leaderBean = leaderService.getLeaderDetails(leaderBean,	renderRequest);
 			renderRequest.setAttribute("leaderBean", leaderBean);
 			renderRequest.setAttribute("isLeader", isLeader);
 			renderRequest.setAttribute("userId", leaderBean.getUserid());
@@ -87,8 +80,7 @@ public class LQPortletServiceImpl implements LQPortletService {
 	}
 
 	@Override
-	public void populateQuestLoginPortlet(List<QuestViewBean> questList,
-			RenderRequest renderRequest) {
+	public void populateQuestLoginPortlet(List<QuestViewBean> questList, RenderRequest renderRequest) {
 
 	}
 
@@ -98,8 +90,7 @@ public class LQPortletServiceImpl implements LQPortletService {
 	}
 
 	@Override
-	public void populateLeaderNoLoginPortlet(List<LeaderBean> leaderList,
-			RenderRequest renderRequest) throws LQPortalException {
+	public void populateLeaderNoLoginPortlet(List<LeaderBean> leaderList, RenderRequest renderRequest) throws LQPortalException {
 		LOG.info("Entering into populateLeaderNoLoginPortlet");
 		LQLeaderService leaderService = new LQLeaderServiceImpl();
 		
@@ -119,16 +110,12 @@ public class LQPortletServiceImpl implements LQPortletService {
 	}
 
 	@Override
-	public void populateLeaderViewPortlet(LeaderBean leaderBean,
-			RenderRequest renderRequest) throws LQPortalException {
+	public void populateLeaderViewPortlet(LeaderBean leaderBean, RenderRequest renderRequest) throws LQPortalException {
 
-		HttpServletRequest httpRequest = PortalUtil
-				.getOriginalServletRequest(PortalUtil
-						.getHttpServletRequest(renderRequest));
+		HttpServletRequest httpRequest = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
 		LQLeaderService leaderService = new LQLeaderServiceImpl();
 
-		leaderBean.setUserid(httpRequest.getParameter("userId") == null ? 0
-				: Integer.valueOf(httpRequest.getParameter("userId")));
+		leaderBean.setUserid(httpRequest.getParameter("userId") == null ? 0	: Integer.valueOf(httpRequest.getParameter("userId")));
 
 		Boolean editRights = false;
 		Boolean deleteRights = false;
@@ -137,8 +124,7 @@ public class LQPortletServiceImpl implements LQPortletService {
 		try {
 			String role = LQPortalUserServiceUtil.getRoleName(renderRequest);
 
-			if (LQPortalConstants.LQ_LEADER_ROLE.equalsIgnoreCase(role)
-					&& httpRequest.getParameter("userId") != null) {
+			if (LQPortalConstants.LQ_LEADER_ROLE.equalsIgnoreCase(role)	&& httpRequest.getParameter("userId") != null) {
 				if (Integer.valueOf(httpRequest.getParameter("userId")) == loginUserId) {
 					editRights = true;
 				}
@@ -154,8 +140,7 @@ public class LQPortletServiceImpl implements LQPortletService {
 			renderRequest.setAttribute("canEdit", editRights);
 			renderRequest.setAttribute("canDelete", deleteRights);
 
-			leaderBean = leaderService.getLeaderDetails(leaderBean,
-					renderRequest);
+			leaderBean = leaderService.getLeaderDetails(leaderBean,	renderRequest);
 			renderRequest.setAttribute("leaderBean", leaderBean);
 			renderRequest.setAttribute("roleName", role);
 			renderRequest.setAttribute("userId", httpRequest.getParameter("userId"));
@@ -167,32 +152,25 @@ public class LQPortletServiceImpl implements LQPortletService {
 	}
 
 	@Override
-	public void populateQuestViewPortlet(List<QuestViewBean> questList,
-			RenderRequest renderRequest) throws LQPortalException {
+	public void populateQuestViewPortlet(List<QuestViewBean> questList, RenderRequest renderRequest) throws LQPortalException {
 		int userId = 0;
 		int questId = 0;
 
 		QuestViewBean questBean = new QuestViewBean();
 
-		HttpServletRequest httpRequest = PortalUtil
-				.getOriginalServletRequest(PortalUtil
-						.getHttpServletRequest(renderRequest));
+		HttpServletRequest httpRequest = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
 		LQLeaderService leaderService = new LQLeaderServiceImpl();
 
-		userId = httpRequest.getParameter("userId") == null ? 0 : Integer
-				.valueOf(httpRequest.getParameter("userId"));
+		userId = httpRequest.getParameter("userId") == null ? 0 : Integer.valueOf(httpRequest.getParameter("userId"));
 
-		questId = httpRequest.getParameter("questId") == null ? 0 : Integer
-				.valueOf(httpRequest.getParameter("questId"));
+		questId = httpRequest.getParameter("questId") == null ? 0 : Integer.valueOf(httpRequest.getParameter("questId"));
 
 		try {
 			// This method is for getting questlists when nologin
 			if (questId != 0) {
-				questList = leaderService.getQuestDetails(questList,
-						renderRequest, userId, questId);
+				questList = leaderService.getQuestDetails(questList, renderRequest, userId, questId);
 			} else { // This method is for getting questlists when login
-				questList = leaderService.getQuestMasterDetails(questList,
-						renderRequest,userId);
+				questList = leaderService.getQuestMasterDetails(questList, renderRequest,userId);
 
 			}
 
@@ -225,12 +203,9 @@ public class LQPortletServiceImpl implements LQPortletService {
 		List<QuestMasterBean> questListFiltered = new ArrayList<QuestMasterBean>();
 		List<QuestViewBean> questListAllFiltered = new ArrayList<QuestViewBean>();
 
-		//int userId = LQPortalUserServiceUtil.getUserId(renderRequest);
 		questList = new ArrayList<QuestMasterBean>();
 		
-		HttpServletRequest httpRequest = PortalUtil
-				.getOriginalServletRequest(PortalUtil
-						.getHttpServletRequest(renderRequest));
+		HttpServletRequest httpRequest = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
 		
 		int questId = Integer.valueOf(httpRequest.getParameter("questId"));
 		int userId = Integer.valueOf(httpRequest.getParameter("userId"));
@@ -238,8 +213,7 @@ public class LQPortletServiceImpl implements LQPortletService {
 		try {
 			LQQuestService questService = new LQQuestServiceImpl();
 			questList = questService.getQuestMasterList(userId);
-			questListAll = leaderService.getQuestMasterDetails(questListAll,
-					renderRequest,userId);
+			questListAll = leaderService.getQuestMasterDetails(questListAll, renderRequest,userId);
 
 			QuestViewBean questBean = new QuestViewBean();
 			if (questList.size() > 0 && questListAll.size() > 0) {
@@ -265,7 +239,6 @@ public class LQPortletServiceImpl implements LQPortletService {
 			renderRequest.setAttribute("questId", questId);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -281,17 +254,11 @@ public class LQPortletServiceImpl implements LQPortletService {
 			int userId = LQPortalUserServiceUtil.getUserId(renderRequest);
 			renderRequest.setAttribute("userId", userId);
 			
-			leaderBean = leaderService.getLeaderDetails(leaderBean,
-					renderRequest);
+			leaderBean = leaderService.getLeaderDetails(leaderBean,	renderRequest);
 			renderRequest.setAttribute("leaderBean", leaderBean);
 
 		} catch (Exception le) {
 			le.printStackTrace();
 		}
-
-		
-		
 	}
-
-
 }

@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.cti.lq.Constants.LQPortalConstants;
 import com.cti.lq.beans.LeaderBean;
 import com.cti.lq.service.LQLeaderService;
 import com.cti.lq.service.impl.LQLeaderServiceImpl;
@@ -65,69 +64,48 @@ public class AddLeader extends MVCPortlet {
 		LeaderBean leaderDetails = new LeaderBean();
 		HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(actionRequest);
 		HttpSession session = httpRequest.getSession();
-		ThemeDisplay themeDisplay = (ThemeDisplay) httpRequest
-				.getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay) httpRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-		UploadPortletRequest uploadRequest = PortalUtil
-				.getUploadPortletRequest(actionRequest);
-
-		String path = getPortletContext().getRealPath("/");
+		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(actionRequest);
 
 		try {
-
 			leaderDetails.setFirstname(uploadRequest.getParameter("firstname"));
 			leaderDetails.setLastname(uploadRequest.getParameter("lastname"));
-			leaderDetails.setEmailAddress(uploadRequest
-					.getParameter("emailaddress"));
-			leaderDetails.setFacultyRole(uploadRequest
-					.getParameter("facultyrole"));
-			leaderDetails.setPrimaryPhone(uploadRequest
-					.getParameter("primaryphone"));
+			leaderDetails.setEmailAddress(uploadRequest.getParameter("emailaddress"));
+			leaderDetails.setFacultyRole(uploadRequest.getParameter("facultyrole"));
+			leaderDetails.setPrimaryPhone(uploadRequest.getParameter("primaryphone"));
 			leaderDetails.setWebsite(uploadRequest.getParameter("website"));
-			leaderDetails.setBusinessName(uploadRequest
-					.getParameter("businessname"));
+			leaderDetails.setBusinessName(uploadRequest.getParameter("businessname"));
 			leaderDetails.setCountry(uploadRequest.getParameter("country"));
 			leaderDetails.setCity(uploadRequest.getParameter("city"));
-			System.out.println("Bio Statement"
-					+ uploadRequest.getParameter("biostatement"));
-
-			leaderDetails.setBioStatement(uploadRequest
-					.getParameter("biostatement"));
+			leaderDetails.setBioStatement(uploadRequest.getParameter("biostatement"));
 			leaderDetails.setUserid(0);
 
 			// upload photo.
-
 			String imageFileName = uploadRequest.getFileName("image_fileName");
-			String fileLocation = LQPortalConstants.LQ_FILE_LOCATION;
-			fileLocation = fileLocation + "/" + imageFileName;
+			String fileLocation = "http://" + uploadRequest.getServerName() + ":" + uploadRequest.getServerPort() + "/lqfiles/" + imageFileName;
 
 			if (!(imageFileName == null || "".equals(imageFileName))) {
-				LQPortalUtil.uploadFile(path, uploadRequest, "image_fileName");
+				LQPortalUtil.uploadFile(uploadRequest, "image_fileName");
 
 				leaderDetails.setPhotoURL(fileLocation);
 
 				LQLeaderService lqServiceLayer = new LQLeaderServiceImpl();
-				Boolean isAdded = lqServiceLayer
-						.addLeaderDetails(leaderDetails,actionRequest);
-
-				LOG.info("insertion done");
+				Boolean isAdded = lqServiceLayer.addLeaderDetails(leaderDetails,actionRequest);
 
 				if (isAdded) {
-					SessionMessages.add(actionRequest,
-							"leader-added-successfully");
+					LOG.info("Leader added successfully");
+					SessionMessages.add(actionRequest, "leader-added-successfully");
 				} else {
 					SessionErrors.add(actionRequest, "leader-add-failed");
 				}
 
 			}
 			// upload Ends.
-			User u = LQPortalUserServiceUtil.getUser(
-					leaderDetails.getEmailAddress(),
-					themeDisplay.getCompanyId());
+			User u = LQPortalUserServiceUtil.getUser(leaderDetails.getEmailAddress(), themeDisplay.getCompanyId());
 			if (u != null) {
 				session.setAttribute("validUser", true);
-				LQPortalUtil.sendPasswordResetEmail(actionRequest,
-						leaderDetails.getEmailAddress(), u.getFirstName());
+				LQPortalUtil.sendPasswordResetEmail(actionRequest, leaderDetails.getEmailAddress(), u.getFirstName());
 				LOG.info("Mail has sent");
 			}
 

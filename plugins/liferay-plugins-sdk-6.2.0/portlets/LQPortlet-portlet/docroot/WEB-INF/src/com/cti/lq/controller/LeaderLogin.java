@@ -13,12 +13,10 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.cti.lq.Constants.LQPortalConstants;
 import com.cti.lq.beans.LeaderBean;
 import com.cti.lq.beans.QuestMasterBean;
 import com.cti.lq.exceptions.LQPortalException;
@@ -33,7 +31,6 @@ import com.cti.lq.util.LQPortalUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
@@ -46,86 +43,70 @@ public class LeaderLogin extends MVCPortlet {
 		viewJSP = getInitParameter("view-template");
 	}
 
-	public void doView(RenderRequest renderRequest,
-			RenderResponse renderResponse) throws IOException, PortletException {
+	public void doView(RenderRequest renderRequest,	RenderResponse renderResponse) throws IOException, PortletException {
 
 		LOG.info("Entering doView()");
-		PortletRequestDispatcher portletRequestDispatcher = getPortletContext()
-				.getRequestDispatcher(viewJSP);
+		PortletRequestDispatcher portletRequestDispatcher = getPortletContext().getRequestDispatcher(viewJSP);
 
 		LeaderBean leaderBean = new LeaderBean();
 		LQPortletService lqServiceLayer = new LQPortletServiceImpl();
 		String role = LQPortalUserServiceUtil.getRoleName(renderRequest);
 
 		try {
-			lqServiceLayer
-					.populateLeaderLoginPortlet(leaderBean, renderRequest);
+			lqServiceLayer.populateLeaderLoginPortlet(leaderBean, renderRequest);
 			renderRequest.setAttribute("roleName", role);
 
 		} catch (LQPortalException le) {
 			LQPortalUtil.processException(le, renderRequest);
 		}
 
-		if (portletRequestDispatcher == null) {
-		} else {
+		if (portletRequestDispatcher != null) {
 			portletRequestDispatcher.include(renderRequest, renderResponse);
 		}
 
 		LOG.info("Leaving doView()");
 	}
 
-	public void submitLeaderDetails(ActionRequest actionRequest,
-			ActionResponse actionResponse) throws IOException, PortletException {
+	public void submitLeaderDetails(ActionRequest actionRequest, ActionResponse actionResponse) throws IOException, PortletException {
 		LOG.info(" Entering submitLeaderDetails()");
 
 		LeaderBean leaderDetails = new LeaderBean();
-		// int userId = LQPortalUserServiceUtil.getUserId(actionRequest);
 
-		UploadPortletRequest uploadRequest = PortalUtil
-				.getUploadPortletRequest(actionRequest);
+		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(actionRequest);
 
-		String path = getPortletContext().getRealPath("/");
+		String imageFileName = uploadRequest.getFileName("image_fileName");
+		String fileLocation = "http://" + uploadRequest.getServerName() + ":" + uploadRequest.getServerPort() + "/lqfiles/" + imageFileName;
 
 		try {
 			int userId = Integer.valueOf(uploadRequest.getParameter("userId"));
 
 			leaderDetails.setFirstname(uploadRequest.getParameter("firstname"));
 			leaderDetails.setLastname(uploadRequest.getParameter("lastname"));
-			leaderDetails.setEmailAddress(uploadRequest
-					.getParameter("emailaddress"));
-			leaderDetails.setFacultyRole(uploadRequest
-					.getParameter("facultyrole"));
-			leaderDetails.setPrimaryPhone(uploadRequest
-					.getParameter("primaryphone"));
+			leaderDetails.setEmailAddress(uploadRequest.getParameter("emailaddress"));
+			leaderDetails.setFacultyRole(uploadRequest.getParameter("facultyrole"));
+			leaderDetails.setPrimaryPhone(uploadRequest.getParameter("primaryphone"));
 			leaderDetails.setWebsite(uploadRequest.getParameter("website"));
-			leaderDetails.setBusinessName(uploadRequest
-					.getParameter("businessname"));
+			leaderDetails.setBusinessName(uploadRequest.getParameter("businessname"));
 			leaderDetails.setCountry(uploadRequest.getParameter("country"));
 			leaderDetails.setCity(uploadRequest.getParameter("city"));
 
-			leaderDetails.setBioStatement(uploadRequest
-					.getParameter("biostatement"));
-			leaderDetails.setPhotoURL(uploadRequest.getParameter("photourl"));
+			leaderDetails.setBioStatement(uploadRequest.getParameter("biostatement"));
 			leaderDetails.setUserid(userId);
 			
-			String imageFileName = uploadRequest.getFileName("image_fileName");
-			String fileLocation = LQPortalConstants.LQ_FILE_LOCATION;
-			fileLocation = fileLocation + "/" + imageFileName;
-
 			if (!(imageFileName == null || "".equals(imageFileName))) {
-				LQPortalUtil.uploadFile(path, uploadRequest, "image_fileName");
+				LQPortalUtil.uploadFile(uploadRequest, "image_fileName");
 				leaderDetails.setPhotoURL(fileLocation);
-				updateLeaderDetail(actionRequest, userId, uploadRequest,
-						leaderDetails);
+			} else {
+				leaderDetails.setPhotoURL(uploadRequest.getParameter("photoURL"));
 			}
+			updateLeaderDetail(actionRequest, userId, uploadRequest, leaderDetails);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
-	private void updateLeaderDetail(ActionRequest actionRequest, int userId,
-			UploadPortletRequest uploadRequest, LeaderBean leaderDetails) {
+	private void updateLeaderDetail(ActionRequest actionRequest, int userId, UploadPortletRequest uploadRequest, LeaderBean leaderDetails) {
 		Boolean saveSuccess = false;
 
 		try {
@@ -141,8 +122,7 @@ public class LeaderLogin extends MVCPortlet {
 
 				if (uploadRequest.getParameter(String.valueOf(qb.getQuestId())) != null) {
 					newBean.setUserId(userId);
-					if ("Private".equalsIgnoreCase(uploadRequest
-							.getParameter(String.valueOf(qb.getQuestId())))) {
+					if ("Private".equalsIgnoreCase(uploadRequest.getParameter(String.valueOf(qb.getQuestId())))) {
 						newBean.setAccessMode(false);
 					} else {
 						newBean.setAccessMode(true);
