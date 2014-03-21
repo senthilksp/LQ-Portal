@@ -3,8 +3,11 @@
 <%@ taglib uri="/WEB-INF/tld/liferay-ui.tld" prefix="liferay-ui"%>
 <%@ taglib uri="http://alloy.liferay.com/tld/aui" prefix="aui"%>
 <%@ page import="com.cti.lq.util.LQPortalUtil" %>
+<%@ page import="com.liferay.portal.util.PortalUtil" %>
 
-<%java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);
+<%
+PortalUtil.setPageTitle("Password Reset", request);
+java.util.ResourceBundle rb= LQPortalUtil.getResourceBundle(request);
 %>
 
 <script type="text/javascript">
@@ -83,7 +86,15 @@ function findPasswordScore(password) {
 
 <portlet:defineObjects />
 
-<div class="white-shadowed">
+<div class="contentWrapper_lq">
+	<br>
+	<div class="interiorBanner1">
+		<h1><%=rb.getString("header-portlet-heading")%></h1>
+	</div>
+	<br>
+	<br>
+</div>
+<div class="contentWrapper_lq" style="width:500px;padding-left:20px;">
 	<h2>Password Reset</h2>
 
 	<portlet:actionURL name="submitPasswordReset"
@@ -112,10 +123,12 @@ function findPasswordScore(password) {
 				<td><input type="hidden" id="email" name="email"
 					value="${email}"></td>
 			</tr>
+		<tr><td>
+			<br><br>		
+			<input type = "button" id="btnSubmit" value="Save" onclick="doSubmit();" />
+			<input type = "button" id="btnCancel" value="Cancel" onclick="doCancel();" />
+		</td></tr>
 		</table>
-
-		<input type = "button" id="btnSubmit" value="Save" onclick="doSubmit();" />
-		<input type = "button" id="btnCancel" value="Cancel" onclick="doCancel();" />
 	
 	</form>
 
