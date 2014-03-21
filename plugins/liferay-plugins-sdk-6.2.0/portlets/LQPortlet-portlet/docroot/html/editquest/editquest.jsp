@@ -90,16 +90,21 @@
 								<br>
 								<input type="text" name="questName" required="required"
 									id="<portlet:namespace />questName"
-									value="${questMaster.questTitle}"> 
+									value="${questMaster.questTitle}"
+									style="width:260px;"> 
 							</div>
 						</div>
 						<div class="Row">
 							<div class="Cell-a">
 								Quest Definition :
 								<br>
-								<input type="text" name="questDefinition" required="required"
-									id="<portlet:namespace />questDefinition"
-									value="${questMaster.questDefinition}">
+								<textarea id="<portlet:namespace />questDefinition" name="<portlet:namespace />questDefinition" required="required" maxlength="1024" style="height:100px;width:260px;background-color:white;">
+									value="${questMaster.questDefinition}"
+								</textarea>
+							</div>
+						</div>
+						<div class="Row">
+							<div class="Cell-a">
 								<input type="submit" id="btnMasterSave" name="btnMasterSave"
 									value=<%=rb.getString("quest-edit-button-caption")%>
 									onclick="doMasterSave();" />

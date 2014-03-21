@@ -35,8 +35,6 @@
 		<div class="Cell-a">
 			<h2><%=rb.getString("quest-view-portlet-heading")%></h2>
 		</div>
-		<div class="Cell-a">
-		</div>
 	</div>
 	<div class="Row">
 		<div class="Cell-a" style="padding-left:20px;">

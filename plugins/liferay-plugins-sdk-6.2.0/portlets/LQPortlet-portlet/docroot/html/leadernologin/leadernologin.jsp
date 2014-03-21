@@ -40,7 +40,6 @@ $(document).ready(function () {
 			<div id="welcomediv" >
 				<h2><%=rb.getString("leader-welcome-msg1")%></h2>
 				<ul style = "margin-left: 55px"> 
-					<li><%=rb.getString("leader-welcome-msg2")%> </li>
 					<li><%=rb.getString("leader-welcome-msg2")%> </li> 
 					<li><%=rb.getString("leader-welcome-msg3")%> </li> 
 					<li><%=rb.getString("leader-welcome-msg4")%> </li> 
@@ -50,14 +49,6 @@ $(document).ready(function () {
 			<div id="leaderdiv" > 
 				<h2><%=rb.getString("leader-welcome-msg6")%></h2>
 			</div>
-		</div>
-        <div class="Cell-b" style="border:none;background-color: white;"></div>
-        <div class="Cell-b" style="border:none;background-color: white;"></div>
-       	<div class="Cell-b" style="border:none;background-color: white;">
-			<a class="addthis_button" style="padding-top:20px;" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=ra-52ce7b2b414da24b">
-			<img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a>
-		    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
-			<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52ce7b2b414da24b"></script>
 		</div>
 	</div>
 </div>

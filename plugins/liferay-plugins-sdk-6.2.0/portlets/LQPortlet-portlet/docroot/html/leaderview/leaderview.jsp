@@ -35,8 +35,6 @@ String LQ_LEADER_DETAIL_VIEW_PAGE = com.cti.lq.Constants.LQPortalConstants.LQ_LE
 		<div class="Cell-a">
 			<h2><%=rb.getString("leader-view-portlet-heading")%></h2>
 		</div>
-		<div class="Cell-a">
-		</div>
 	</div>
 </div>
 <div class="Table">

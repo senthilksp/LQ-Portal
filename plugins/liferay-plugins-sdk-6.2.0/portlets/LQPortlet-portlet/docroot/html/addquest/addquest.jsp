@@ -41,8 +41,6 @@ function doSubmit() {
 	<div class="Row">
 		<div class="Cell-a"><h2><%=rb.getString("quest-addquest-title")%></h2>
 		</div>
-		<div class="Cell-a">
-		</div>
 	</div>
 </div>
 <div class="Table">
@@ -59,14 +57,15 @@ function doSubmit() {
 		<div class="Row">
 			<div class="Cell-b3"><%=rb.getString("quest-addquest-name")%>
 			</div>
-			<div class="Cell-b4"><input type="text" name="questName"  id="questName" >
+			<div class="Cell-b4"><input type="text" name="questName"  id="questName" style="width:260px;">
 			</div>
 		</div>
 		<div class="Row">
 			<div class="Cell-b3"><%=rb.getString("quest-addquest-definition")%>
 			</div>
 			<div class="Cell-b4">
-				<input type="text" name="<portlet:namespace />questDefinition" required="required" id="questDefinition" >
+				<textarea id="questDefinition" name="<portlet:namespace />questDefinition" required="required" maxlength="1024" style="height:100px;width:260px;background-color:white;"></textarea>
+				<!--  <input type="text" name="<portlet:namespace />questDefinition" required="required" id="questDefinition" >-->
 			</div>
 		</div>
 	</div>

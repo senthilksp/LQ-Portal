@@ -34,8 +34,6 @@ function doCancel(userId) {
 	<div class="Row">
 		<div class="Cell-a"><h2><%=rb.getString("leader-login-portlet-title")%></h2>
 		</div>
-		<div class="Cell-a">
-		</div>
 	</div>
 </div>
 <div class="Table">
@@ -49,6 +47,7 @@ function doCancel(userId) {
 <aui:form action="<%=submitLeaderDetailsURL.toString()%>" method="post" name="LeaderDetailsForm" 
 		id="LeaderDetailsForm" enctype="multipart/form-data">
 	<aui:input type="hidden" id="userId" name="userId" value="${userId}" readonly="readonly"/>
+	<aui:input type="hidden" id="photoURL" name="photoURL" value="${leaderBean.photoURL}" readonly="readonly"/>
 	<div class="Table">
 		<div class="Row">
 			<div class="Cell-a">

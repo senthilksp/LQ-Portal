@@ -38,8 +38,6 @@ PortalUtil.setPageTitle("Quests", request);
 			<div class="Cell-a">
 				<h2>Quest Details</h2>
 			</div>
-			<div class="Cell-a">
-			</div>
 		</div>
 	</div>
 	<div class="Table">

@@ -14,15 +14,6 @@ PortalUtil.setPageTitle("Quests", request);
             <!-- Column 2 start -->
             <h2>Quests</h2>
         </div>
-        <div class="Cell-b" style="border:none;"></div>
-        <div class="Cell-b" style="border:none;"></div>
-       	<div class="Cell-b" style="border:none;">
-       	<!-- Column 1 start -->
-			<a class="addthis_button" style="padding-top:20px;" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=ra-52ce7b2b414da24b">
-			<img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a>
-		    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
-			<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52ce7b2b414da24b"></script>
-		</div>
 	</div>
 </div>
 <%
