@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
 import org.apache.commons.logging.Log;
@@ -29,35 +30,49 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 	final Log LOG = LogFactory.getLog(LQLeaderDAO.class);
 
 	@Override
-	public List<LeaderBean> getLeaderList(List<LeaderBean> leaderlist, RenderRequest renderRequest) throws SQLException {
+	public List<LeaderBean> getLeaderList(List<LeaderBean> leaderlist,
+			RenderRequest renderRequest) throws SQLException {
 
 		LOG.info("Entering into LeaderDAO");
 		int signinUserId = renderRequest != null ? LQPortalUserServiceUtil.getUserId(renderRequest) : 0;
+		StringBuffer leaderQuery = new StringBuffer("");
+		String searchString = (String) renderRequest.getPortletSession().getAttribute("LQ_SEARCH_STRING",PortletSession.APPLICATION_SCOPE);
 
 		Connection con = null;
 		PreparedStatement ps1 = null;
 		PreparedStatement ps2 = null;
-
 		ResultSet rs1 = null;
 		ResultSet rs2 = null;
-
 		Boolean accessMode = false;
 
-		StringBuffer leaderQuery = new StringBuffer(QueryContants.getAllLeaders);
+		if (searchString == null || "".equals(searchString)) {
+			leaderQuery = new StringBuffer(QueryContants.getAllLeaders);
+		} else {
+			leaderQuery = new StringBuffer(QueryContants.searchQuery);
+		}
 
 		try {
 			con = DBConnectionFactory.getPostgresDBConnection();
 			ps1 = con.prepareStatement(leaderQuery.toString());
+			if (searchString != null && !"".equals(searchString)) {
+				for(int i=1; i<=14; i++) {
+					ps1.setString(i, "%" + searchString.toLowerCase().trim() + "%");
+				}
+			} 
+
 			rs1 = ps1.executeQuery();
 			leaderlist = new ArrayList<LeaderBean>();
+			StringBuffer questQuery = new StringBuffer(QueryContants.getQuestInfoByleader);
 			while (rs1.next()) {
 				LeaderBean lb = new LeaderBean();
 				lb = settingLeaderBean(rs1, lb);
+				questQuery = new StringBuffer(QueryContants.getQuestInfoByleader);
 
-				StringBuffer questQuery = new StringBuffer(QueryContants.getQuestInfoByleader);
+
 				List<QuestMasterBean> questList = new ArrayList<QuestMasterBean>();
 				ps2 = con.prepareStatement(questQuery.toString());
 				ps2.setInt(1, lb.getUserid());
+
 				rs2 = ps2.executeQuery();
 				String role = renderRequest == null ? null : LQPortalUserServiceUtil.getRoleName(renderRequest);
 
@@ -102,7 +117,6 @@ public class LQLeaderDAOImpl implements LQLeaderDAO {
 		return leaderlist;
 	}
 
-	@SuppressWarnings("resource")
 	@Override
 	public LeaderBean getLeaderDetails(RenderRequest renderRequest, LeaderBean leaderBean) throws SQLException {
 

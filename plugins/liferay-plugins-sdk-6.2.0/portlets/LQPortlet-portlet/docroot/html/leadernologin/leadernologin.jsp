@@ -30,10 +30,17 @@ $(document).ready(function () {
 		$("#leaderdiv").hide();
 	}
 });
+
+function searchSubmit() {
+    document.leaderNoLoginForm.submit();
+}
+
 </script>
 
 
 <portlet:defineObjects />
+<portlet:actionURL name="submitSearchDeails" var="submitSearchDeailsURL" />
+
 <div class="Table">
     <div class="Row">
         <div class="Cell-a" style="border:none;background-color: white;">
@@ -52,6 +59,14 @@ $(document).ready(function () {
 		</div>
 	</div>
 </div>
+
+<div id="searchDiv">
+    <form id="leaderNoLoginForm" name="leaderNoLoginForm" action="<%=submitSearchDeailsURL.toString()%>" method="post" >
+		<input type="text"  name="txtSearch" id="txtSearch" style="" autocomplete="off" placeholder="Search.." />
+	    <input type ="button" id="searchBtn" name="searchBtn" onclick="searchSubmit();" value="Go" />
+	</form>    
+</div> <br><br><br>
+
 <%
 String select_column="Row";
 String bgcolor = "background-color: lightyellow;";

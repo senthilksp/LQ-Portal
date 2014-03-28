@@ -60,5 +60,15 @@ public class QueryContants {
 	public static String deleteLeader2 = "delete from user_   where userid=?";
 	
 	public static String findQuestId = "select quest_id from quest_master_ where quest_title=? and definition=? and userid=?";
+	
+	public static final String searchQuery = "select a.userid,b.firstname,b.lastname,b.emailaddress,a.business_name,a.city,a.country,a.photo,"
+			+ "a.bio_statement,a.primary_phone,a.website,a.faculty_role from user_lq a, user_ b where a.userid = b.userid and b.userid not in (13103, 13113)" +
+			"and a.userid in (select userid from user_ where LOWER(firstname) like ? or LOWER(lastname) like ? or LOWER(emailaddress) like ? " +
+			"union " +
+			" select userid from user_lq where LOWER(faculty_role) like ? or LOWER(primary_phone) like ? or LOWER(website) like ? or " +
+			"LOWER(business_name) like ? or LOWER(city) like ? or LOWER(country) like ? or LOWER(photo) like ? or LOWER(bio_statement) like ? " +
+			"union " +
+			" select userid from quest_master_ where LOWER(quest_title) like ? or LOWER(definition) like ? or " +
+			"quest_id in(select quest_id from quest_transaction_ where LOWER(quest_location) like ?))";
 
 }
