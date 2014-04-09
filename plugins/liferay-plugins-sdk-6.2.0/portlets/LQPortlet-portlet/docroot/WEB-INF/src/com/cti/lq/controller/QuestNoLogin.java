@@ -41,8 +41,7 @@ public class QuestNoLogin  extends MVCPortlet{
 			RenderResponse renderResponse) throws IOException, PortletException {
 		
 		LOG.info("Entering doView()");
-		PortletRequestDispatcher portletRequestDispatcher = getPortletContext()
-				.getRequestDispatcher(viewJSP);
+		PortletRequestDispatcher portletRequestDispatcher = getPortletContext().getRequestDispatcher(viewJSP);
 		
 		List<LeaderBean> leaderList = new ArrayList<LeaderBean>();
 		

@@ -17,6 +17,7 @@ PortalUtil.setPageTitle("Add Quest", request);
 jQuery(document).ready(function() {
 	jQuery("#questname-error1").hide();
 	jQuery("#questname-error2").hide();
+	$("textarea").val('');
 });
 
 function doSubmit() {
@@ -107,15 +108,54 @@ function doSubmit() {
 			</div>
 		</div>
 		<div class="Row">
+			<div class="Cell-b3"><label>Comment:</label>
+			</div>
+			<div class="Cell-b4">
+				<textarea 
+					id="image_comment" 
+					name="image_comment" 
+					required="required" 
+					maxlength="1024" 
+					style="height:100px;width:260px;background-color:white;">
+				</textarea>
+			</div>
+		</div>
+		<div class="Row">
 			<div class="Cell-b3"><%=rb.getString("quest-addquest-audio-type")%>
 			</div>
 			<div class="Cell-b4"><input type="file" name="<portlet:namespace />audio_fileName" id="audio_fileName"/><br><br>
 			</div>
 		</div>
 		<div class="Row">
+			<div class="Cell-b3"><label>Comment:</label>
+			</div>
+			<div class="Cell-b4">
+				<textarea 
+					id="audio_comment" 
+					name="audio_comment" 
+					required="required" 
+					maxlength="1024" 
+					style="height:100px;width:260px;background-color:white;">
+				</textarea>
+			</div>
+		</div>
+		<div class="Row">
 			<div class="Cell-b3"><%=rb.getString("quest-addquest-video-type")%>
 			</div>
 			<div class="Cell-b4"><input type="file" name="<portlet:namespace />video_fileName" id="video_fileName" /><br><br>
+			</div>
+		</div>
+		<div class="Row">
+			<div class="Cell-b3"><label>Comment:</label>
+			</div>
+			<div class="Cell-b4">
+				<textarea 
+					id="video_comment" 
+					name="video_comment" 
+					required="required" 
+					maxlength="1024" 
+					style="height:100px;width:260px;background-color:white;">
+				</textarea>
 			</div>
 		</div>
 		<div class="Row">

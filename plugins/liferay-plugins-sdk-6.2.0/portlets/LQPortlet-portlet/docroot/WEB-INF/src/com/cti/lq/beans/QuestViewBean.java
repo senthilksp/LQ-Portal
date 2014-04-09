@@ -3,11 +3,14 @@
  */
 package com.cti.lq.beans;
 
+import java.util.List;
+
 /**
  * @author senthil
  *
  */
 public class QuestViewBean {
+
 
 	private int id;
 	private int quest_id;
@@ -21,7 +24,7 @@ public class QuestViewBean {
 	private String photoURL;
 	private int questTransId;
 	private String qlocationForDisplay;
-	
+	private List<QuestCommentBean> commentList;
 	
 	public int getId() {
 		return id;
@@ -97,8 +100,18 @@ public class QuestViewBean {
 	public void setQlocationForDisplay(String qlocationForDisplay) {
 		this.qlocationForDisplay = qlocationForDisplay;
 	}
-	
-
+	/**
+	 * @return the commentsList
+	 */
+	public List<QuestCommentBean> getCommentList() {
+		return commentList;
+	}
+	/**
+	 * @param commentsList the commentsList to set
+	 */
+	public void setCommentList(List<QuestCommentBean> commentList) {
+		this.commentList = commentList;
+	}
 }
 
 

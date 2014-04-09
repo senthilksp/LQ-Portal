@@ -5,9 +5,9 @@ package com.cti.lq.service.impl;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.cti.lq.beans.QuestCommentBean;
 import com.cti.lq.beans.QuestMasterBean;
 import com.cti.lq.beans.QuestTransactionBean;
-import com.cti.lq.beans.QuestViewBean;
 import com.cti.lq.dao.LQQuestDAO;
 import com.cti.lq.dao.impl.LQQuestDAOImpl;
 import com.cti.lq.service.LQQuestService;
@@ -68,6 +68,12 @@ public class LQQuestServiceImpl implements LQQuestService {
 	public int findQuestId(QuestMasterBean questmaster) throws SQLException {
 		LQQuestDAO questDAO = new LQQuestDAOImpl();
 		return questDAO.findQuestId(questmaster);
+	}
+
+	@Override
+	public Boolean saveQuestComment(QuestCommentBean questCommentBean) throws SQLException {
+		LQQuestDAO questDAO = new LQQuestDAOImpl();
+		return questDAO.saveQuestComment(questCommentBean);
 	}
 
 }

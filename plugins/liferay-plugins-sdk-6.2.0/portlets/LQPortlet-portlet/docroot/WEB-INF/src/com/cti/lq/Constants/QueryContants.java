@@ -25,10 +25,14 @@ public class QueryContants {
 	
 	public static final String getQuestInfoByleader = "select * from quest_master_ where userid=? order by quest_id";
 
-	public static String getQuestInfo = "select b.id, a.quest_id, b.id,a.quest_title,a.access_mode, a.definition,a.userid,c.firstname,d.photo, b.quest_type, b.quest_location "
+	public static String getQuestInfo = "select b.id, a.quest_id, a.quest_title,a.access_mode, a.definition,a.userid,c.firstname,d.photo, b.quest_type, b.quest_location "
 			+ "from quest_master_ a, quest_transaction_ b, user_ c, user_lq d where "
 			+ "a.quest_id = b.quest_id and a.userid = c.userid and c.userid = d.userid and a.userid=? and a.quest_id=? order by quest_id, quest_type" ;
 
+	public static String getQuestComment = "select b.id, b.quest_trans_id, b.comment, b.added_by, b.added_on "
+			+ "from quest_transaction_ a, quest_comment b where "
+			+ "a.id = b.quest_trans_id and b.quest_trans_id=? order by quest_id" ;
+	
 	public static final String insertLeader_LQ = "insert into user_lq(userid,roleid,faculty_role,primary_phone,website,business_name,"
 			+ "city,country,photo,bio_statement) values(?,?,?,?,?,?,?,?,?,?) ";
 	
@@ -44,6 +48,7 @@ public class QueryContants {
 	
 	public static final String insertQuestMaster = "insert into quest_master_ (quest_title,access_mode,definition,userid) values(?,?,?,?)";
 	public static final String insertQuestTrans  = "Insert into quest_transaction_ (quest_id,quest_type,quest_location) values (?,?,?)";
+	public static final String insertQuestComment  = "Insert into quest_comment (quest_trans_id,comment,added_by,added_on) values (?,?,?,?)";
 	public static final String getQuestId = "select quest_id from quest_master_ where quest_title=?";
 	
 	public static Object getMaxQuestId = "select max(quest_id) from quest_master_ where userid=?";
@@ -54,6 +59,7 @@ public class QueryContants {
 	public static final String updateQuestTran   	  = "update quest_transaction_  set quest_location=? where id=?"; 
 	public static final String deleteQuestTran   	  = "delete from quest_transaction_ where id=?";
 	public static final String deleteQuestMaster 	  = "delete from quest_master_ where quest_id=?";
+	public static final String deleteQuestComment 	  = "delete from quest_comment where quest_trans_id=?";
 	public static final String deleteQuestTransaction = "delete from quest_transaction_ where quest_id=?";
 	
 	public static String deleteLeader1 = "delete from user_lq where userid=?";
@@ -70,5 +76,6 @@ public class QueryContants {
 			"union " +
 			" select userid from quest_master_ where LOWER(quest_title) like ? or LOWER(definition) like ? or " +
 			"quest_id in(select quest_id from quest_transaction_ where LOWER(quest_location) like ?))";
+
 
 }

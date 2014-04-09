@@ -4,7 +4,10 @@
 package com.cti.lq.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -19,6 +22,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.cti.lq.Constants.LQPortalConstants;
 import com.cti.lq.beans.LeaderBean;
+import com.cti.lq.beans.QuestCommentBean;
 import com.cti.lq.beans.QuestMasterBean;
 import com.cti.lq.beans.QuestTransactionBean;
 import com.cti.lq.exceptions.LQPortalException;
@@ -49,7 +53,7 @@ public class AddQuest extends MVCPortlet {
 
 	public void doView(RenderRequest renderRequest,	RenderResponse renderResponse) throws IOException, PortletException {
 
-		LOG.info("Entering doView()");
+		LOG.info("Entering AddQuest->doView()");
 		PortletRequestDispatcher portletRequestDispatcher = getPortletContext().getRequestDispatcher(viewJSP);
 
 		LeaderBean leaderBean = new LeaderBean();
@@ -73,23 +77,44 @@ public class AddQuest extends MVCPortlet {
 
 	public void submitQuestDetails(ActionRequest actionRequest, ActionResponse actionResponse) throws IOException, PortletException {
 		
-		LOG.info(" Entering submitQuestDetails()");
+		LOG.info(" Entering AddQuest->submitQuestDetails()");
 		
 		QuestMasterBean questmaster = new QuestMasterBean();
 		List<QuestTransactionBean> qTransList = new ArrayList<QuestTransactionBean>();
 		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(actionRequest);
 		String path = "http://" + uploadRequest.getServerName() + ":" + uploadRequest.getServerPort() + "/lqfiles/";
 		
+		List<QuestCommentBean> questCommentBeanList = null;
+		
+		String addedBy = LQPortalUserServiceUtil.getUser(LQPortalUserServiceUtil.getUserId(actionRequest)).getFullName();
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+		Date date = new Date();
+		String addedOn = dateFormat.format(date);
+		
+		QuestCommentBean questCommentBean = new QuestCommentBean();
+		questCommentBean.setAddedBy(addedBy);
+		questCommentBean.setAddedOn(addedOn);
+		
 		try {
 			String imageFileName = uploadRequest.getFileName("image_fileName");
+			String imageComment = uploadRequest.getParameter("image_comment");
 			String audioFileName = uploadRequest.getFileName("audio_fileName");
+			String audioComment = uploadRequest.getParameter("audio_comment");
 			String videoFileName = uploadRequest.getFileName("video_fileName");
-
+			String videoComment = uploadRequest.getParameter("video_comment");
+			
 			if (! (imageFileName == null || "".equals(imageFileName))) {
 				LQPortalUtil.uploadFile(uploadRequest, "image_fileName");
 				QuestTransactionBean transBean = new QuestTransactionBean();
 				transBean.setQuestType(LQPortalConstants.IMAGE_TYPE);
 				transBean.setQuestLocation(path + "/" + imageFileName);
+				
+				if (imageComment != null && !imageComment.isEmpty()) {
+					questCommentBeanList = new ArrayList<QuestCommentBean>();
+					questCommentBean.setComment(imageComment);
+					questCommentBeanList.add(questCommentBean);
+					transBean.setQuestCommentBean(questCommentBeanList);
+				}
 				qTransList.add(transBean);
 				
 			}
@@ -98,6 +123,12 @@ public class AddQuest extends MVCPortlet {
 				QuestTransactionBean transBean = new QuestTransactionBean();
 				transBean.setQuestType(LQPortalConstants.AUDIO_TYPE);
 				transBean.setQuestLocation(path + "/" +  audioFileName);
+				if (audioComment != null && !audioComment.isEmpty()) {
+					questCommentBeanList = new ArrayList<QuestCommentBean>();
+					questCommentBean.setComment(audioComment);
+					questCommentBeanList.add(questCommentBean);
+					transBean.setQuestCommentBean(questCommentBeanList);
+				}
 				qTransList.add(transBean);
 				
 			}
@@ -106,6 +137,12 @@ public class AddQuest extends MVCPortlet {
 				QuestTransactionBean transBean = new QuestTransactionBean();
 				transBean.setQuestType(LQPortalConstants.VIDEO_TYPE);
 				transBean.setQuestLocation(path + "/"+ videoFileName);
+				if (videoComment != null && !videoComment.isEmpty()) {
+					questCommentBeanList = new ArrayList<QuestCommentBean>();
+					questCommentBean.setComment(videoComment);
+					questCommentBeanList.add(questCommentBean);
+					transBean.setQuestCommentBean(questCommentBeanList);
+				}
 				qTransList.add(transBean);
 			}
 
@@ -128,6 +165,7 @@ public class AddQuest extends MVCPortlet {
 			
 			LQQuestService questService = new LQQuestServiceImpl();
 			Boolean isSaved = questService.saveQuestDetails(questmaster,qTransList);
+			LOG.info("isSaved = " + isSaved);
 			if(isSaved) {
 				SessionMessages.add(actionRequest, "quest-added-successfully");
 			} else {

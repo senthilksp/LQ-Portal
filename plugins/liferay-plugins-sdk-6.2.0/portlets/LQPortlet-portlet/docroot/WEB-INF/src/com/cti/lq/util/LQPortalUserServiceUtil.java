@@ -28,7 +28,6 @@ public class LQPortalUserServiceUtil {
 		} catch (PortalException e) {
 			e.printStackTrace();
 		} catch (SystemException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return user;
@@ -42,7 +41,6 @@ public class LQPortalUserServiceUtil {
 		} catch (PortalException e) {
 			e.printStackTrace();
 		} catch (SystemException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return user;

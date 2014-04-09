@@ -11,7 +11,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$(".quest").hide();	
+		$(".quest").hide();
+		$("textarea[id^=comment]").val('');
 	});
 	
 	function doDisplay(divId) {
@@ -22,10 +23,17 @@
 		$('#' + divId).show();
 	}
 	
-
 	function doSubmit(x) {
+		
+		var fileChosen = jQuery("input[type=file][name=" + x + "]").val();
+		
+		if (fileChosen == "") {
+			alert("Please choose a file.");
+			return false;
+		}
 		jQuery("input[name=id1]").val(x);
 		jQuery("input[name=delId]").val("MODIFY");
+		
 		document.<portlet:namespace />questForm.submit();
 	}
 	
@@ -43,13 +51,58 @@
 	function doMasterDelete() {
 		jQuery("input[name=delId]").val("DELETEALL");
 		document.<portlet:namespace />questForm.submit();
-	}	
+	}
+	
+	function openCommentBox(questid) {
+		$("#comment_inputs_" + questid).css("display", "block");
+	}
+
+	function saveComment(questTransId){
+		
+		$("input#questTransId").val(questTransId);
+		$("input#addedBy").val($("#addedBy_" + questTransId).val());
+		$("input#comment").val($("#comment_" + questTransId).val());
+		
+		//alert("questTransId = " + $("input#questTransId").val() + "\naddedBy = " + $("input#addedBy").val() + "\ncomment = " + $("input#comment").val());
+		$("form#questCommentForm").submit();
+	}
+
+	function closeComment(questid) {
+		$("#comment_" + questid).val('');
+		$("#addedBy_" + questid).val('');
+		$("#comment_inputs_" + questid).css("display", "none");
+	}
+
+	function toggleComments(questid) {
+		var linkTitle = $("#viewCommentsLink_" + questid).text();
+		if (linkTitle == "View Comments") {
+			$("#viewCommentsLink_" + questid).text("Close Comments");
+			$("#viewComments_" + questid).css("display", "block");
+		} else if (linkTitle == "Close Comments") {
+			$("#viewCommentsLink_" + questid).text("View Comments");
+			$("#viewComments_" + questid).css("display", "none");
+		}
+	}
 </script>
 
 <%
 	java.util.ResourceBundle rb = LQPortalUtil
 			.getResourceBundle(request);
 %>
+
+<portlet:actionURL name="submitQuestComment" var="submitQuestCommentURL" />
+<form id="questCommentForm" 
+	name="questCommentForm" 
+	action="<%=submitQuestCommentURL.toString()%>" 
+	method="post"
+	enctype="multipart/form-data">
+	
+	<input type="hidden" name="questTransId" id="questTransId" value ="" />
+	<input type="hidden" name="addedBy" id="addedBy" value ="" />
+	<input type="hidden" name="comment" id="comment" value ="" />
+	<input type="hidden" name="questId" id="questId" value ="${questId}" />
+</form>
+
 <portlet:actionURL name="submitQuestDetails" var="submitQuestDetailsURL" />
 <div class="Table">
 	<div class="Row">
@@ -126,9 +179,13 @@
 						<div class="Row">
 							<div class="Cell-a">
 								<h5>Pictures</h5>
-								<c:forEach items="${questListAll}" var="questTransaction">
-									<c:if test="${questMaster.questId == questTransaction.quest_id}">
-										<c:if test="${questTransaction.questType eq 'IMAGE'}">
+							</div>
+						</div>
+						<c:forEach items="${questListAll}" var="questTransaction">
+							<c:if test="${questMaster.questId == questTransaction.quest_id}">
+								<c:if test="${questTransaction.questType eq 'IMAGE'}">
+									<div class="Row">
+										<div class="Cell-a">
 											<br>
 											<img src="${questTransaction.questLocation}" alt=""></img>
 											<br>
@@ -141,17 +198,82 @@
 											<input type="button" id="btnDelete" name="btnDelete"
 												value=<%=rb.getString("quest-delete-button-caption")%>
 												onclick="doDelete('${questTransaction.id}');" />
+										</div>
+									</div>
+												
+<!-- Displaying Comments -->
+<%
+String bgcolor = "background-color: lightyellow;";
+%>
+									<div class="Row">
+										<c:if test="${not empty questTransaction.commentList}">
+		
+										
+<!-- 									<a id="viewCommentsLink_${quest.id}" href="#!" onclick="toggleComments(${quest.id})">View Comments</a>
+									<div id="viewComments_${quest.id}" style="display:none;">
+ -->
+											<div>
+												<strong>Comments:</strong>
+												<hr/>
+												<c:forEach items="${questTransaction.commentList}" var="comment">
+													<div class="Table">
+														<div class="Row">
+															<div class="Cell-a" style="<%=bgcolor%>">
+																<strong>${comment.addedBy} : </strong>${comment.comment}
+																<br/>
+																<div style="font-size:0.75em;"><i>${comment.addedOn}</i></div>
+															</div>
+														</div>
+													</div>
+<%
+if (bgcolor == "background-color: lightyellow;") {
+	bgcolor = "background-color: lightgoldenrodyellow;";
+} else {
+	bgcolor = "background-color: lightyellow;";
+}
+%>
+												</c:forEach>
+											</div>
 										</c:if>
-								  	</c:if>	
-								</c:forEach>
-							</div>
-						</div>
+									</div>
+<!-- Adding Comment button -->
+									<div class="Row">
+										<div class="Cell-a">
+											<input type="button" onclick="openCommentBox(${questTransaction.id});" value="Add Comment"/>
+										</div>
+									</div>
+<!-- Adding Comment inputs -->
+									<div class="Row" id="comment_inputs_${questTransaction.id}" style="display:none;">
+										<div class="Cell-a">
+											<label>Comment:</label>
+											<textarea 
+												id="comment_${questTransaction.id}" 
+												name="comment_${questTransaction.id}" 
+												required="required" 
+												maxlength="1024" 
+												style="height:100px;width:360px;background-color:white;">
+											</textarea>
+											<label>Your Name:</label>
+											<input type="text" id="addedBy_${questTransaction.id}" name="addedBy_${questTransaction.id}" style="width:360px;" required="required"/>
+											<br/>
+											<input type="button" value="Save Comment" onclick="saveComment(${questTransaction.id});"/>
+											<input type="button" value="Cancel" onclick="closeComment(${questTransaction.id});" />
+										</div>
+									</div>
+												
+								</c:if>
+						  	</c:if>	
+						</c:forEach>
 						<div class="Row">
 							<div class="Cell-a">
 								<h5>Audios</h5>
-								<c:forEach items="${questListAll}" var="questTransaction">
-									<c:if test="${questMaster.questId == questTransaction.quest_id}">	
-										<c:if test="${questTransaction.questType eq 'AUDIO'}">
+							</div>
+						</div>
+						<c:forEach items="${questListAll}" var="questTransaction">
+							<c:if test="${questMaster.questId == questTransaction.quest_id}">	
+								<c:if test="${questTransaction.questType eq 'AUDIO'}">
+									<div class="Row">
+										<div class="Cell-a">
 											<a href='#!' onclick="doDisplay('${questTransaction.id}')">${questTransaction.qlocationForDisplay}</a>
 											<div id="${questTransaction.id}" class="quest">
 												<video id="lq_video" class="video-js vjs-default-skin" controls
@@ -172,18 +294,81 @@
 													value=<%=rb.getString("quest-delete-button-caption")%>
 													onclick="doDelete('${questTransaction.id}');" />	
 											</div>
-											<br>	
+										</div>
+									</div>
+<!-- Displaying Comments -->
+<%
+String bgcolor = "background-color: lightyellow;";
+%>
+									<div class="Row">
+										<c:if test="${not empty questTransaction.commentList}">
+
+								
+<!-- 									<a id="viewCommentsLink_${quest.id}" href="#!" onclick="toggleComments(${quest.id})">View Comments</a>
+									<div id="viewComments_${quest.id}" style="display:none;">
+ -->
+											<div>
+												<strong>Comments:</strong>
+												<hr/>
+												<c:forEach items="${questTransaction.commentList}" var="comment">
+													<div class="Table">
+														<div class="Row">
+															<div class="Cell-a" style="<%=bgcolor%>">
+																<strong>${comment.addedBy} : </strong>${comment.comment}
+																<br/>
+																<div style="font-size:0.75em;"><i>${comment.addedOn}</i></div>
+															</div>
+														</div>
+													</div>
+<%
+if (bgcolor == "background-color: lightyellow;") {
+	bgcolor = "background-color: lightgoldenrodyellow;";
+} else {
+	bgcolor = "background-color: lightyellow;";
+}
+%>
+												</c:forEach>
+											</div>
 										</c:if>
-								  </c:if>	
-							</c:forEach>
-							</div>
-						</div>
+									</div>
+<!-- Adding Comment button -->
+									<div class="Row">
+										<div class="Cell-a">
+											<input type="button" onclick="openCommentBox(${questTransaction.id});" value="Add Comment"/>
+										</div>
+									</div>
+<!-- Adding Comment inputs -->
+									<div class="Row" id="comment_inputs_${questTransaction.id}" style="display:none;">
+										<div class="Cell-a">
+											<label>Comment:</label>
+											<textarea 
+												id="comment_${questTransaction.id}" 
+												name="comment_${questTransaction.id}" 
+												required="required" 
+												maxlength="1024" 
+												style="height:100px;width:360px;background-color:white;">
+											</textarea>
+											<label>Your Name:</label>
+											<input type="text" id="addedBy_${questTransaction.id}" name="addedBy_${questTransaction.id}" style="width:360px;" required="required"/>
+											<br/>
+											<input type="button" value="Save Comment" onclick="saveComment(${questTransaction.id});"/>
+											<input type="button" value="Cancel" onclick="closeComment(${questTransaction.id});" />
+										</div>
+									</div>
+									<br>	
+								</c:if>
+							</c:if>	
+						</c:forEach>
 						<div class="Row">
 							<div class="Cell-a">
 								<h5>Videos</h5>
-								<c:forEach items="${questListAll}" var="questTransaction">
-									<c:if test="${questMaster.questId == questTransaction.quest_id}">
-										<c:if test="${questTransaction.questType eq 'VIDEO' }">
+							</div>
+						</div>
+						<c:forEach items="${questListAll}" var="questTransaction">
+							<c:if test="${questMaster.questId == questTransaction.quest_id}">
+								<c:if test="${questTransaction.questType eq 'VIDEO' }">
+									<div class="Row">
+										<div class="Cell-a">
 											<br>
 											<a href='#!' onclick="doDisplay('${questTransaction.id}')">${questTransaction.qlocationForDisplay}</a>
 											<div id="${questTransaction.id}" class="quest">
@@ -204,12 +389,71 @@
 													value=<%=rb.getString("quest-delete-button-caption")%>
 												    onclick="doDelete('${questTransaction.id}');" />
 											</div>
-											<br>	
+											<br>
+										</div>
+									</div>
+<!-- Displaying Comments -->
+<%
+String bgcolor = "background-color: lightyellow;";
+%>
+									<div class="Row">
+										<c:if test="${not empty questTransaction.commentList}">
+		
+										
+<!-- 									<a id="viewCommentsLink_${quest.id}" href="#!" onclick="toggleComments(${quest.id})">View Comments</a>
+									<div id="viewComments_${quest.id}" style="display:none;">
+ -->
+											<div>
+												<strong>Comments:</strong>
+												<hr/>
+												<c:forEach items="${questTransaction.commentList}" var="comment">
+													<div class="Table">
+														<div class="Row">
+															<div class="Cell-a" style="<%=bgcolor%>">
+																<strong>${comment.addedBy} : </strong>${comment.comment}
+																<br/>
+																<div style="font-size:0.75em;"><i>${comment.addedOn}</i></div>
+															</div>
+														</div>
+													</div>
+<%
+if (bgcolor == "background-color: lightyellow;") {
+	bgcolor = "background-color: lightgoldenrodyellow;";
+} else {
+	bgcolor = "background-color: lightyellow;";
+}
+%>
+												</c:forEach>
+											</div>
 										</c:if>
-									</c:if>
-								</c:forEach>
-							</div>
-						</div>
+									</div>
+<!-- Adding Comment button -->
+									<div class="Row">
+										<div class="Cell-a">
+											<input type="button" onclick="openCommentBox(${questTransaction.id});" value="Add Comment"/>
+										</div>
+									</div>
+<!-- Adding Comment inputs -->
+									<div class="Row" id="comment_inputs_${questTransaction.id}" style="display:none;">
+										<div class="Cell-a">
+											<label>Comment:</label>
+											<textarea 
+												id="comment_${questTransaction.id}" 
+												name="comment_${questTransaction.id}" 
+												required="required" 
+												maxlength="1024" 
+												style="height:100px;width:360px;background-color:white;">
+											</textarea>
+											<label>Your Name:</label>
+											<input type="text" id="addedBy_${questTransaction.id}" name="addedBy_${questTransaction.id}" style="width:360px;" required="required"/>
+											<br/>
+											<input type="button" value="Save Comment" onclick="saveComment(${questTransaction.id});"/>
+											<input type="button" value="Cancel" onclick="closeComment(${questTransaction.id});" />
+										</div>
+									</div>
+								</c:if>
+							</c:if>
+						</c:forEach>
 						<div class="Row">
 							<div class="Cell-a">
 								<a href='/web/guest/addQuestPage'><%=rb.getString("quest-addquest-link-caption")%></a>

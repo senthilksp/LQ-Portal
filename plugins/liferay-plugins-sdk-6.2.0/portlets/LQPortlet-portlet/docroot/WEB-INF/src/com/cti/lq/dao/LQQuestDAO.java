@@ -3,9 +3,9 @@ package com.cti.lq.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.cti.lq.beans.QuestCommentBean;
 import com.cti.lq.beans.QuestMasterBean;
 import com.cti.lq.beans.QuestTransactionBean;
-import com.cti.lq.beans.QuestViewBean;
 
 public interface LQQuestDAO {
 
@@ -16,11 +16,13 @@ public interface LQQuestDAO {
 
 	Boolean saveQuestTransactions(List<QuestTransactionBean> qTransList, int userId, int questId) throws SQLException;
 
+	Boolean saveQuestComment(QuestCommentBean questCommentBean) throws SQLException;
+	
 	Boolean updateQuestTransaction(QuestTransactionBean transBean) throws SQLException;
 
 	Boolean updateQuestMaster(QuestMasterBean questMaster) throws SQLException;
 
-	Boolean deleteQuestTransaction(int id1) throws SQLException;
+	Boolean deleteQuestTransaction(int questTransId) throws SQLException;
 
 	Boolean deleteQuestMaster(int questId) throws SQLException;
 

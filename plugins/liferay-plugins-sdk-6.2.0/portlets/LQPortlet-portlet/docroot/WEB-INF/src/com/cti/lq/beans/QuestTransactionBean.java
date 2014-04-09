@@ -1,5 +1,7 @@
 package com.cti.lq.beans;
 
+import java.util.List;
+
 public class QuestTransactionBean {
 
 	private int id;
@@ -7,6 +9,7 @@ public class QuestTransactionBean {
 	private int QuestId;
 	private String QuestType;
 	private String QuestLocation;
+	private List<QuestCommentBean> questCommentBean;
 	
 	public int getQuestId() {
 		return QuestId;
@@ -32,6 +35,18 @@ public class QuestTransactionBean {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	/**
+	 * @return the questCommentBean
+	 */
+	public List<QuestCommentBean> getQuestCommentBean() {
+		return questCommentBean;
+	}
+	/**
+	 * @param questCommentBean the questCommentBean to set
+	 */
+	public void setQuestCommentBean(List<QuestCommentBean> questCommentBean) {
+		this.questCommentBean = questCommentBean;
 	}
 
 }
